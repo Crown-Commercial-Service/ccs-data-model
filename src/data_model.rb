@@ -77,7 +77,7 @@ module DataModel
 
     attr_reader :name, :attributes
 
-    def initialize(name, attributes = {}, &block)
+    def initialize(name, attributes = {}, &initialize_block)
       @name = name
       @attributes = attributes
 
@@ -115,7 +115,7 @@ module DataModel
       end
 
       if block_given?
-        self.instance_exec &block
+        self.instance_exec &initialize_block
       end
     end
 
@@ -189,7 +189,7 @@ module DataModel
 
     attr_reader :contents, :name
 
-    def initialize name, &block
+    def initialize name, &initialise_block
       @contents = {}
       @name = name.to_sym
       self.class.const_set name.to_sym, self
@@ -217,7 +217,7 @@ module DataModel
       end
 
       if block_given?
-        self.instance_exec &block
+        self.instance_exec &initialise_block
       end
     end
 

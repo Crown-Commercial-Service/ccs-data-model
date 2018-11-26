@@ -1,13 +1,13 @@
 # agreement-design.gemspec
 # TODO - split the gem for schema design from the one containing agreement models
 Gem::Specification.new do |spec|
-  spec.name          = "agreement-design-prototype"
-  spec.version       = "0.0.5"
+  spec.name          = "ccs-data-model"
+  spec.version       = "0.0.1"
   spec.authors       = ["CCS"]
-  spec.homepage      = 'https://github.com/Crown-Commercial-Service/cmp-design-prototype/agreement-design'
+  spec.homepage      = 'https://github.com/Crown-Commercial-Service/ccs-data-model'
   spec.email         = ["rubygems@humphries.tech"]
-  spec.description   = %q{A prototype of techniques to manage agreement specifications.}
-  spec.summary       = %q{Agreement prototype .}
+  spec.description   = %q{Alpha model of data interfaces for commercial agreements.}
+  spec.summary       = %q{CCS Data alpha.}
   spec.license       = "MIT"
 
   spec.files         = Dir["./**/*"]

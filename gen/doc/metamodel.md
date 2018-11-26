@@ -189,25 +189,3 @@ will contain lat/long if we have derived it.
 |name|String|1||
 |description|String|1||
 |subcode|Geographic::AreaCode|*||
-# Data model: SupplyTeacherOfferings
-## ST_Offering extends Agreements::Offering
-   An offer for ST supply
-The offerings look the same for both lots - since they both relate to the same items and data
-
-|attribute|type|multiplicity|description|
-|---------|----|------------|-----------|
-|agreement_id|String -> Agreements::Agreement|1|The agreement this offering relates to|
-|supplier_id|String -> Parties::Party|1||
-|id|String|1|unique id for the offering across all offerings, suppliers and frameworks|
-|name|String|1||
-|description|String|1||
-|item|Agreements::Item|*|details of the item|
-|location_id|String -> Geographic::AreaCode|1..*|Pick list of applicable regions. There must be at least one, even if it is just 'UK'|
-|sector_id|String -> Parties::Sector|*|Pick list of applicable sectors.
-If set offering is only to be shown to users proven to belong to the sectors given|
-|commission|String|1|The percentage the supplier charges for the item|
-|duration|(Up_to_1_week,Between_1_and_12_weeks,Over_12_weeks)|1||
-|branch_name|String|1|branch name from which the offer is supplied|
-|branch_contact_id|String -> Parties::Contact|1|links to contact at the address|
-|branch_location|String|1|postcode of branch|
-|vendor_type|(Master_Vendor,Neutral_Vendor) -> Parties::Contact|1|for managed service offerings|
