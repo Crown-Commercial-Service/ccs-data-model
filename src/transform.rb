@@ -21,7 +21,6 @@ module Transform
     end
   end
 
-
   def before_model_lambda model: nil
     return [model: model]
   end

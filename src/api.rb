@@ -18,17 +18,11 @@ require 'pp'
 class OpenApi3 < Output
   attr_accessor :fmt, :std_qry_params
 
+
   def initialize dir, name, fmt: :json
+
     super File.join(dir, "openapi3"),
-          name,
-          case fmt
-          when :json then
-            "json"
-          when :yaml then
-            "yaml"
-          else
-            raise(fmt)
-          end
+          name, fmt.to_s
     self.fmt = fmt
     self.std_qry_params = [:name, :id, :keyword]
   end
@@ -57,9 +51,15 @@ class OpenApi3 < Output
 
   GET = "get"
 
+  PATHS = "paths"
+
   INFO = "info"
 
-  PATHS = "paths"
+  PUT = "put"
+
+  POST = "post"
+
+  OPERATION_ID = "operationId"
 
   def output api
 
@@ -88,18 +88,44 @@ class OpenApi3 < Output
 
     paths = map[PATHS] = {}
 
-    endpoint.resource.each do |r|
-      name = r.type.typename
-      paths["/#{name}"] = {
+    endpoint.resource.each do |resource|
+      resource_name = resource.type.typename.downcase
+      paths["/#{resource_name}"] = {
           GET => {
               SUMMARY => "get list",
               TAGS => [BROWSERS],
               SUMMARY => "search",
-              DESCRIPTION => "searches #{name} by name, id or keyword",
-              PARAMETERS => std_qry_params.map {|k| {REF => ref(:query, k)}},
+              OPERATION_ID => "search-#{resource_name}",
+              DESCRIPTION => "searches #{resource_name} by name, id or keyword",
+              PARAMETERS => std_qry_params.map {|k| {REF => ref_component(:query, k)}},
               RESPONSES => {
                   R200 => {
-                      REF => ref(:responses, name)
+                      REF => ref_component(:responses, resource_name)
+                  },
+                  R4XX => {
+                      DESCRIPTION => "error TODO"
+                  }
+              }
+          },
+          POST => {
+              SUMMARY => "put a new element",
+              TAGS => [RECORDERS],
+              SUMMARY => "put",
+              OPERATION_ID => "create-#{resource_name}",
+              DESCRIPTION => "add a new #{resource_name} and retreive copy of it",
+              "requestBody" => {
+                  "content" => {
+                      "application/json" => {
+                          "schema" => {
+                              REF => ref_component(:schema, resource_name)
+                          }
+                      }
+                  },
+                  DESCRIPTION => "body should be the new #{resource_name}"
+              },
+              RESPONSES => {
+                  R200 => {
+                      REF => ref_component(:response, resource_name)
                   },
                   R4XX => {
                       DESCRIPTION => "error TODO"
@@ -107,16 +133,16 @@ class OpenApi3 < Output
               }
           }
       }
-      paths["/#{name}/{id}"] = {
+      paths["/#{resource_name}/{id}"] = {
           GET => {
               SUMMARY => "get item",
               TAGS => [RECORDERS],
-              SUMMARY => "get a #{name}",
-              DESCRIPTION => "retrieve #{name} by id",
-              PARAMETERS => [{REF => ref(:path, "id")}],
+              SUMMARY => "get a #{resource_name}",
+              DESCRIPTION => "retrieve #{resource_name} by id",
+              PARAMETERS => [{REF => ref_component(:path, "id")}],
               RESPONSES => {
                   R200 => {
-                      REF => ref(:response, name)
+                      REF => ref_component(:response, resource_name)
                   },
                   R4XX => {
                       DESCRIPTION => "error TODO"
@@ -130,25 +156,25 @@ class OpenApi3 < Output
 
     schemas = components["schemas"] = {}
     endpoint.resource.each do |r|
-      schema = detail(:schema, r.type)
+      schema = detail_component(:schema, r.type)
       schemas[schema[0]] = schema[1]
     end
 
     parameters = components[PARAMETERS] = {}
     @std_qry_params.each do |p|
-      param = detail(:query, p)
+      param = detail_component(:query, p)
       parameters[param[0]] = param[1]
     end
     [:id].each do |p|
-      param = detail(:path, p)
+      param = detail_component(:path, p)
       parameters[param[0]] = param[1]
     end
 
     responses = components[RESPONSES] = {}
     endpoint.resource.each do |r|
-      param = detail(:response, r.type)
+      param = detail_component(:response, r.type)
       responses[param[0]] = param[1]
-      param = detail(:responses, r.type)
+      param = detail_component(:responses, r.type)
       responses[param[0]] = param[1]
     end
 
@@ -160,7 +186,7 @@ class OpenApi3 < Output
 
   # get named parameter definition - name is prefixed by _ if a query param
   # return [param name, param detail]
-  def detail(qryOrPathOrSchemaOrResponse, nameOrType)
+  def detail_component(qryOrPathOrSchemaOrResponse, nameOrType)
     case qryOrPathOrSchemaOrResponse
     when :query then
       name = "q_" + nameOrType.to_s
@@ -178,7 +204,7 @@ class OpenApi3 < Output
           "schema" => {"type" => "string"}
       }]
     when :schema then
-      name = nameOrType.typename.to_s
+      name = nameOrType.typename.to_s.downcase
       [name,
        {
            "type" => "object",
@@ -186,22 +212,22 @@ class OpenApi3 < Output
        }
       ]
     when :response then
-      name = nameOrType.typename.to_s
+      name = nameOrType.typename.to_s.downcase
       [name,
        {
            DESCRIPTION => "#{nameOrType.typename} matching id",
            "content" => {
                "application/json" => {
                    "schema" => {
-                       REF => ref(:schema, nameOrType)
+                       REF => ref_component(:schema, name)
                    }
                }
            }
        }
       ]
     when :responses then
-      name = nameOrType.typename.to_s + "s"
-      [name, #TODO proper i18n pluralization
+      name = nameOrType.typename.to_s.downcase
+      [name + "s", #TODO proper i18n pluralization
        {
            DESCRIPTION => "array of #{nameOrType.typename}s matching id",
            "content" => {
@@ -209,7 +235,7 @@ class OpenApi3 < Output
                    "schema" => {
                        "type" => "array",
                        "items" => {
-                           REF => ref(:schema, nameOrType)
+                           REF => ref_component(:schema, name)
                        }
                    }
                }
@@ -221,18 +247,18 @@ class OpenApi3 < Output
     end
   end
 
-  def ref(qryOrPathOrSchemaOrResponse, nameOrType)
+  def ref_component(qryOrPathOrSchemaOrResponse, name)
     case qryOrPathOrSchemaOrResponse
     when :query
-      "#/components/parameters/q_#{nameOrType}"
+      "#/components/parameters/q_#{name}"
     when :path
-      "#/components/parameters/#{nameOrType}"
+      "#/components/parameters/#{name}"
     when :response
-      "#/components/responses/#{nameOrType}"
+      "#/components/responses/#{name}"
     when :responses
-      "#/components/responses/#{nameOrType}s" #TODO i18n
+      "#/components/responses/#{name}s" #TODO i18n
     when :schema
-      "#/components/schemas/#{nameOrType.typename}"
+      "#/components/schemas/#{name}"
     else
       raise "unk"
     end
@@ -245,7 +271,7 @@ class OpenApi3 < Output
       elsif fmt == :yaml
         file.print(map.to_yaml({header: false}))
       else
-        raise " unknown data file format "
+        raise " not allowed data file format #{fmt}"
       end
     end
   end

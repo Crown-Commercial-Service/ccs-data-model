@@ -10,8 +10,7 @@ class DataFile < Output
   attr_accessor :fmt
 
   def initialize dir, name, fmt: :json
-    super File.join(dir, "data"), name,
-          (fmt == :json ? "json" : (fmt == :jsonlines ? "jsonlines" : "yaml"))
+    super File.join(dir, "data"), name, fmt.to_s
     self.fmt = fmt
   end
 
@@ -62,7 +61,7 @@ class DataFile < Output
       elsif fmt == :yaml
         file.print(map.to_yaml)
       else
-        raise "unknown data file format"
+        raise "unknown data file format #{fmt}"
       end
     end
   end
