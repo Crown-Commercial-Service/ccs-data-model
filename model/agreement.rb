@@ -5,16 +5,17 @@ include DataModel
 
 domain :Agreements do
 
-  UNITS = Selection(:Area, :Commission, :Currency)
-  CLASSIFICATION_SCHEMES = Selection(:CPV, :CPVS, :UNSPSC, :CPV, :OKDP, :OKPD, :CCS)
+  UNITS = Codelist(:Area, :Commission, :Currency)
+  CLASSIFICATION_SCHEMES = Codelist(:CPV, :CPVS, :UNSPSC, :CPV, :OKDP, :OKPD, :CCS)
+
   code(:CCS, description: "CCS invented schemes")
 
   datatype(:ItemType,
            description:
-"Defines the items that can be offered in any selected agreements
-Agreements hava a number of items that can have values defining the agreement. The Items should
-constrain the key quantifiable elements of an agreement award. A supplier may provide additional
-variable facts in their Offer to supplement the description of how they support the agreement.") {
+               "Defines the items that can be offered in any selected agreements
+                Agreements hava a number of items that can have values defining the agreement. The Items should
+                constrain the key quantifiable elements of an agreement award. A supplier may provide additional
+                variable facts in their Offer to supplement the description of how they support the agreement.") {
 
     attribute :id, String, "The code id, which must be unique across all schemes"
     attribute :scheme_id, CLASSIFICATION_SCHEMES, "The classiciation scheme id"
@@ -25,25 +26,25 @@ variable facts in their Offer to supplement the description of how they support 
     attribute :unit, UNITS, " define the units, if one units matches "
   }
 
-  TYPES_OF_EXPRESSION_OF_NEED = Selection(:Budget, :Location, :Service)
+  TYPES_OF_EXPRESSION_OF_NEED = Codelist(:Budget, :Location, :Service)
   code(:Budget, description:
-"What is the budget the buyer has for their need?
-Match the budget to the value range of the agreement, and the value range of supplier offers.
-Matching the budget will probably require evaluation of offer prices.")
+      "What is the budget the buyer has for their need?" +
+          "Match the budget to the value range of the agreement, and the value range of supplier offers." +
+          "Matching the budget will probably require evaluation of offer prices.")
   code(:Location, description:
-"Where is the need?
-Match location needs to locations of offers")
+      " Where is the need? " +
+          " Match location needs to locations of offers ")
   code(:Service, description:
-"What sort of things do they need?
-Match the service to item types, their keywords, and offering titles.")
+      " What sort of things do they need? " +
+          " Match the service to item types, their keywords, and offering titles.")
 
   datatype(:ExpressionOfNeed,
            description:
-" Defines a buyer's need which can be matched to agreement items and other details
-The need matches closely to our definitions of agreements under 'items types' and their classification
+               " Defines a buyer 's need which can be matched to agreement items and other details
+The need matches closely to our definitions of agreements under ' items types ' and their classification
 schemes, but is not a one-to-one match.") {
     attribute :buyer_id, String, "The buyer expressing the need"
-    attribute :kind, Selection(:Budget, :Location, :Service)
+    attribute :kind, Codelist(:Budget, :Location, :Service)
     attribute :value, String
     attribute :unit, UNITS, "The units typically used to express the need"
   }
@@ -52,14 +53,15 @@ schemes, but is not a one-to-one match.") {
            description: "General definition of Commercial Agreements") {
 
     # identify the agreement
-    attribute :kind, Selection(:Framework, :Lot, :Contract),
+    attribute :kind, Codelist(:Framework, :Lot, :Contract),
               #TODO doc should enumeration selections
               "Kind of agreement, including :Framework, :Lot, :Contract"
     attribute :id, String, "id of agreeement; This is the RM number for a framework, and {RM.lotnumber} for a lot"
+    attribute :keyword, String, ZERO_TO_MANY, "other names for the agreement"
     attribute :name, String
     attribute :long_name, String
-    attribute :version, String, "semantic version id of the form X.Y.Z"
-    attribute :status, Selection(:Live, :Inactive, :Future, :Planned, :Underway), "semantic version id of the form X.Y.Z"
+    attribute :version, String, "semantic version id of the agreement model, in the form X.Y.Z"
+    attribute :status, Codelist(:Live, :Inactive, :Future, :Planned, :Underway), "semantic version id of the form X.Y.Z"
     attribute :pillar, String
     attribute :duration, Integer, "Months"
     attribute :category, String
@@ -101,7 +103,7 @@ variable facts in their Offer to supplement the description of how they support 
     attribute :item, :Item, ZERO_TO_MANY, "details of the item"
     # Qualifications
     attribute :location_id, String, ONE_TO_MANY,
-              "Pick list of applicable regions. There must be at least one, even if it is just 'UK'",
+              "Pick list of applicable regions. There must be at least one, even if it is just ' UK '",
               links: Geographic::AreaCode
     attribute :sector_id, String, ZERO_TO_MANY,
               "Pick list of applicable sectors.
@@ -115,11 +117,11 @@ If set offering is only to be shown to users proven to belong to the sectors giv
 
   datatype(:Involvement,
            description: "Involvement relationship between a party and an agreement
-Technology strategy documents call this type 'interest' but perhaps this could
+Technology strategy documents call this type ' interest ' but perhaps this could
 be confused with the accounting interest") {
     attribute :agreement_id, String, "The agreement this interest relates to", links: :Agreement
     attribute :party_id, String, "The party this interest relates to", links: Parties::Party
-    attribute :role, Selection(:AwardedSupplier, :AwardedBuyer, :SupplyingQuote, :RequestingQuote, :Etc),
+    attribute :role, Codelist(:AwardedSupplier, :AwardedBuyer, :SupplyingQuote, :RequestingQuote, :Etc),
               "The role of the party in the involvment"
   }
 

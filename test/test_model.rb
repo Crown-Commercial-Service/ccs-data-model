@@ -22,7 +22,7 @@ domain :TestModel do
   end
 
   datatype :Kindly do
-    attribute :kind, Selection( :Framework, :Lot, :Contract), "semantic version id of the form X.Y.Z"
+    attribute :kind, Codelist(:Framework, :Lot, :Contract), "semantic version id of the form X.Y.Z"
   end
 
   datatype :ReferencingType do

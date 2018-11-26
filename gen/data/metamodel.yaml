@@ -69,6 +69,11 @@
         for a lot
       :name: :id
       :type: String
+    :keyword:
+      :multiplicity: "*"
+      :description: other names for the agreement
+      :name: :keyword
+      :type: String
     :name:
       :multiplicity: '1'
       :description: ''
@@ -81,7 +86,7 @@
       :type: String
     :version:
       :multiplicity: '1'
-      :description: semantic version id of the form X.Y.Z
+      :description: semantic version id of the agreement model, in the form X.Y.Z
       :name: :version
       :type: String
     :status:
@@ -211,7 +216,7 @@
     :location_id:
       :multiplicity: 1..*
       :description: Pick list of applicable regions. There must be at least one, even
-        if it is just 'UK'
+        if it is just ' UK '
       :name: :location_id
       :type: String
       :links: Geographic::AreaCode

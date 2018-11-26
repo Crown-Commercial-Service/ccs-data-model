@@ -223,7 +223,6 @@ module DataModel
 
   end
 
-
   module_function
 
   def domain(name, &block)
@@ -240,7 +239,7 @@ module DataModel
     Date.new(day, month, year)
   end
 
-  def Selection(*args)
+  def Codelist(*args)
     typename = "Selection_#{args.join '_'}"
     selclass = Object.const_set typename, Class.new(Symbol)
     selclass.define_singleton_method(:selection) {args}
@@ -249,5 +248,12 @@ module DataModel
     return selclass
   end
 
+  def api(name, &block)
+    api = Object.const_set name.to_sym, Class.new(API)
+    if block_given?
+      api.instance_exec &block
+    end
+    return api
+  end
 
 end # DataModel

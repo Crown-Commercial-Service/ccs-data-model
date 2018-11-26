@@ -1,9 +1,9 @@
 # Data model: Agreements
 ## ItemType
   Defines the items that can be offered in any selected agreements
-Agreements hava a number of items that can have values defining the agreement. The Items should
-constrain the key quantifiable elements of an agreement award. A supplier may provide additional
-variable facts in their Offer to supplement the description of how they support the agreement.
+                Agreements hava a number of items that can have values defining the agreement. The Items should
+                constrain the key quantifiable elements of an agreement award. A supplier may provide additional
+                variable facts in their Offer to supplement the description of how they support the agreement.
 
 |attribute|type|multiplicity|description|
 |---------|----|------------|-----------|
@@ -15,8 +15,8 @@ variable facts in their Offer to supplement the description of how they support 
 |code|String|1| Code within the scheme defining this type |
 |unit|(Area,Commission,Currency)|1| define the units, if one units matches |
 ## ExpressionOfNeed
-   Defines a buyer's need which can be matched to agreement items and other details
-The need matches closely to our definitions of agreements under 'items types' and their classification
+   Defines a buyer 's need which can be matched to agreement items and other details
+The need matches closely to our definitions of agreements under ' items types ' and their classification
 schemes, but is not a one-to-one match.
 
 |attribute|type|multiplicity|description|
@@ -32,9 +32,10 @@ schemes, but is not a one-to-one match.
 |---------|----|------------|-----------|
 |kind|(Framework,Lot,Contract)|1|Kind of agreement, including :Framework, :Lot, :Contract|
 |id|String|1|id of agreeement; This is the RM number for a framework, and {RM.lotnumber} for a lot|
+|keyword|String|*|other names for the agreement|
 |name|String|1||
 |long_name|String|1||
-|version|String|1|semantic version id of the form X.Y.Z|
+|version|String|1|semantic version id of the agreement model, in the form X.Y.Z|
 |status|(Live,Inactive,Future,Planned,Underway)|1|semantic version id of the form X.Y.Z|
 |pillar|String|1||
 |duration|Integer|1|Months|
@@ -70,7 +71,7 @@ variable facts in their Offer to supplement the description of how they support 
 |name|String|1||
 |description|String|1||
 |item|Agreements::Item|*|details of the item|
-|location_id|String -> Geographic::AreaCode|1..*|Pick list of applicable regions. There must be at least one, even if it is just 'UK'|
+|location_id|String -> Geographic::AreaCode|1..*|Pick list of applicable regions. There must be at least one, even if it is just ' UK '|
 |sector_id|String -> Parties::Sector|*|Pick list of applicable sectors.
 If set offering is only to be shown to users proven to belong to the sectors given|
 ## Catalogue
@@ -81,7 +82,7 @@ If set offering is only to be shown to users proven to belong to the sectors giv
 |offers|Agreements::Offering|*|description of the item|
 ## Involvement
   Involvement relationship between a party and an agreement
-Technology strategy documents call this type 'interest' but perhaps this could
+Technology strategy documents call this type ' interest ' but perhaps this could
 be confused with the accounting interest
 
 |attribute|type|multiplicity|description|
@@ -94,17 +95,13 @@ be confused with the accounting interest
 CCS invented schemes
 
 ## Budget 
-What is the budget the buyer has for their need?
-Match the budget to the value range of the agreement, and the value range of supplier offers.
-Matching the budget will probably require evaluation of offer prices.
+What is the budget the buyer has for their need?Match the budget to the value range of the agreement, and the value range of supplier offers.Matching the budget will probably require evaluation of offer prices.
 
 ## Location 
-Where is the need?
-Match location needs to locations of offers
+ Where is the need?  Match location needs to locations of offers 
 
 ## Service 
-What sort of things do they need?
-Match the service to item types, their keywords, and offering titles.
+ What sort of things do they need?  Match the service to item types, their keywords, and offering titles.
 
 # Data model: Parties
 ## Sector
