@@ -81,9 +81,9 @@ class OpenApi3 < Output
     }
     map[TAGS] = [
         {NAME => BROWSERS,
-         DESCRIPTION => "for all users, especially buyers"
+         DESCRIPTION => "for all users, typically buyers"
         }, {NAME => RECORDERS,
-            DESCRIPTION => "for record updaters"
+            DESCRIPTION => "for record updaters, often suppliers"
         }]
 
     paths = map[PATHS] = {}
@@ -148,7 +148,34 @@ class OpenApi3 < Output
                       DESCRIPTION => "error TODO"
                   }
               }
+          },
+          POST => {
+              SUMMARY => "post a new element",
+              TAGS => [RECORDERS],
+              SUMMARY => "post",
+              OPERATION_ID => "revise-#{resource_name}",
+              DESCRIPTION => "update an existing #{resource_name} given its id",
+              PARAMETERS => [{REF => ref_component(:path, "id")}],
+              "requestBody" => {
+                  "content" => {
+                      "application/json" => {
+                          "schema" => {
+                              REF => ref_component(:schema, resource_name)
+                          }
+                      }
+                  },
+                  DESCRIPTION => "body should be the updated #{resource_name}"
+              },
+              RESPONSES => {
+                  R200 => {
+                      REF => ref_component(:response, resource_name)
+                  },
+                  R4XX => {
+                      DESCRIPTION => "error TODO"
+                  }
+              }
           }
+
       }
     end
 
