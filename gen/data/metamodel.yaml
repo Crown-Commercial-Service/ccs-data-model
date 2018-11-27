@@ -69,6 +69,7 @@
         for a lot
       :name: :id
       :type: String
+      :example: RM3541
     :keyword:
       :multiplicity: "*"
       :description: other names for the agreement
@@ -91,7 +92,7 @@
       :type: String
     :status:
       :multiplicity: '1'
-      :description: semantic version id of the form X.Y.Z
+      :description: ''
       :name: :status
       :type: "(Live,Inactive,Future,Planned,Underway)"
     :pillar:

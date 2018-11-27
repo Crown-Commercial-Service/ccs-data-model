@@ -28,38 +28,26 @@ class OpenApi3 < Output
   end
 
   BROWSERS = "browser"
-
   RECORDERS = "recorder"
-
   SUMMARY = "summary"
-
   RESPONSES = "responses"
-
-  DESCRIPTION = "description"
-
   NAME = "name"
-
-  TAGS = "tags"
-
-  PARAMETERS = "parameters"
-
-  REF = "$ref"
-
-  R200 = "200"
-
-  R4XX = "4XX"
-
-  GET = "get"
-
-  PATHS = "paths"
-
-  INFO = "info"
-
-  PUT = "put"
-
-  POST = "post"
-
+  DESCRIPTION = "description"
   OPERATION_ID = "operationId"
+  TAGS = "tags"
+  PARAMETERS = "parameters"
+  REF = "$ref"
+  R200 = "200"
+  R4XX = "4XX"
+  GET = "get"
+  POST = "post"
+  PUT = "put"
+  PATHS = "paths"
+  INFO = "info"
+  REQUEST_BODY = "requestBody"
+  CONTENT = "content"
+  SCHEMA = "schema"
+  APPLICATION_JSON = "application/json"
 
   def output api
 
@@ -113,10 +101,10 @@ class OpenApi3 < Output
               SUMMARY => "put",
               OPERATION_ID => "create-#{resource_name}",
               DESCRIPTION => "add a new #{resource_name} and retreive copy of it",
-              "requestBody" => {
-                  "content" => {
-                      "application/json" => {
-                          "schema" => {
+              REQUEST_BODY => {
+                  CONTENT => {
+                      APPLICATION_JSON => {
+                          SCHEMA => {
                               REF => ref_component(:schema, resource_name)
                           }
                       }
@@ -156,10 +144,10 @@ class OpenApi3 < Output
               OPERATION_ID => "revise-#{resource_name}",
               DESCRIPTION => "update an existing #{resource_name} given its id",
               PARAMETERS => [{REF => ref_component(:path, "id")}],
-              "requestBody" => {
-                  "content" => {
-                      "application/json" => {
-                          "schema" => {
+              REQUEST_BODY => {
+                  CONTENT => {
+                      APPLICATION_JSON => {
+                          SCHEMA => {
                               REF => ref_component(:schema, resource_name)
                           }
                       }
@@ -220,7 +208,7 @@ class OpenApi3 < Output
       [name, {
           "name" => nameOrType.to_s,
           "in" => 'query',
-          "schema" => {"type" => "string"}
+          SCHEMA => {"type" => "string"}
       }]
     when :path then
       name = nameOrType.to_s
@@ -228,14 +216,24 @@ class OpenApi3 < Output
           "name" => name,
           "in" => 'path',
           "required" => true,
-          "schema" => {"type" => "string"}
+          SCHEMA => {"type" => "string"}
       }]
     when :schema then
       name = nameOrType.typename.to_s.downcase
+      properties = {}
+      nameOrType.attributes.each_value do |v|
+        properties[v[:name]]= {
+            # case v[:type]
+            "type" => v[:type],
+            "example" => v[:example]
+        }
+      end
       [name,
        {
            "type" => "object",
-           "required" => ["id", NAME] #TODO all attributes that are nonzero
+           "required" => ["id", NAME], #TODO all attributes that are nonzero
+           "properties" => properties
+
        }
       ]
     when :response then
@@ -243,9 +241,9 @@ class OpenApi3 < Output
       [name,
        {
            DESCRIPTION => "#{nameOrType.typename} matching id",
-           "content" => {
-               "application/json" => {
-                   "schema" => {
+           CONTENT => {
+               APPLICATION_JSON => {
+                   SCHEMA => {
                        REF => ref_component(:schema, name)
                    }
                }
@@ -257,9 +255,9 @@ class OpenApi3 < Output
       [name + "s", #TODO proper i18n pluralization
        {
            DESCRIPTION => "array of #{nameOrType.typename}s matching id",
-           "content" => {
-               "application/json" => {
-                   "schema" => {
+           CONTENT => {
+               APPLICATION_JSON => {
+                   SCHEMA => {
                        "type" => "array",
                        "items" => {
                            REF => ref_component(:schema, name)

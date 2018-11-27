@@ -56,12 +56,13 @@ schemes, but is not a one-to-one match.") {
     attribute :kind, Codelist(:Framework, :Lot, :Contract),
               #TODO doc should enumeration selections
               "Kind of agreement, including :Framework, :Lot, :Contract"
-    attribute :id, String, "id of agreeement; This is the RM number for a framework, and {RM.lotnumber} for a lot"
+    attribute :id, String, "id of agreeement; This is the RM number for a framework, and {RM.lotnumber} for a lot",
+              example: "RM3541"
     attribute :keyword, String, ZERO_TO_MANY, "other names for the agreement"
     attribute :name, String
     attribute :long_name, String
     attribute :version, String, "semantic version id of the agreement model, in the form X.Y.Z"
-    attribute :status, Codelist(:Live, :Inactive, :Future, :Planned, :Underway), "semantic version id of the form X.Y.Z"
+    attribute :status, Codelist(:Live, :Inactive, :Future, :Planned, :Underway)
     attribute :pillar, String
     attribute :duration, Integer, "Months"
     attribute :category, String

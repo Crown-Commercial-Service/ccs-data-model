@@ -36,7 +36,7 @@ schemes, but is not a one-to-one match.
 |name|String|1||
 |long_name|String|1||
 |version|String|1|semantic version id of the agreement model, in the form X.Y.Z|
-|status|(Live,Inactive,Future,Planned,Underway)|1|semantic version id of the form X.Y.Z|
+|status|(Live,Inactive,Future,Planned,Underway)|1||
 |pillar|String|1||
 |duration|Integer|1|Months|
 |category|String|1||

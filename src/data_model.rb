@@ -49,9 +49,10 @@ module DataModel
         @extends < DataType ? @extends.name : nil
       end
 
-      def attribute(name, type, *args, multiplicity: SINGLE, description: "", links: nil, source: nil)
+      def attribute(name, type, *args, multiplicity: SINGLE,
+                    description: "", links: nil, source: nil, example: nil)
         type = getType(type)
-        options = {:multiplicity => multiplicity, :description => description, :name => name, :type => type, :source => source}
+        options = {:multiplicity => multiplicity, :description => description, :name => name, :type => type, :source => source, :example => example}
         options[:links] = getType(links)
 
         for opt in args

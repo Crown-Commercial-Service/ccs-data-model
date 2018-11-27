@@ -1,0 +1,190 @@
+---
+openapi: 3.0.4
+servers:
+- description: generated server for API::Endpoint
+  url: ccs.gov.uk
+info:
+  title: API::Endpoint
+  description: genearated endpoint for data API::Endpoint
+  version: 0.1.0
+  contact:
+    email: admin@ccs.gov.uk
+  license:
+    name: MIT
+    url: https://github.com/Crown-Commercial-Service/ccs-data-model/blob/master/LICENSE
+tags:
+- name: browser
+  description: for all users, typically buyers
+- name: recorder
+  description: for record updaters, often suppliers
+paths:
+  "/agreement":
+    get:
+      summary: search
+      tags:
+      - browser
+      operationId: search-agreement
+      description: searches agreement by name, id or keyword
+      parameters:
+      - "$ref": "#/components/parameters/q_name"
+      - "$ref": "#/components/parameters/q_id"
+      - "$ref": "#/components/parameters/q_keyword"
+      responses:
+        '200':
+          "$ref": "#/components/responses/agreements"
+        4XX:
+          description: error TODO
+    post:
+      summary: put
+      tags:
+      - recorder
+      operationId: create-agreement
+      description: add a new agreement and retreive copy of it
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/agreement"
+        description: body should be the new agreement
+      responses:
+        '200':
+          "$ref": "#/components/responses/agreement"
+        4XX:
+          description: error TODO
+  "/agreement/{id}":
+    get:
+      summary: get a agreement
+      tags:
+      - recorder
+      description: retrieve agreement by id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      responses:
+        '200':
+          "$ref": "#/components/responses/agreement"
+        4XX:
+          description: error TODO
+    post:
+      summary: post
+      tags:
+      - recorder
+      operationId: revise-agreement
+      description: update an existing agreement given its id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/agreement"
+        description: body should be the updated agreement
+      responses:
+        '200':
+          "$ref": "#/components/responses/agreement"
+        4XX:
+          description: error TODO
+components:
+  schemas:
+    agreement:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        :kind:
+          type: !ruby/class 'Selection_Framework_Lot_Contract'
+          example: 
+        :id:
+          type: &1 !ruby/class 'String'
+          example: RM3541
+        :keyword:
+          type: *1
+          example: 
+        :name:
+          type: *1
+          example: 
+        :long_name:
+          type: *1
+          example: 
+        :version:
+          type: *1
+          example: 
+        :status:
+          type: !ruby/class 'Selection_Live_Inactive_Future_Planned_Underway'
+          example: 
+        :pillar:
+          type: *1
+          example: 
+        :duration:
+          type: &3 !ruby/class 'Integer'
+          example: 
+        :category:
+          type: *1
+          example: 
+        :start_date:
+          type: &2 !ruby/class 'Date'
+          example: 
+        :end_date:
+          type: *2
+          example: 
+        :original_end_date:
+          type: *2
+          example: 
+        :description:
+          type: *1
+          example: 
+        :offerType:
+          type: *1
+          example: 
+        :part_of_id:
+          type: *1
+          example: 
+        :conforms_to_id:
+          type: *1
+          example: 
+        :item_type:
+          type: !ruby/class 'Agreements::ItemType'
+          example: 
+        :min_value:
+          type: *3
+          example: 
+        :max_value:
+          type: *3
+          example: 
+  parameters:
+    q_name:
+      name: name
+      in: query
+      schema:
+        type: string
+    q_id:
+      name: id
+      in: query
+      schema:
+        type: string
+    q_keyword:
+      name: keyword
+      in: query
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    agreement:
+      description: Agreement matching id
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/agreement"
+    agreements:
+      description: array of Agreements matching id
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/agreement"
