@@ -76,8 +76,10 @@ class OpenApi3 < Output
 
     paths = map[PATHS] = {}
 
+    all_schemas=[]
+
     endpoint.resource.each do |resource|
-      resource_name = resource.type.typename.downcase
+      resource_name = resource.type.typename
       paths["/#{resource_name}"] = {
           GET => {
               SUMMARY => "get list",
@@ -170,8 +172,20 @@ class OpenApi3 < Output
     components = map["components"] = {}
 
     schemas = components["schemas"] = {}
-    endpoint.resource.each do |r|
-      schema = detail_component(:schema, r.type)
+
+    all_schemas = endpoint.resource.map {|r| r.type}
+
+    all_schemas.each do |t|
+      t.attributes.each_value do |v|
+        t = v[:type]
+        if t <= DataType && !all_schemas.include?(t)
+          all_schemas << t
+        end
+      end
+    end
+
+    all_schemas.each do |t|
+      schema = detail_component(:schema, t)
       schemas[schema[0]] = schema[1]
     end
 
@@ -219,25 +233,16 @@ class OpenApi3 < Output
           SCHEMA => {"type" => "string"}
       }]
     when :schema then
-      name = nameOrType.typename.to_s.downcase
-      properties = {}
-      nameOrType.attributes.each_value do |v|
-        properties[v[:name]]= {
-            # case v[:type]
-            "type" => v[:type],
-            "example" => v[:example]
-        }
-      end
+      name = nameOrType.typename.to_s
       [name,
        {
            "type" => "object",
-           "required" => ["id", NAME], #TODO all attributes that are nonzero
-           "properties" => properties
-
+           "required" => ["id", NAME], #TODO all attributes that are min nonzero
+           "properties" => datatype_properties(nameOrType)
        }
       ]
     when :response then
-      name = nameOrType.typename.to_s.downcase
+      name = nameOrType.typename.to_s
       [name,
        {
            DESCRIPTION => "#{nameOrType.typename} matching id",
@@ -251,7 +256,7 @@ class OpenApi3 < Output
        }
       ]
     when :responses then
-      name = nameOrType.typename.to_s.downcase
+      name = nameOrType.typename.to_s
       [name + "s", #TODO proper i18n pluralization
        {
            DESCRIPTION => "array of #{nameOrType.typename}s matching id",
@@ -287,6 +292,39 @@ class OpenApi3 < Output
     else
       raise "unk"
     end
+  end
+
+  def datatype_properties type
+    property_set = {}
+    type.attributes.each_value do |v|
+      p = {}
+      attype = v[:type]
+      if (attype <= String)
+        p.merge!({"type" => "string"})
+      elsif (attype <= Date)
+        p.merge!({"type" => "string",
+                  "format" => "date"})
+      elsif (attype <= Integer)
+        p.merge!({"type" => "integer"})
+      elsif (attype <= DataType)
+        p.merge!({"$ref" => ref_component(:schema, attype.typename)
+                 })
+      else
+        print("Warning: don't understand schema for #{attype.to_s}\n")
+        p.merge!({"type" => "string"})
+      end
+      if v[:multiplicity].end > 1 || v[:multiplicity].end < 0
+        p = {
+            "type" => "array",
+            "items" => p
+        }
+      end
+      if (nil != v[:example])
+        p["example"] = v[:example]
+      end
+      property_set[v[:name]] = p
+    end
+    property_set
   end
 
   def save(map)

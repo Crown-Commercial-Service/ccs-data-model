@@ -18,139 +18,149 @@ tags:
 - name: recorder
   description: for record updaters, often suppliers
 paths:
-  "/agreement":
+  "/Agreement":
     get:
       summary: search
       tags:
       - browser
-      operationId: search-agreement
-      description: searches agreement by name, id or keyword
+      operationId: search-Agreement
+      description: searches Agreement by name, id or keyword
       parameters:
       - "$ref": "#/components/parameters/q_name"
       - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_keyword"
       responses:
         '200':
-          "$ref": "#/components/responses/agreements"
+          "$ref": "#/components/responses/Agreements"
         4XX:
           description: error TODO
     post:
       summary: put
       tags:
       - recorder
-      operationId: create-agreement
-      description: add a new agreement and retreive copy of it
+      operationId: create-Agreement
+      description: add a new Agreement and retreive copy of it
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/agreement"
-        description: body should be the new agreement
+              "$ref": "#/components/schemas/Agreement"
+        description: body should be the new Agreement
       responses:
         '200':
-          "$ref": "#/components/responses/agreement"
+          "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
-  "/agreement/{id}":
+  "/Agreement/{id}":
     get:
-      summary: get a agreement
+      summary: get a Agreement
       tags:
       - recorder
-      description: retrieve agreement by id
+      description: retrieve Agreement by id
       parameters:
       - "$ref": "#/components/parameters/id"
       responses:
         '200':
-          "$ref": "#/components/responses/agreement"
+          "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
     post:
       summary: post
       tags:
       - recorder
-      operationId: revise-agreement
-      description: update an existing agreement given its id
+      operationId: revise-Agreement
+      description: update an existing Agreement given its id
       parameters:
       - "$ref": "#/components/parameters/id"
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/agreement"
-        description: body should be the updated agreement
+              "$ref": "#/components/schemas/Agreement"
+        description: body should be the updated Agreement
       responses:
         '200':
-          "$ref": "#/components/responses/agreement"
+          "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
 components:
   schemas:
-    agreement:
+    Agreement:
       type: object
       required:
       - id
       - name
       properties:
         :kind:
-          type: !ruby/class 'Selection_Framework_Lot_Contract'
-          example: 
+          type: string
         :id:
-          type: &1 !ruby/class 'String'
+          type: string
           example: RM3541
         :keyword:
-          type: *1
-          example: 
+          type: array
+          items:
+            type: string
         :name:
-          type: *1
-          example: 
+          type: string
         :long_name:
-          type: *1
-          example: 
+          type: string
         :version:
-          type: *1
-          example: 
+          type: string
         :status:
-          type: !ruby/class 'Selection_Live_Inactive_Future_Planned_Underway'
-          example: 
+          type: string
         :pillar:
-          type: *1
-          example: 
+          type: string
         :duration:
-          type: &3 !ruby/class 'Integer'
-          example: 
+          type: integer
         :category:
-          type: *1
-          example: 
+          type: string
         :start_date:
-          type: &2 !ruby/class 'Date'
-          example: 
+          type: string
+          format: date
         :end_date:
-          type: *2
-          example: 
+          type: string
+          format: date
         :original_end_date:
-          type: *2
-          example: 
+          type: string
+          format: date
         :description:
-          type: *1
-          example: 
+          type: string
         :offerType:
-          type: *1
-          example: 
+          type: string
         :part_of_id:
-          type: *1
-          example: 
+          type: string
         :conforms_to_id:
-          type: *1
-          example: 
+          type: string
         :item_type:
-          type: !ruby/class 'Agreements::ItemType'
-          example: 
+          type: array
+          items:
+            "$ref": "#/components/schemas/ItemType"
         :min_value:
-          type: *3
-          example: 
+          type: integer
         :max_value:
-          type: *3
-          example: 
+          type: integer
+    ItemType:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        :id:
+          type: string
+        :scheme_id:
+          type: string
+        :description:
+          type: string
+        :keyword:
+          type: array
+          items:
+            type: string
+        :uri:
+          type: string
+        :code:
+          type: string
+        :unit:
+          type: string
   parameters:
     q_name:
       name: name
@@ -174,17 +184,17 @@ components:
       schema:
         type: string
   responses:
-    agreement:
+    Agreement:
       description: Agreement matching id
       content:
         application/json:
           schema:
-            "$ref": "#/components/schemas/agreement"
-    agreements:
+            "$ref": "#/components/schemas/Agreement"
+    Agreements:
       description: array of Agreements matching id
       content:
         application/json:
           schema:
             type: array
             items:
-              "$ref": "#/components/schemas/agreement"
+              "$ref": "#/components/schemas/Agreement"
