@@ -30,9 +30,8 @@ the [model](model/) directory defines our [agreements metamodel](model/agreement
  
 the build script generates [outputs](gen) including
 
-- [api definitions](gen/openapi_2)  giving api definition files
+- [api definitions](gen/openapi3/ccs_api.yaml)  giving api definition files
 - [data files](gen/data) showing the agreements and catalogue entries
-   - for instance, can bulk load [jsonlines](gen/data/fm_catalogue.jsonlines) for FM catalogue into search cluster
 - a [picture](gen/images/metamodel.jpg) of the metamodel
 - documentation for the agreements and metamodel
 
