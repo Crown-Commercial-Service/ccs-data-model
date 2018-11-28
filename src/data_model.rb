@@ -141,6 +141,31 @@ module DataModel
 
   end
 
+  class Code
+    attr_accessor :url, :elements, :title, :description, :data
+
+    def initialize *elements, url:,
+                   description: nil, title: nil, data: {}
+      self.url = url
+      self.elements = elements
+      self.title = title
+      self.description = description
+      self.data = data
+    end
+
+    def self.id_of *elements
+      (elements.join '_').to_sym
+    end
+
+    def id
+      Code::id_of self.elements
+    end
+
+    def to_s
+      URI.encode(url + '/' + id)
+    end
+  end
+
   class Domain
 
     class << self
@@ -176,14 +201,33 @@ module DataModel
         end
       end
 
-      def code(*context,
-               description: nil, title: nil, uri: nil)
+      # use codes to enter data in reference data documents. Each code entry results
+      # in a data item in the reference data document defined by the base URL
+      # for this domain.
+      #
+      # uri absolute or relative URI of the code; if relative it is relative to the URI of the #CodeList
+      #
+      def code(*elements, url:nil,
+               description: nil, title: nil, data: {})
         unless instance_variable_defined? :@codes
           @codes = {}
           self.define_singleton_method(:codes) {@codes}
         end
-        id = "#{context.join '.'}"
-        @codes[id] = {:id => id, :description => description, :title => title, :uri => uri}
+        code = Code.new(elements, url: url, title: title, description: description)
+        @codes[code.url] = {} unless @codes[code.url]
+        @codes[code.url][code.id] = code
+      end
+
+      def scheme(url:,
+                 description: nil, title: nil, data: {},
+                 &block)
+        unless instance_variable_defined? :@schemes
+          schemes = []
+          self.define_singleton_method(:schemes) {@schemes}
+        end
+        scheme = Scheme.new(url: url, title: title, description: description)
+        @schemes[code.url] = {} unless @schemes[code.url]
+        @schemes[code.url][code.id] = code
       end
 
     end
@@ -224,6 +268,7 @@ module DataModel
 
   end
 
+
   module_function
 
   def domain(name, &block)
@@ -238,15 +283,6 @@ module DataModel
 
   def date(day, month, year)
     Date.new(day, month, year)
-  end
-
-  def Codelist(*args)
-    typename = "Selection_#{args.join '_'}"
-    selclass = Object.const_set typename, Class.new(Symbol)
-    selclass.define_singleton_method(:selection) {args}
-    selclass.define_singleton_method(:validate) {|s| selection.member? s.to_sym}
-    selclass.define_singleton_method(:to_s) {"(#{self.selection.join(',')})"}
-    return selclass
   end
 
   def api(name, &block)

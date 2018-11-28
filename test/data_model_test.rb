@@ -58,6 +58,11 @@ class DataModelTest < Test::Unit::TestCase
     # end
   end
 
+  def test_codes
+    assert_equal(CODE_ITEM_TITLE, TestModel.codes[CODE_SCHEME_URL][:CODE_ID].title)
+
+  end
+
   private
 
   def contains(type, attr)

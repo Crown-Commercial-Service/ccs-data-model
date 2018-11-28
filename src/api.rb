@@ -16,7 +16,7 @@ require 'pp'
 
 # noinspection RubyStringKeysInHashInspection
 class OpenApi3 < Output
-  attr_accessor :fmt, :std_qry_params
+  attr_accessor :fmt, :std_qry_params, :std_path_params
 
 
   def initialize dir, name, fmt: :json
@@ -24,7 +24,8 @@ class OpenApi3 < Output
     super File.join(dir, "openapi3"),
           name, fmt.to_s
     self.fmt = fmt
-    self.std_qry_params = [:name, :id, :keyword]
+    self.std_qry_params = [:name, :id, :keyword, :title]
+    self.std_path_params = [:id]
   end
 
   BROWSERS = "browser"
@@ -48,6 +49,9 @@ class OpenApi3 < Output
   CONTENT = "content"
   SCHEMA = "schema"
   APPLICATION_JSON = "application/json"
+
+  PAGING_CONTROL = [:limit, :skip]
+  PAGE_LIMIT = 200
 
   def output api
 
@@ -76,7 +80,7 @@ class OpenApi3 < Output
 
     paths = map[PATHS] = {}
 
-    all_schemas=[]
+    all_types = []
 
     endpoint.resource.each do |resource|
       resource_name = resource.type.typename
@@ -87,7 +91,10 @@ class OpenApi3 < Output
               SUMMARY => "search",
               OPERATION_ID => "search-#{resource_name}",
               DESCRIPTION => "searches #{resource_name} by name, id or keyword",
-              PARAMETERS => std_qry_params.map {|k| {REF => ref_component(:query, k)}},
+              PARAMETERS => std_qry_params
+                                .select {|k| resource.type.attributes.has_key? k}
+                                .map {|k| {REF => ref_component(:query, k)}}
+                                .concat(PAGING_CONTROL.map {|k| {REF => ref_component(:query, k)}}),
               RESPONSES => {
                   R200 => {
                       REF => ref_component(:responses, resource_name)
@@ -167,12 +174,60 @@ class OpenApi3 < Output
           }
 
       }
-    end
+    end # each resource
 
     components = map["components"] = {}
 
     schemas = components["schemas"] = {}
 
+    all_types_for_endpoint(endpoint).each do |t|
+      schema = detail_component_type(:schema, t)
+      schemas[schema[0]] = schema[1]
+    end
+
+    # TODO - document params
+    # TODO multiple params, e.g. keyword
+    # TODO form params
+    parameters = components[PARAMETERS] = {}
+    std_qry_params.each do |p|
+      param = detail_component_param(:query, p, description: "optional search parameter")
+      parameters[param[0]] = param[1]
+    end
+
+    std_path_params.each do |p|
+      param = detail_component_param(:path, p, description: "optional id parameter")
+      parameters[param[0]] = param[1]
+    end
+
+    PAGING_CONTROL.each do |p|
+      schema = {
+          "type" => "integer",
+          "format" => "int32",
+          "minimum" => 0,
+      }
+      if (p == :limit)
+        schema["maximum"] = PAGE_LIMIT
+      end
+
+      param = detail_component_param(:query, p, description: "optional control parameter", schema: schema)
+      parameters[param[0]] = param[1]
+    end
+
+    responses = components[RESPONSES] = {}
+    endpoint.resource.each do |r|
+      param = detail_component_type(:response, r.type)
+      responses[param[0]] = param[1]
+      param = detail_component_type(:responses, r.type)
+      responses[param[0]] = param[1]
+    end
+
+    save(map)
+
+  end
+
+  private
+
+  def all_types_for_endpoint(endpoint)
     all_schemas = endpoint.resource.map {|r| r.type}
 
     all_schemas.each do |t|
@@ -183,69 +238,49 @@ class OpenApi3 < Output
         end
       end
     end
-
-    all_schemas.each do |t|
-      schema = detail_component(:schema, t)
-      schemas[schema[0]] = schema[1]
-    end
-
-    parameters = components[PARAMETERS] = {}
-    @std_qry_params.each do |p|
-      param = detail_component(:query, p)
-      parameters[param[0]] = param[1]
-    end
-    [:id].each do |p|
-      param = detail_component(:path, p)
-      parameters[param[0]] = param[1]
-    end
-
-    responses = components[RESPONSES] = {}
-    endpoint.resource.each do |r|
-      param = detail_component(:response, r.type)
-      responses[param[0]] = param[1]
-      param = detail_component(:responses, r.type)
-      responses[param[0]] = param[1]
-    end
-
-    save(map)
-
+    all_schemas
   end
-
-  private
 
   # get named parameter definition - name is prefixed by _ if a query param
   # return [param name, param detail]
-  def detail_component(qryOrPathOrSchemaOrResponse, nameOrType)
-    case qryOrPathOrSchemaOrResponse
+  def detail_component_param(qryOrPath, name, schema: {"type" => "string"}, description: "")
+    case qryOrPath
     when :query then
-      name = "q_" + nameOrType.to_s
+      name = "q_" + name.to_s
       [name, {
-          "name" => nameOrType.to_s,
+          "name" => name.to_s,
           "in" => 'query',
-          SCHEMA => {"type" => "string"}
+          "description" => description,
+          SCHEMA => schema
       }]
     when :path then
-      name = nameOrType.to_s
+      name = name.to_s
       [name, {
           "name" => name,
           "in" => 'path',
           "required" => true,
-          SCHEMA => {"type" => "string"}
+          "description" => description,
+          SCHEMA => schema
       }]
+    end
+  end
+
+  def detail_component_type(achemaOrResponseOrResponses, type)
+    case achemaOrResponseOrResponses
     when :schema then
-      name = nameOrType.typename.to_s
+      name = type.typename.to_s
       [name,
        {
            "type" => "object",
            "required" => ["id", NAME], #TODO all attributes that are min nonzero
-           "properties" => datatype_properties(nameOrType)
+           "properties" => datatype_properties(type)
        }
       ]
     when :response then
-      name = nameOrType.typename.to_s
+      name = type.typename.to_s
       [name,
        {
-           DESCRIPTION => "#{nameOrType.typename} matching id",
+           DESCRIPTION => "#{type.typename} matching id",
            CONTENT => {
                APPLICATION_JSON => {
                    SCHEMA => {
@@ -256,10 +291,10 @@ class OpenApi3 < Output
        }
       ]
     when :responses then
-      name = nameOrType.typename.to_s
+      name = type.typename.to_s
       [name + "s", #TODO proper i18n pluralization
        {
-           DESCRIPTION => "array of #{nameOrType.typename}s matching id",
+           DESCRIPTION => "array of #{type.typename}s matching id",
            CONTENT => {
                APPLICATION_JSON => {
                    SCHEMA => {
@@ -278,6 +313,7 @@ class OpenApi3 < Output
   end
 
   def ref_component(qryOrPathOrSchemaOrResponse, name)
+    name = name.to_s
     case qryOrPathOrSchemaOrResponse
     when :query
       "#/components/parameters/q_#{name}"
@@ -309,6 +345,9 @@ class OpenApi3 < Output
       elsif (attype <= DataType)
         p.merge!({"$ref" => ref_component(:schema, attype.typename)
                  })
+      elsif (attype <= Selection)
+        p.merge!({"type" => "string",
+                  "enum" => attype.ids.map {|c| c.to_s}})
       else
         print("Warning: don't understand schema for #{attype.to_s}\n")
         p.merge!({"type" => "string"})

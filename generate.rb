@@ -45,6 +45,19 @@ API.new :MAIN do
   }
 end
 
-api = OpenApi3.new(output_path, "ccs_api", fmt: :yaml )
+# generate reference codes
+# get each document out of each reference data domain and create a file based on it's id
+
+REFERENCE_DATA= [
+    ReferenceData::AgreementReferenceData
+]
+
+REFERENCE_DATA.each do |dom|
+  data = DataFile.new(output_path, dom.name, fmt: :json, subdir: "reference_data")
+  data.output *dom
+end
+
+# generate the API
+api = OpenApi3.new(output_path, "ccs_api", fmt: :yaml)
 api.output API::MAIN
 

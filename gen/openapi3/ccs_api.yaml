@@ -29,6 +29,8 @@ paths:
       - "$ref": "#/components/parameters/q_name"
       - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_keyword"
+      - "$ref": "#/components/parameters/q_limit"
+      - "$ref": "#/components/parameters/q_skip"
       responses:
         '200':
           "$ref": "#/components/responses/Agreements"
@@ -93,6 +95,10 @@ components:
       properties:
         :kind:
           type: string
+          enum:
+          - Framework
+          - Lot
+          - Contract
         :id:
           type: string
           example: RM3541
@@ -108,6 +114,11 @@ components:
           type: string
         :status:
           type: string
+          enum:
+          - Inactive
+          - Future
+          - Planned
+          - Underway
         :pillar:
           type: string
         :duration:
@@ -147,42 +158,78 @@ components:
       properties:
         :id:
           type: string
-        :scheme_id:
-          type: string
         :description:
           type: string
         :keyword:
           type: array
           items:
             type: string
-        :uri:
+        :scheme_id:
           type: string
+          enum:
+          - CPV
+          - CPVS
+          - GSIN
+          - UNSPSC
+          - CPC
         :code:
           type: string
+        :unit_scheme:
+          type: string
+          enum:
+          - UNCEFACT
+          - QUDT
         :unit:
           type: string
   parameters:
     q_name:
-      name: name
+      name: q_name
       in: query
+      description: optional search parameter
       schema:
         type: string
     q_id:
-      name: id
+      name: q_id
       in: query
+      description: optional search parameter
       schema:
         type: string
     q_keyword:
-      name: keyword
+      name: q_keyword
       in: query
+      description: optional search parameter
+      schema:
+        type: string
+    q_title:
+      name: q_title
+      in: query
+      description: optional search parameter
       schema:
         type: string
     id:
       name: id
       in: path
       required: true
+      description: optional id parameter
       schema:
         type: string
+    q_limit:
+      name: q_limit
+      in: query
+      description: optional control parameter
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 200
+    q_skip:
+      name: q_skip
+      in: query
+      description: optional control parameter
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
   responses:
     Agreement:
       description: Agreement matching id

@@ -1,1 +1,590 @@
-{"Agreements":{"ItemType":{"id":{"multiplicity":"1","description":"The code id, which must be unique across all schemes","name":"id","type":"String"},"scheme_id":{"multiplicity":"1","description":"The classiciation scheme id","name":"scheme_id","type":"(CPV,CPVS,UNSPSC,CPV,OKDP,OKPD,CCS)"},"description":{"multiplicity":"1","description":"","name":"description","type":"String"},"keyword":{"multiplicity":"*","description":"","name":"keyword","type":"String"},"uri":{"multiplicity":"1","description":" URI for the code within the scheme defining this type ","name":"uri","type":"String"},"code":{"multiplicity":"1","description":" Code within the scheme defining this type ","name":"code","type":"String"},"unit":{"multiplicity":"1","description":" define the units, if one units matches ","name":"unit","type":"(Area,Commission,Currency)"}},"ExpressionOfNeed":{"buyer_id":{"multiplicity":"1","description":"The buyer expressing the need","name":"buyer_id","type":"String"},"kind":{"multiplicity":"1","description":"","name":"kind","type":"(Budget,Location,Service)"},"value":{"multiplicity":"1","description":"","name":"value","type":"String"},"unit":{"multiplicity":"1","description":"The units typically used to express the need","name":"unit","type":"(Area,Commission,Currency)"}},"Agreement":{"kind":{"multiplicity":"1","description":"Kind of agreement, including :Framework, :Lot, :Contract","name":"kind","type":"(Framework,Lot,Contract)"},"id":{"multiplicity":"1","description":"id of agreeement; This is the RM number for a framework, and {RM.lotnumber} for a lot","name":"id","type":"String","example":"RM3541"},"keyword":{"multiplicity":"*","description":"other names for the agreement","name":"keyword","type":"String"},"name":{"multiplicity":"1","description":"","name":"name","type":"String"},"long_name":{"multiplicity":"1","description":"","name":"long_name","type":"String"},"version":{"multiplicity":"1","description":"semantic version id of the agreement model, in the form X.Y.Z","name":"version","type":"String"},"status":{"multiplicity":"1","description":"","name":"status","type":"(Live,Inactive,Future,Planned,Underway)"},"pillar":{"multiplicity":"1","description":"","name":"pillar","type":"String"},"duration":{"multiplicity":"1","description":"Months","name":"duration","type":"Integer"},"category":{"multiplicity":"1","description":"","name":"category","type":"String"},"start_date":{"multiplicity":"1","description":"","name":"start_date","type":"Date"},"end_date":{"multiplicity":"1","description":"","name":"end_date","type":"Date"},"original_end_date":{"multiplicity":"1","description":"","name":"original_end_date","type":"Date"},"description":{"multiplicity":"1","description":"Describe the agreement","name":"description","type":"String"},"offerType":{"multiplicity":"1","description":"Name of the subclass of the Offering, supporting the Agreement","name":"offerType","type":"String"},"part_of_id":{"multiplicity":"1","description":"Agreement this is part of, applicable only to Lots","name":"part_of_id","type":"String","links":"Agreements::Agreement"},"conforms_to_id":{"multiplicity":"1","description":"Agreement this conforms to, such as a Contract conforming to a Framework","name":"conforms_to_id","type":"String","links":"Agreements::Agreement"},"item_type":{"multiplicity":"*","description":"describe the items that can be offered under the agreement","name":"item_type","type":"Agreements::ItemType"},"min_value":{"multiplicity":"0..1","description":"Minimum value of award, in pounds sterling","name":"min_value","type":"Integer"},"max_value":{"multiplicity":"0..1","description":"Maximum value of award, in pounds sterling","name":"max_value","type":"Integer"}},"Item":{"type_id":{"multiplicity":"1","description":" type of the item ","name":"type_id","type":"String","links":"Agreements::ItemType"},"unit":{"multiplicity":"1","description":" define the units ","name":"unit","type":"(Area,Commission,Currency)"},"value":{"multiplicity":"1","description":"an object of the type matching type->units","name":"value","type":"Object"}},"Offering":{"agreement_id":{"multiplicity":"1","description":"The agreement this offering relates to","name":"agreement_id","type":"String","links":"Agreements::Agreement"},"supplier_id":{"multiplicity":"1","description":"","name":"supplier_id","type":"String","links":"Parties::Party"},"id":{"multiplicity":"1","description":"unique id for the offering across all offerings, suppliers and frameworks","name":"id","type":"String"},"name":{"multiplicity":"1","description":"","name":"name","type":"String"},"description":{"multiplicity":"1","description":"","name":"description","type":"String"},"item":{"multiplicity":"*","description":"details of the item","name":"item","type":"Agreements::Item"},"location_id":{"multiplicity":"1..*","description":"Pick list of applicable regions. There must be at least one, even if it is just ' UK '","name":"location_id","type":"String","links":"Geographic::AreaCode"},"sector_id":{"multiplicity":"*","description":"Pick list of applicable sectors.\nIf set offering is only to be shown to users proven to belong to the sectors given","name":"sector_id","type":"String","links":"Parties::Sector"}},"Catalogue":{"offers":{"multiplicity":"*","description":"description of the item","name":"offers","type":"Agreements::Offering"}},"Involvement":{"agreement_id":{"multiplicity":"1","description":"The agreement this interest relates to","name":"agreement_id","type":"String","links":"Agreements::Agreement"},"party_id":{"multiplicity":"1","description":"The party this interest relates to","name":"party_id","type":"String","links":"Parties::Party"},"role":{"multiplicity":"1","description":"The role of the party in the involvment","name":"role","type":"(AwardedSupplier,AwardedBuyer,SupplyingQuote,RequestingQuote,Etc)"}}},"Parties":{"Sector":{"name":{"multiplicity":"1","description":"","name":"name","type":"String"},"description":{"multiplicity":"1","description":"","name":"description","type":"String"},"subsector":{"multiplicity":"*","description":"","name":"subsector","type":"Parties::Sector"}},"Party":{"id":{"multiplicity":"1","description":"URN, should match salesforce ID; master key","name":"id","type":"String"},"parent_org_id":{"multiplicity":"1","description":"URN, should match salesforce ID","name":"parent_org_id","type":"String","links":"Parties::Party"},"duns":{"multiplicity":"0..1","description":"Dunn & Bradstreet number - usually suppleirs only","name":"duns","type":"String"},"urn":{"multiplicity":"0..1","description":"Government URN, of the form 100001234","name":"urn","type":"String"},"company_reg_number":{"multiplicity":"0..1","description":"","name":"company_reg_number","type":"String"},"org_name":{"multiplicity":"1","description":"","name":"org_name","type":"String"},"sector":{"multiplicity":"*","description":"","name":"sector","type":"Parties::Sector"},"trading_name":{"multiplicity":"0..1","description":"Salesforce only stores for supplier","name":"trading_name","type":"String"},"supplier_registration_completed":{"multiplicity":"1","description":"The party is a supplier who has completed registration","name":"supplier_registration_completed","type":"Date"},"buyer_registration_completed":{"multiplicity":"1","description":"The party is a supplier who has completed registration","name":"buyer_registration_completed","type":"Date"},"spend_this_year":{"multiplicity":"0..1","description":"Salesforce only stores for buyer","name":"spend_this_year","type":"String"},"documents_url":{"multiplicity":"0..1","description":"Salesforce links to google drive for this supplier; we will move to S3 in due course","name":"documents_url","type":"String"},"account_manager_id":{"multiplicity":"0..1","description":"Who manages the account for CCS","name":"account_manager_id","type":"String"}},"Address":{"street":{"multiplicity":"1","description":"","name":"street","type":"String"},"address_2":{"multiplicity":"0..1","description":"","name":"address_2","type":"String"},"town":{"multiplicity":"0..1","description":"","name":"town","type":"String"},"county":{"multiplicity":"0..1","description":"","name":"county","type":"String"},"country":{"multiplicity":"0..1","description":"","name":"country","type":"String"},"postcode":{"multiplicity":"0..1","description":"","name":"postcode","type":"String"},"latitutde":{"multiplicity":"0..1","description":"Location from the address for geo search","name":"latitutde","type":"String"},"longtitude":{"multiplicity":"0..1","description":"Location from the address for geo search","name":"longtitude","type":"String"}},"Contact":{"id":{"multiplicity":"1","description":"a newly minted UUID for CMp","name":"id","type":"String"},"salesforce_id":{"multiplicity":"1","description":"a Salesforce Contact_ID column point; of the form CONT-000122663","name":"salesforce_id","type":"String"},"party_id":{"multiplicity":"1","description":"contact is a link for this party","name":"party_id","type":"String","links":"Parties::Party"},"role":{"multiplicity":"*","description":"role for CMp","name":"role","type":"String"},"first_name":{"multiplicity":"1","description":"","name":"first_name","type":"String"},"last_name":{"multiplicity":"1","description":"","name":"last_name","type":"String"},"title":{"multiplicity":"0..1","description":"Salesforce; not sure what the constrainst are","name":"title","type":"String"},"job_title":{"multiplicity":"0..1","description":"Salesforce; free text","name":"job_title","type":"String"},"department":{"multiplicity":"0..1","description":"Salesforce - department within org, rather than gov","name":"department","type":"String"},"address":{"multiplicity":"0..1","description":"address of the contact point","name":"address","type":"Parties::Address"},"phone":{"multiplicity":"*","description":"phone of the contact point; salesforce only supports one","name":"phone","type":"String"},"email":{"multiplicity":"*","description":"email of the contact point; salesforce only supports two","name":"email","type":"String"},"origin":{"multiplicity":"0..1","description":"from Salesforce - where the data was entered","name":"origin","type":"String"},"notes":{"multiplicity":"0..1","description":"from Salesforce","name":"notes","type":"String"},"status":{"multiplicity":"0..1","description":"from Salesforce, 'Active'","name":"status","type":"String"},"user_research_participane":{"multiplicity":"0..1","description":"Y/N: from Salesforce","name":"user_research_participane","type":"String"},"not_to_receive_ccs_emails":{"multiplicity":"0..1","description":"Y/N: from Salesforce","name":"not_to_receive_ccs_emails","type":"String"},"contact_owner":{"multiplicity":"0..1","description":"from Salesforce","name":"contact_owner","type":"String"}}},"Geographic":{"AreaCode":{"name":{"multiplicity":"1","description":"","name":"name","type":"String"},"description":{"multiplicity":"1","description":"","name":"description","type":"String"},"subcode":{"multiplicity":"*","description":"","name":"subcode","type":"Geographic::AreaCode"}}}}
+{
+  "Agreements": {
+    "ItemType": {
+      "id": {
+        "multiplicity": "1",
+        "description": "The composite code string, which must be unique across all schemesMake this up by taking the scheme_id and appending the code id",
+        "name": "id",
+        "type": "String"
+      },
+      "description": {
+        "multiplicity": "1",
+        "description": "long description",
+        "name": "description",
+        "type": "String"
+      },
+      "keyword": {
+        "multiplicity": "*",
+        "description": "alternate names for the item type",
+        "name": "keyword",
+        "type": "String"
+      },
+      "scheme_id": {
+        "multiplicity": "1",
+        "description": "The classiciation scheme id",
+        "name": "scheme_id",
+        "type": "SchemeOfSchemes schemeofschemes {:id=>:ItemClassificationSchemes, :version=>\"0.1.0\", :title=>\"ItemClassificationSchemes\", :description=>\"Scheme of codes used to decide what scheme to use to classify an item\", :code=>[#<ReferenceData::SchemeCode:0x00007f89ae8d7680 @name=:code, @attributes={:id=>:CPV, :title=>\"EC Common Procurement Vocabulary\", :description=>\"The Common Procurement Vocabulary is a standard adopted by the Commission of the European Community, and consisting of a main vocabulary for defining the subject of a contract, and a supplementary vocabulary for adding further qualitative information. The main vocabulary, identified in OCDS by the code CPV, is based on a tree structure comprising codes of up to 9 digits (an 8 digit code plus a check digit) associated with a wording that describes the type of supplies, works or services forming the subject of the contract. Codes may be provided with or without the check digit, and consuming applications should be aware of this when processing data with CPV codes.\\t\", :source=>\"http://simap.europa.eu/codes-and-nomenclatures/codes-cpv/codes-cpv_en.htm\"}>, #<ReferenceData::SchemeCode:0x00007f89ae8d6708 @name=:code, @attributes={:id=>:CPVS, :title=>\"EC Common Procurement Vocabulary - Supplementary Codelists\", :description=>\"The Common Procurement Vocabulary is a standard adopted by the Commission of the European Community, and consisting of a main vocabulary for defining the subject of a contract, and a supplementary vocabulary for adding further qualitative information. The supplementary vocabulary, identified in OCDS by the code CPVS, is made up of an alphanumeric code with a corresponding wording allowing further details to be added regarding the specific nature or destination of the goods to be purchased.\\t\", :source=>\"http://simap.europa.eu/codes-and-nomenclatures/codes-cpv/codes-cpv_en.htm\"}>, #<ReferenceData::SchemeCode:0x00007f89ae8d56f0 @name=:code, @attributes={:id=>:GSIN, :title=>\"Goods and Services Identification Number\", :description=>\"The Canadian federal government uses Goods and Services Identification Number (GSIN) codes to identify generic product descriptions for its procurement activities. The full list is published and maintained at buyandsell.gc.ca\\t\", :source=>\"https://buyandsell.gc.ca/procurement-data/goods-and-services-identification-number\"}>, #<ReferenceData::SchemeCode:0x00007f89ae8d4430 @name=:code, @attributes={:id=>:UNSPSC, :title=>\"United Nations Standard Products and Services Code\\t\", :description=>\"The United Nations Standard Products and Services Code (UNSPSC) is a hierarchical convention that is used to classify all products and services. Machine readable metadata for UNSPSC is not provided as open data: and so publishers should consider alternative classification schemes that do provide open data lookup tables wherever possible.\\t\", :source=>\"http://www.unspsc.org/codeset-downloads\"}>, #<ReferenceData::SchemeCode:0x00007f89ae8b8ff0 @name=:code, @attributes={:id=>:CPC, :title=>\"Central Product Classification\\t\", :description=>\"The Central Product Classification (CPC) is a product classification for goods and services promulgated by the United Nations Statistical Commission. It is intended to be an international standard for organizing and analyzing data on industrial production, national accounts, trade and prices\\t\", :source=>\"http://unstats.un.org/unsd/cr/registry/cpc-21.asp\"}>]}(CPV,CPVS,GSIN,UNSPSC,CPC)"
+      },
+      "code": {
+        "multiplicity": "1",
+        "description": " Code within the scheme defining this type",
+        "name": "code",
+        "type": "String"
+      },
+      "unit_scheme": {
+        "multiplicity": "1",
+        "description": " define the unit scheme ",
+        "name": "unit_scheme",
+        "type": "SchemeOfSchemes schemeofschemes {:id=>:ItemClassificationSchemes, :version=>\"0.1.0\", :title=>\"Units\", :description=>\"Scheme of codes used to decide what scheme to use to classify units\", :code=>[#<ReferenceData::SchemeCode:0x00007f89ae8b6430 @name=:code, @attributes={:id=>:UNCEFACT, :title=>\"UN/CEFACT Recommendation 20\", :description=>\"\", :source=>\"http://tfig.unece.org/contents/recommendation-20.htm\"}>, #<ReferenceData::SchemeCode:0x00007f89ae8b5238 @name=:code, @attributes={:id=>:QUDT, :title=>\"Quantities, Units, Dimensions and Data Types Ontologies\", :description=>\"Use the [QUDT Code](http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html) value.\", :source=>\"http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html\"}>]}(UNCEFACT,QUDT)"
+      },
+      "unit": {
+        "multiplicity": "1",
+        "description": " define the units, if one units matches ",
+        "name": "unit",
+        "type": "String"
+      }
+    },
+    "ExpressionOfNeed": {
+      "buyer_id": {
+        "multiplicity": "1",
+        "description": "The buyer expressing the need",
+        "name": "buyer_id",
+        "type": "String"
+      },
+      "kind": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "kind",
+        "type": "CodingScheme codingscheme {:id=>:AgreementTypes, :version=>\"0.1.0\", :title=>\"Agreement types\", :description=>\"Scheme of codes used to decide what scheme to use to classify an agreement\", :code=>[#<ReferenceData::Code:0x00007f89ae8ca3e0 @name=:code, @attributes={:id=>:Location, :title=>\"Location\", :description=>\" Where is the need?  Match location needs to locations of offers \"}>, #<ReferenceData::Code:0x00007f89ae8c9878 @name=:code, @attributes={:id=>:Service, :title=>\"Service\", :description=>\" What sort of things do they need?  Match the service to item types, their keywords, and offering titles.\"}>, #<ReferenceData::Code:0x00007f89ae8c8e00 @name=:code, @attributes={:id=>:Budget, :title=>\"Budget\", :description=>\"What is the budget the buyer has for their need?Match the budget to the value range of the agreement, and the value range of supplier offers.Matching the budget will probably require evaluation of offer prices.\"}>]}(Location,Service,Budget)"
+      },
+      "value": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "value",
+        "type": "String"
+      },
+      "unit_scheme": {
+        "multiplicity": "1",
+        "description": "The units typically used to express the need",
+        "name": "unit_scheme",
+        "type": "String"
+      }
+    },
+    "Agreement": {
+      "kind": {
+        "multiplicity": "1",
+        "description": "Kind of agreement, such as Framework, Lot, Contract. Lots are considered separate\nagreements, but link to their owning framework agreement. Similarly Contracts should link to any\nlot that they are based on",
+        "name": "kind",
+        "type": "CodingScheme codingscheme {:id=>:AgreementTypes, :version=>\"0.1.0\", :title=>\"Agreement types\", :description=>\"Scheme of codes used to decide what scheme to use to classify an agreement\", :code=>[#<ReferenceData::Code:0x00007f89ae8cead0 @name=:code, @attributes={:id=>:Framework, :title=>\"Framework \"}>, #<ReferenceData::Code:0x00007f89ae8cdfe0 @name=:code, @attributes={:id=>:Lot, :title=>\" Lot \"}>, #<ReferenceData::Code:0x00007f89ae8cd5e0 @name=:code, @attributes={:id=>:Contract, :title=>\" Contract\"}>]}(Framework,Lot,Contract)"
+      },
+      "id": {
+        "multiplicity": "1",
+        "description": "id of agreeement; This is the RM number for a framework, and {RM#lotnumber} for a lot",
+        "name": "id",
+        "type": "String",
+        "example": "RM3541"
+      },
+      "keyword": {
+        "multiplicity": "*",
+        "description": "other names for the agreement",
+        "name": "keyword",
+        "type": "String"
+      },
+      "name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "name",
+        "type": "String"
+      },
+      "long_name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "long_name",
+        "type": "String"
+      },
+      "version": {
+        "multiplicity": "1",
+        "description": "semantic version id of the agreement model, in the form X.Y.Z",
+        "name": "version",
+        "type": "String"
+      },
+      "status": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "status",
+        "type": "Live(Inactive,Future,Planned,Underway)"
+      },
+      "pillar": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "pillar",
+        "type": "String"
+      },
+      "duration": {
+        "multiplicity": "1",
+        "description": "Months",
+        "name": "duration",
+        "type": "Integer"
+      },
+      "category": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "category",
+        "type": "String"
+      },
+      "start_date": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "start_date",
+        "type": "Date"
+      },
+      "end_date": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "end_date",
+        "type": "Date"
+      },
+      "original_end_date": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "original_end_date",
+        "type": "Date"
+      },
+      "description": {
+        "multiplicity": "1",
+        "description": "Describe the agreement",
+        "name": "description",
+        "type": "String"
+      },
+      "offerType": {
+        "multiplicity": "1",
+        "description": "Name of the subclass of the Offering, supporting the Agreement",
+        "name": "offerType",
+        "type": "String"
+      },
+      "part_of_id": {
+        "multiplicity": "1",
+        "description": "Agreement this is part of, applicable only to Lots",
+        "name": "part_of_id",
+        "type": "String",
+        "links": "Agreements::Agreement"
+      },
+      "conforms_to_id": {
+        "multiplicity": "1",
+        "description": "Agreement this conforms to, such as a Contract conforming to a Framework",
+        "name": "conforms_to_id",
+        "type": "String",
+        "links": "Agreements::Agreement"
+      },
+      "item_type": {
+        "multiplicity": "*",
+        "description": "describe the items that can be offered under the agreement",
+        "name": "item_type",
+        "type": "Agreements::ItemType"
+      },
+      "min_value": {
+        "multiplicity": "0..1",
+        "description": "Minimum value of award, in pounds sterling",
+        "name": "min_value",
+        "type": "Integer"
+      },
+      "max_value": {
+        "multiplicity": "0..1",
+        "description": "Maximum value of award, in pounds sterling",
+        "name": "max_value",
+        "type": "Integer"
+      }
+    },
+    "Item": {
+      "type_id": {
+        "multiplicity": "1",
+        "description": " type of the item ",
+        "name": "type_id",
+        "type": "String",
+        "links": "Agreements::ItemType"
+      },
+      "unit": {
+        "multiplicity": "1",
+        "description": " define the units, which should match one of the allowed unit code values\nin the scheme defind in the type",
+        "name": "unit",
+        "type": "String"
+      },
+      "value": {
+        "multiplicity": "1",
+        "description": "an object of the type matching type->units",
+        "name": "value",
+        "type": "Object"
+      }
+    },
+    "Offering": {
+      "agreement_id": {
+        "multiplicity": "1",
+        "description": "The agreement this offering relates to",
+        "name": "agreement_id",
+        "type": "String",
+        "links": "Agreements::Agreement"
+      },
+      "supplier_id": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "supplier_id",
+        "type": "String",
+        "links": "Parties::Party"
+      },
+      "id": {
+        "multiplicity": "1",
+        "description": "unique id for the offering across all offerings, suppliers and frameworks",
+        "name": "id",
+        "type": "String"
+      },
+      "name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "name",
+        "type": "String"
+      },
+      "description": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "description",
+        "type": "String"
+      },
+      "item": {
+        "multiplicity": "*",
+        "description": "details of the item",
+        "name": "item",
+        "type": "Agreements::Item"
+      },
+      "location_id": {
+        "multiplicity": "1..*",
+        "description": "Pick list of applicable regions. There must be at least one, even if it is just ' UK '",
+        "name": "location_id",
+        "type": "String",
+        "links": "Geographic::AreaCode"
+      },
+      "sector_id": {
+        "multiplicity": "*",
+        "description": "Pick list of applicable sectors.\nIf set offering is only to be shown to users proven to belong to the sectors given",
+        "name": "sector_id",
+        "type": "String",
+        "links": "Parties::Sector"
+      }
+    },
+    "Catalogue": {
+      "offers": {
+        "multiplicity": "*",
+        "description": "description of the item",
+        "name": "offers",
+        "type": "Agreements::Offering"
+      }
+    },
+    "Involvement": {
+      "agreement_id": {
+        "multiplicity": "1",
+        "description": "The agreement this interest relates to",
+        "name": "agreement_id",
+        "type": "String",
+        "links": "Agreements::Agreement"
+      },
+      "party_id": {
+        "multiplicity": "1",
+        "description": "The party this interest relates to",
+        "name": "party_id",
+        "type": "String",
+        "links": "Parties::Party"
+      },
+      "role": {
+        "multiplicity": "1",
+        "description": "The role of the party in the involvment",
+        "name": "role",
+        "type": "AwardedSupplier(AwardedBuyer,SupplyingQuote,RequestingQuote,Etc)"
+      }
+    }
+  },
+  "Parties": {
+    "Sector": {
+      "name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "name",
+        "type": "String"
+      },
+      "description": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "description",
+        "type": "String"
+      },
+      "subsector": {
+        "multiplicity": "*",
+        "description": "",
+        "name": "subsector",
+        "type": "Parties::Sector"
+      }
+    },
+    "Party": {
+      "id": {
+        "multiplicity": "1",
+        "description": "URN, should match salesforce ID; master key",
+        "name": "id",
+        "type": "String"
+      },
+      "parent_org_id": {
+        "multiplicity": "1",
+        "description": "URN, should match salesforce ID",
+        "name": "parent_org_id",
+        "type": "String",
+        "links": "Parties::Party"
+      },
+      "duns": {
+        "multiplicity": "0..1",
+        "description": "Dunn & Bradstreet number - usually suppleirs only",
+        "name": "duns",
+        "type": "String"
+      },
+      "urn": {
+        "multiplicity": "0..1",
+        "description": "Government URN, of the form 100001234",
+        "name": "urn",
+        "type": "String"
+      },
+      "company_reg_number": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "company_reg_number",
+        "type": "String"
+      },
+      "org_name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "org_name",
+        "type": "String"
+      },
+      "sector": {
+        "multiplicity": "*",
+        "description": "",
+        "name": "sector",
+        "type": "Parties::Sector"
+      },
+      "trading_name": {
+        "multiplicity": "0..1",
+        "description": "Salesforce only stores for supplier",
+        "name": "trading_name",
+        "type": "String"
+      },
+      "supplier_registration_completed": {
+        "multiplicity": "1",
+        "description": "The party is a supplier who has completed registration",
+        "name": "supplier_registration_completed",
+        "type": "Date"
+      },
+      "buyer_registration_completed": {
+        "multiplicity": "1",
+        "description": "The party is a supplier who has completed registration",
+        "name": "buyer_registration_completed",
+        "type": "Date"
+      },
+      "spend_this_year": {
+        "multiplicity": "0..1",
+        "description": "Salesforce only stores for buyer",
+        "name": "spend_this_year",
+        "type": "String"
+      },
+      "documents_url": {
+        "multiplicity": "0..1",
+        "description": "Salesforce links to google drive for this supplier; we will move to S3 in due course",
+        "name": "documents_url",
+        "type": "String"
+      },
+      "account_manager_id": {
+        "multiplicity": "0..1",
+        "description": "Who manages the account for CCS",
+        "name": "account_manager_id",
+        "type": "String"
+      }
+    },
+    "Address": {
+      "street": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "street",
+        "type": "String"
+      },
+      "address_2": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "address_2",
+        "type": "String"
+      },
+      "town": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "town",
+        "type": "String"
+      },
+      "county": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "county",
+        "type": "String"
+      },
+      "country": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "country",
+        "type": "String"
+      },
+      "postcode": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "postcode",
+        "type": "String"
+      },
+      "latitutde": {
+        "multiplicity": "0..1",
+        "description": "Location from the address for geo search",
+        "name": "latitutde",
+        "type": "String"
+      },
+      "longtitude": {
+        "multiplicity": "0..1",
+        "description": "Location from the address for geo search",
+        "name": "longtitude",
+        "type": "String"
+      }
+    },
+    "Contact": {
+      "id": {
+        "multiplicity": "1",
+        "description": "a newly minted UUID for CMp",
+        "name": "id",
+        "type": "String"
+      },
+      "salesforce_id": {
+        "multiplicity": "1",
+        "description": "a Salesforce Contact_ID column point; of the form CONT-000122663",
+        "name": "salesforce_id",
+        "type": "String"
+      },
+      "party_id": {
+        "multiplicity": "1",
+        "description": "contact is a link for this party",
+        "name": "party_id",
+        "type": "String",
+        "links": "Parties::Party"
+      },
+      "role": {
+        "multiplicity": "*",
+        "description": "role for CMp",
+        "name": "role",
+        "type": "String"
+      },
+      "first_name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "first_name",
+        "type": "String"
+      },
+      "last_name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "last_name",
+        "type": "String"
+      },
+      "title": {
+        "multiplicity": "0..1",
+        "description": "Salesforce; not sure what the constrainst are",
+        "name": "title",
+        "type": "String"
+      },
+      "job_title": {
+        "multiplicity": "0..1",
+        "description": "Salesforce; free text",
+        "name": "job_title",
+        "type": "String"
+      },
+      "department": {
+        "multiplicity": "0..1",
+        "description": "Salesforce - department within org, rather than gov",
+        "name": "department",
+        "type": "String"
+      },
+      "address": {
+        "multiplicity": "0..1",
+        "description": "address of the contact point",
+        "name": "address",
+        "type": "Parties::Address"
+      },
+      "phone": {
+        "multiplicity": "*",
+        "description": "phone of the contact point; salesforce only supports one",
+        "name": "phone",
+        "type": "String"
+      },
+      "email": {
+        "multiplicity": "*",
+        "description": "email of the contact point; salesforce only supports two",
+        "name": "email",
+        "type": "String"
+      },
+      "origin": {
+        "multiplicity": "0..1",
+        "description": "from Salesforce - where the data was entered",
+        "name": "origin",
+        "type": "String"
+      },
+      "notes": {
+        "multiplicity": "0..1",
+        "description": "from Salesforce",
+        "name": "notes",
+        "type": "String"
+      },
+      "status": {
+        "multiplicity": "0..1",
+        "description": "from Salesforce, 'Active'",
+        "name": "status",
+        "type": "String"
+      },
+      "user_research_participane": {
+        "multiplicity": "0..1",
+        "description": "Y/N: from Salesforce",
+        "name": "user_research_participane",
+        "type": "String"
+      },
+      "not_to_receive_ccs_emails": {
+        "multiplicity": "0..1",
+        "description": "Y/N: from Salesforce",
+        "name": "not_to_receive_ccs_emails",
+        "type": "String"
+      },
+      "contact_owner": {
+        "multiplicity": "0..1",
+        "description": "from Salesforce",
+        "name": "contact_owner",
+        "type": "String"
+      }
+    }
+  },
+  "Geographic": {
+    "AreaCode": {
+      "name": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "name",
+        "type": "String"
+      },
+      "description": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "description",
+        "type": "String"
+      },
+      "subcode": {
+        "multiplicity": "*",
+        "description": "",
+        "name": "subcode",
+        "type": "Geographic::AreaCode"
+      }
+    }
+  }
+}

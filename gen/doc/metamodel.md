@@ -7,13 +7,13 @@
 
 |attribute|type|multiplicity|description|
 |---------|----|------------|-----------|
-|id|String|1|The code id, which must be unique across all schemes|
-|scheme_id|(CPV,CPVS,UNSPSC,CPV,OKDP,OKPD,CCS)|1|The classiciation scheme id|
-|description|String|1||
-|keyword|String|*||
-|uri|String|1| URI for the code within the scheme defining this type |
-|code|String|1| Code within the scheme defining this type |
-|unit|(Area,Commission,Currency)|1| define the units, if one units matches |
+|id|String|1|The composite code string, which must be unique across all schemesMake this up by taking the scheme_id and appending the code id|
+|description|String|1|long description|
+|keyword|String|*|alternate names for the item type|
+|scheme_id|SchemeOfSchemes schemeofschemes {:id=>:ItemClassificationSchemes, :version=>"0.1.0", :title=>"ItemClassificationSchemes", :description=>"Scheme of codes used to decide what scheme to use to classify an item", :code=>[#<ReferenceData::SchemeCode:0x00007f89ae8d7680 @name=:code, @attributes={:id=>:CPV, :title=>"EC Common Procurement Vocabulary", :description=>"The Common Procurement Vocabulary is a standard adopted by the Commission of the European Community, and consisting of a main vocabulary for defining the subject of a contract, and a supplementary vocabulary for adding further qualitative information. The main vocabulary, identified in OCDS by the code CPV, is based on a tree structure comprising codes of up to 9 digits (an 8 digit code plus a check digit) associated with a wording that describes the type of supplies, works or services forming the subject of the contract. Codes may be provided with or without the check digit, and consuming applications should be aware of this when processing data with CPV codes.\t", :source=>"http://simap.europa.eu/codes-and-nomenclatures/codes-cpv/codes-cpv_en.htm"}>, #<ReferenceData::SchemeCode:0x00007f89ae8d6708 @name=:code, @attributes={:id=>:CPVS, :title=>"EC Common Procurement Vocabulary - Supplementary Codelists", :description=>"The Common Procurement Vocabulary is a standard adopted by the Commission of the European Community, and consisting of a main vocabulary for defining the subject of a contract, and a supplementary vocabulary for adding further qualitative information. The supplementary vocabulary, identified in OCDS by the code CPVS, is made up of an alphanumeric code with a corresponding wording allowing further details to be added regarding the specific nature or destination of the goods to be purchased.\t", :source=>"http://simap.europa.eu/codes-and-nomenclatures/codes-cpv/codes-cpv_en.htm"}>, #<ReferenceData::SchemeCode:0x00007f89ae8d56f0 @name=:code, @attributes={:id=>:GSIN, :title=>"Goods and Services Identification Number", :description=>"The Canadian federal government uses Goods and Services Identification Number (GSIN) codes to identify generic product descriptions for its procurement activities. The full list is published and maintained at buyandsell.gc.ca\t", :source=>"https://buyandsell.gc.ca/procurement-data/goods-and-services-identification-number"}>, #<ReferenceData::SchemeCode:0x00007f89ae8d4430 @name=:code, @attributes={:id=>:UNSPSC, :title=>"United Nations Standard Products and Services Code\t", :description=>"The United Nations Standard Products and Services Code (UNSPSC) is a hierarchical convention that is used to classify all products and services. Machine readable metadata for UNSPSC is not provided as open data: and so publishers should consider alternative classification schemes that do provide open data lookup tables wherever possible.\t", :source=>"http://www.unspsc.org/codeset-downloads"}>, #<ReferenceData::SchemeCode:0x00007f89ae8b8ff0 @name=:code, @attributes={:id=>:CPC, :title=>"Central Product Classification\t", :description=>"The Central Product Classification (CPC) is a product classification for goods and services promulgated by the United Nations Statistical Commission. It is intended to be an international standard for organizing and analyzing data on industrial production, national accounts, trade and prices\t", :source=>"http://unstats.un.org/unsd/cr/registry/cpc-21.asp"}>]}(CPV,CPVS,GSIN,UNSPSC,CPC)|1|The classiciation scheme id|
+|code|String|1| Code within the scheme defining this type|
+|unit_scheme|SchemeOfSchemes schemeofschemes {:id=>:ItemClassificationSchemes, :version=>"0.1.0", :title=>"Units", :description=>"Scheme of codes used to decide what scheme to use to classify units", :code=>[#<ReferenceData::SchemeCode:0x00007f89ae8b6430 @name=:code, @attributes={:id=>:UNCEFACT, :title=>"UN/CEFACT Recommendation 20", :description=>"", :source=>"http://tfig.unece.org/contents/recommendation-20.htm"}>, #<ReferenceData::SchemeCode:0x00007f89ae8b5238 @name=:code, @attributes={:id=>:QUDT, :title=>"Quantities, Units, Dimensions and Data Types Ontologies", :description=>"Use the [QUDT Code](http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html) value.", :source=>"http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html"}>]}(UNCEFACT,QUDT)|1| define the unit scheme |
+|unit|String|1| define the units, if one units matches |
 ## ExpressionOfNeed
    Defines a buyer 's need which can be matched to agreement items and other details
 The need matches closely to our definitions of agreements under ' items types ' and their classification
@@ -22,21 +22,23 @@ schemes, but is not a one-to-one match.
 |attribute|type|multiplicity|description|
 |---------|----|------------|-----------|
 |buyer_id|String|1|The buyer expressing the need|
-|kind|(Budget,Location,Service)|1||
+|kind|CodingScheme codingscheme {:id=>:AgreementTypes, :version=>"0.1.0", :title=>"Agreement types", :description=>"Scheme of codes used to decide what scheme to use to classify an agreement", :code=>[#<ReferenceData::Code:0x00007f89ae8ca3e0 @name=:code, @attributes={:id=>:Location, :title=>"Location", :description=>" Where is the need?  Match location needs to locations of offers "}>, #<ReferenceData::Code:0x00007f89ae8c9878 @name=:code, @attributes={:id=>:Service, :title=>"Service", :description=>" What sort of things do they need?  Match the service to item types, their keywords, and offering titles."}>, #<ReferenceData::Code:0x00007f89ae8c8e00 @name=:code, @attributes={:id=>:Budget, :title=>"Budget", :description=>"What is the budget the buyer has for their need?Match the budget to the value range of the agreement, and the value range of supplier offers.Matching the budget will probably require evaluation of offer prices."}>]}(Location,Service,Budget)|1||
 |value|String|1||
-|unit|(Area,Commission,Currency)|1|The units typically used to express the need|
+|unit_scheme|String|1|The units typically used to express the need|
 ## Agreement
   General definition of Commercial Agreements
 
 |attribute|type|multiplicity|description|
 |---------|----|------------|-----------|
-|kind|(Framework,Lot,Contract)|1|Kind of agreement, including :Framework, :Lot, :Contract|
-|id|String|1|id of agreeement; This is the RM number for a framework, and {RM.lotnumber} for a lot|
+|kind|CodingScheme codingscheme {:id=>:AgreementTypes, :version=>"0.1.0", :title=>"Agreement types", :description=>"Scheme of codes used to decide what scheme to use to classify an agreement", :code=>[#<ReferenceData::Code:0x00007f89ae8cead0 @name=:code, @attributes={:id=>:Framework, :title=>"Framework "}>, #<ReferenceData::Code:0x00007f89ae8cdfe0 @name=:code, @attributes={:id=>:Lot, :title=>" Lot "}>, #<ReferenceData::Code:0x00007f89ae8cd5e0 @name=:code, @attributes={:id=>:Contract, :title=>" Contract"}>]}(Framework,Lot,Contract)|1|Kind of agreement, such as Framework, Lot, Contract. Lots are considered separate
+agreements, but link to their owning framework agreement. Similarly Contracts should link to any
+lot that they are based on|
+|id|String|1|id of agreeement; This is the RM number for a framework, and {RM#lotnumber} for a lot|
 |keyword|String|*|other names for the agreement|
 |name|String|1||
 |long_name|String|1||
 |version|String|1|semantic version id of the agreement model, in the form X.Y.Z|
-|status|(Live,Inactive,Future,Planned,Underway)|1||
+|status|Live(Inactive,Future,Planned,Underway)|1||
 |pillar|String|1||
 |duration|Integer|1|Months|
 |category|String|1||
@@ -56,7 +58,8 @@ schemes, but is not a one-to-one match.
 |attribute|type|multiplicity|description|
 |---------|----|------------|-----------|
 |type_id|String -> Agreements::ItemType|1| type of the item |
-|unit|(Area,Commission,Currency)|1| define the units |
+|unit|String|1| define the units, which should match one of the allowed unit code values
+in the scheme defind in the type|
 |value|Object|1|an object of the type matching type->units|
 ## Offering
    Supplier offering against an item or items of an agreement.
@@ -89,19 +92,10 @@ be confused with the accounting interest
 |---------|----|------------|-----------|
 |agreement_id|String -> Agreements::Agreement|1|The agreement this interest relates to|
 |party_id|String -> Parties::Party|1|The party this interest relates to|
-|role|(AwardedSupplier,AwardedBuyer,SupplyingQuote,RequestingQuote,Etc)|1|The role of the party in the involvment|
+|role|AwardedSupplier(AwardedBuyer,SupplyingQuote,RequestingQuote,Etc)|1|The role of the party in the involvment|
 # Codes
-## CCS 
-CCS invented schemes
+##  
 
-## Budget 
-What is the budget the buyer has for their need?Match the budget to the value range of the agreement, and the value range of supplier offers.Matching the budget will probably require evaluation of offer prices.
-
-## Location 
- Where is the need?  Match location needs to locations of offers 
-
-## Service 
- What sort of things do they need?  Match the service to item types, their keywords, and offering titles.
 
 # Data model: Parties
 ## Sector

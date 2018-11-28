@@ -9,8 +9,8 @@ class DataFile < Output
 
   attr_accessor :fmt
 
-  def initialize dir, name, fmt: :json
-    super File.join(dir, "data"), name, fmt.to_s
+  def initialize dir, name, fmt: :json, subdir: "data"
+    super File.join(dir, subdir), name, fmt.to_s
     self.fmt = fmt
   end
 
@@ -35,7 +35,7 @@ class DataFile < Output
         end
       elsif fmt == :json
         select ? map = map[select] : map
-        file.print(JSON.generate(map))
+        file.print(JSON.pretty_generate(map))
       elsif fmt == :yaml
         select ? map = map[select] : map
         file.print(map.to_yaml)
@@ -57,7 +57,7 @@ class DataFile < Output
           end
         end
       elsif fmt == :json
-        file.print(JSON.generate(map))
+        file.print(JSON.pretty_generate(map))
       elsif fmt == :yaml
         file.print(map.to_yaml)
       else

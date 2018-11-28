@@ -22,7 +22,7 @@ domain :TestModel do
   end
 
   datatype :Kindly do
-    attribute :kind, Codelist(:Framework, :Lot, :Contract), "semantic version id of the form X.Y.Z"
+    attribute :kind, Enum(:Framework, :Lot, :Contract), "semantic version id of the form X.Y.Z"
   end
 
   datatype :ReferencingType do
@@ -50,6 +50,12 @@ domain :TestModel do
 
   datatype :Empty do
   end
+
+  CODE_SCHEME_URL = "test.ccs.gov/schemefile"
+  CODE_ITEM_TITLE = "item title"
+  code(:CODE_ID, url: "#{CODE_SCHEME_URL}", title: CODE_ITEM_TITLE,
+       description: "item in scheme")
+
 
 end
 

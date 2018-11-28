@@ -58,7 +58,7 @@ class Document < Output
               code: lambda do |model:, code:|
                 file.print "## #{code[:id]} #{code[:title]}\n"
                 file.print "#{code[:description]}\n"
-                file.print "#{code[:uri]}\n"
+                file.print "#{code[:base_uri]}\n"
               end
           }, *models)
     end
