@@ -1,6 +1,26 @@
 require_relative '../src/data_model'
 include DataModel
 
+domain :TestRefModel do
+  datatype(:Code,
+           description: "a code list") {
+    attribute :id, String
+  }
+  datatype(:List) {
+    attribute :id, String
+    attribute :code, :Code, ZERO_TO_MANY
+  }
+end
+
+TestRefModel.new :TESTREF do
+  LIST= list {
+    id :list_for_test_enum
+    code {id :one}
+    code {id :two}
+    code {id :three}
+  }
+end
+
 domain :TestModel do
 
   datatype(:ArrayParam,
@@ -22,7 +42,8 @@ domain :TestModel do
   end
 
   datatype :Kindly do
-    attribute :kind, Enum(:Framework, :Lot, :Contract), "semantic version id of the form X.Y.Z"
+    attribute :kind, Enum(LIST, :one, :two), "pick two ids from list"
+    attribute :allkinds, Enum(LIST, code_type: :code), "all ids"
   end
 
   datatype :ReferencingType do
@@ -50,12 +71,6 @@ domain :TestModel do
 
   datatype :Empty do
   end
-
-  CODE_SCHEME_URL = "test.ccs.gov/schemefile"
-  CODE_ITEM_TITLE = "item title"
-  code(:CODE_ID, url: "#{CODE_SCHEME_URL}", title: CODE_ITEM_TITLE,
-       description: "item in scheme")
-
 
 end
 
@@ -88,7 +103,7 @@ TestModel.new :TESTMODEL do
   end
 
   kindly do
-    kind :Framework
+    kind :one
   end
 
 end

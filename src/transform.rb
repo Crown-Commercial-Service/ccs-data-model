@@ -29,14 +29,6 @@ module Transform
     return [model: model, before: before]
   end
 
-  def before_codes_lambda model: nil
-    return [model: model]
-  end
-
-  def code_lambda model: nil, code: nil
-    return [model: model, code: code]
-  end
-
   def before_group_lambda name: nil
     return [name: name]
   end
@@ -99,12 +91,6 @@ module Transform
         cond_call(lambdas, :after_type, *after_type_lambda(type: type, before: before))
       end
       cond_call(lambdas, :after_model, *after_model_lambda(model: model, before: dom))
-      if model.respond_to? :codes
-        cond_call(lambdas, :before_codes, *before_codes_lambda(model: model))
-        for code in model.codes.values
-          cond_call(lambdas, :code, *code_lambda(model: model, code: code))
-        end
-      end
     end
   end
 

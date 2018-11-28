@@ -26,6 +26,12 @@ class DataModelTest < Test::Unit::TestCase
     assert(contains(TestModel::DerivedType, :id), "has derived attribute")
   end
 
+  def test_enum_metamodel
+    assert_equal( [:one,:two], TestModel::Kindly.attributes[:kind][:type].ids, "has derived attribute")
+    assert_equal( [:one,:two,:three], TestModel::Kindly.attributes[:allkinds][:type].ids, "has derived attribute")
+
+    assert_equal( "list_for_test_enum(one,two)", TestModel::Kindly.attributes[:kind][:type].to_s)
+  end
 
   def test_model
     assert_equal(1, TestModel::TESTMODEL.contents[:table][0].attributes[:vals][0], "has vals")
@@ -48,7 +54,7 @@ class DataModelTest < Test::Unit::TestCase
 
 
   def test_kinds
-    assert_equal(:Framework, TestModel::TESTMODEL.kindly[0].kind, "kinds")
+    assert_equal(:one, TestModel::TESTMODEL.kindly[0].kind, "kinds")
 
     # TODO: assertion on strings that aren't in the selection list
     # assert_raise() do
@@ -56,11 +62,6 @@ class DataModelTest < Test::Unit::TestCase
     #     kindly {kind :KindNotValid}
     #   end
     # end
-  end
-
-  def test_codes
-    assert_equal(CODE_ITEM_TITLE, TestModel.codes[CODE_SCHEME_URL][:CODE_ID].title)
-
   end
 
   private

@@ -29,6 +29,33 @@ ReferenceData.new :AgreementReferenceData do
       title " Contract"
     }
   }
+  AGREEMENT_STATUSES = codingscheme {
+    id :AgreementStatuses
+    version "0.1.0"
+    title "Agreement types"
+    description "Scheme of codes used to decide what scheme to use to classify an agreement"
+    code {
+      id :Live
+    }
+    code {
+      id :Inactive
+    }
+    code {
+      id :Future
+    }
+    code {
+      id :Planned
+    }
+    code {
+      id :Underway
+    }
+    code {
+      id :Withdrawn
+    }
+    code {
+      id :Ended
+    }
+  }
 
   ItemClassificationSchemes = schemeofschemes {
     id :ItemClassificationSchemes
@@ -68,7 +95,7 @@ ReferenceData.new :AgreementReferenceData do
   }
 
   UNITSCHEMES = schemeofschemes {
-    id :ItemClassificationSchemes
+    id :UnitClassificationSchemes
     version "0.1.0"
     title "Units"
     description "Scheme of codes used to decide what scheme to use to classify units"
@@ -153,16 +180,19 @@ schemes, but is not a one-to-one match.") {
 
     # identify the agreement
     attribute :kind, Enum(AGREEMENT_TYPES),
-              "Kind of agreement, such as Framework, Lot, Contract. Lots are considered separate
-agreements, but link to their owning framework agreement. Similarly Contracts should link to any
-lot that they are based on"
+              "Kind of agreement, such as Framework, Lot,
+
+
+   Contract. Lots are considered separate" +
+                  "agreements, but link to their owning framework agreement. Similarly Contracts should link to any" +
+                  "lot that they are based on"
     attribute :id, String, "id of agreeement; This is the RM number for a framework, and {RM#lotnumber} for a lot",
               example: "RM3541"
     attribute :keyword, String, ZERO_TO_MANY, "other names for the agreement"
     attribute :name, String
     attribute :long_name, String
     attribute :version, String, "semantic version id of the agreement model, in the form X.Y.Z"
-    attribute :status, Enum(:Live, :Inactive, :Future, :Planned, :Underway)
+    attribute :status, Enum(AGREEMENT_STATUSES)
     attribute :pillar, String
     attribute :duration, Integer, "Months"
     attribute :category, String
@@ -223,7 +253,8 @@ Technology strategy documents call this type ' interest ' but perhaps this could
 be confused with the accounting interest") {
     attribute :agreement_id, String, "The agreement this interest relates to", links: :Agreement
     attribute :party_id, String, "The party this interest relates to", links: Parties::Party
-    attribute :role, Enum(:AwardedSupplier, :AwardedBuyer, :SupplyingQuote, :RequestingQuote, :Etc),
+    attribute :role, String,
+              # Enum(:AwardedSupplier, :AwardedBuyer, :SupplyingQuote, :RequestingQuote, :Etc),
               "The role of the party in the involvment"
   }
 

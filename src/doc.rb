@@ -50,16 +50,9 @@ class Document < Output
                 file.print "|---------|----|------------|-----------|\n"
               end,
               attribute: lambda do |id:, val:, type:, depth:, index:, total:|
-                file.print "|#{val[:name]}|#{type_and_link(val)}|#{pretty_multiplicity(val)}|#{val[:description]}|\n"
+                desc = val[:description].gsub(/\n/,"")
+                file.print "|#{val[:name]}|#{type_and_link(val)}|#{pretty_multiplicity(val)}|#{desc}|\n"
               end,
-              before_codes: lambda do |model:|
-                file.print "# Codes\n"
-              end,
-              code: lambda do |model:, code:|
-                file.print "## #{code[:id]} #{code[:title]}\n"
-                file.print "#{code[:description]}\n"
-                file.print "#{code[:base_uri]}\n"
-              end
           }, *models)
     end
   end

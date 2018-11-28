@@ -1,11 +1,11 @@
 ---
 openapi: 3.0.4
 servers:
-- description: generated server for API::Endpoint
+- description: generated server for Endpoint
   url: ccs.gov.uk
 info:
-  title: API::Endpoint
-  description: genearated endpoint for data API::Endpoint
+  title: :Endpoint
+  description: genearated endpoint for data Endpoint
   version: 0.1.0
   contact:
     email: admin@ccs.gov.uk
@@ -115,10 +115,13 @@ components:
         :status:
           type: string
           enum:
+          - Live
           - Inactive
           - Future
           - Planned
           - Underway
+          - Withdrawn
+          - Ended
         :pillar:
           type: string
         :duration:

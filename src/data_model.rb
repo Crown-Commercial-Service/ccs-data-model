@@ -45,6 +45,8 @@ module DataModel
         @typename
       end
 
+      alias name typename
+
       def extends
         @extends < DataType ? @extends.name : nil
       end
@@ -110,13 +112,15 @@ module DataModel
           @attributes[k] = val
           val
         end
-        self.define_singleton_method :include do |&block|
-          self.instance_exec &block
+        if !self.respond_to? :include
+          self.define_singleton_method :include do |&block|
+            self.instance_exec(&block)
+          end
         end
       end
 
       if block_given?
-        self.instance_exec &initialize_block
+        self.instance_exec(&initialize_block)
       end
     end
 
@@ -132,38 +136,13 @@ module DataModel
         if nil == block
           raise "Need a block for a nested type #{sym} in #{self}"
         end
-        at.instance_exec &block
+        at.instance_exec(&block)
         return at
       else
         args[0]
       end
     end
 
-  end
-
-  class Code
-    attr_accessor :url, :elements, :title, :description, :data
-
-    def initialize *elements, url:,
-                   description: nil, title: nil, data: {}
-      self.url = url
-      self.elements = elements
-      self.title = title
-      self.description = description
-      self.data = data
-    end
-
-    def self.id_of *elements
-      (elements.join '_').to_sym
-    end
-
-    def id
-      Code::id_of self.elements
-    end
-
-    def to_s
-      URI.encode(url + '/' + id)
-    end
   end
 
   class Domain
@@ -181,7 +160,7 @@ module DataModel
         type.instance_exec do
           init name, dom, extends, description
         end
-        type.instance_exec &block
+        type.instance_exec(&block)
         type
       end
 
@@ -201,40 +180,11 @@ module DataModel
         end
       end
 
-      # use codes to enter data in reference data documents. Each code entry results
-      # in a data item in the reference data document defined by the base URL
-      # for this domain.
-      #
-      # uri absolute or relative URI of the code; if relative it is relative to the URI of the #CodeList
-      #
-      def code(*elements, url:nil,
-               description: nil, title: nil, data: {})
-        unless instance_variable_defined? :@codes
-          @codes = {}
-          self.define_singleton_method(:codes) {@codes}
-        end
-        code = Code.new(elements, url: url, title: title, description: description)
-        @codes[code.url] = {} unless @codes[code.url]
-        @codes[code.url][code.id] = code
-      end
-
-      def scheme(url:,
-                 description: nil, title: nil, data: {},
-                 &block)
-        unless instance_variable_defined? :@schemes
-          schemes = []
-          self.define_singleton_method(:schemes) {@schemes}
-        end
-        scheme = Scheme.new(url: url, title: title, description: description)
-        @schemes[code.url] = {} unless @schemes[code.url]
-        @schemes[code.url][code.id] = code
-      end
-
     end
 
     attr_reader :contents, :name
 
-    def initialize name, &initialise_block
+    def initialize(name, &initialise_block)
       @contents = {}
       @name = name.to_sym
       self.class.const_set name.to_sym, self
@@ -253,7 +203,7 @@ module DataModel
           @contents[k] = [] unless @contents[k]
           @contents[k] << decl
           if block_given?
-            decl.instance_exec &block
+            decl.instance_exec(&block)
           else
             puts "warning: no block given for type #{k} in #{self}"
           end
@@ -262,7 +212,7 @@ module DataModel
       end
 
       if block_given?
-        self.instance_exec &initialise_block
+        self.instance_exec(&initialise_block)
       end
     end
 
@@ -274,7 +224,7 @@ module DataModel
   def domain(name, &block)
     dom = Object.const_set name.to_sym, Class.new(Domain)
     if block_given?
-      dom.instance_exec &block
+      dom.instance_exec(&block)
     end
     return dom
   end
@@ -288,9 +238,35 @@ module DataModel
   def api(name, &block)
     api = Object.const_set name.to_sym, Class.new(API)
     if block_given?
-      api.instance_exec &block
+      api.instance_exec(&block)
     end
     return api
   end
 
+  class Selection < Symbol
+  end
+
+  # create an enumeration class derived from Symbol
+  def Enum(scheme, *code_ids, code_type: :code, code_key: :id, scheme_desc: :id)
+    if( !(scheme.class <= DataType))
+      raise "doc for Enum needs to be a data type with many type values as an attribute 'codekey'"
+    end
+    if (code_ids.length == 0)
+      code_ids = scheme.attributes[code_type].map {|code| code.attributes[code_key]}
+    end
+    typename = "ENUM_#{code_ids.join '_'}"
+    selclass = Object.const_set typename, Class.new(Selection)
+    selclass.define_singleton_method(:ids) {code_ids}
+    selclass.define_singleton_method(:scheme) {scheme}
+    selclass.define_singleton_method(:to_s) {"#{self.scheme.attributes[scheme_desc]}(#{self.ids.join(',')})"}
+    return selclass
+  end
+
+
 end # DataModel
+
+class Class
+  def typename
+    return self.name
+  end
+end

@@ -86,11 +86,11 @@ class Diagram < Output
   end
 
   def modelname m
-    m.name.gsub(/^#{DataModel.name}::/, "").gsub /::/, "-"
+    m.name.gsub(/^#{DataModel.name}::/, "").gsub( /::/, "-")
   end
 
   def typename t
-    t.name.gsub(/^#{t.domain}::/, "").gsub /::/, "-"
+    t.name.gsub(/^#{t.domain}::/, "").gsub( /::/, "-")
   end
 
   private
