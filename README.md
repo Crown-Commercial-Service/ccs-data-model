@@ -23,7 +23,7 @@ This prototype
 
 # Things to see
 
-the [model](model/) directory defines our [agreements metamodel](model/agreement.rb). This defines
+the [model](model/) directory defines our [agreements metamodel](model/v_0/agreement.rb). This defines
  what the required data elements are for agreements.
  
  From this model we will define instances of agreement data to define our agreement structure.

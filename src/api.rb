@@ -67,7 +67,7 @@ class OpenApi3 < Output
     map[INFO] = {
         "title" => endpoint.class.name,
         DESCRIPTION => "genearated endpoint for data #{endpoint.class.name}",
-        "version" => endpoint.version,
+        "version" => endpoint.version.to_s,
         "contact" => {"email" => "admin@ccs.gov.uk"},
         "license" => {NAME => "MIT", "url" => "https://github.com/Crown-Commercial-Service/ccs-data-model/blob/master/LICENSE"}
     }
@@ -84,7 +84,21 @@ class OpenApi3 < Output
 
     endpoint.resource.each do |resource|
       resource_name = resource.type.typename
-      paths["/#{resource_name}"] = {
+      api_root = "/api"
+      vroot = "#{api_root}/v#{endpoint.version.major}"
+      paths["#{api_root}/#{resource_name}"] = {
+          GET => {
+              SUMMARY => "get latest version for api",
+              TAGS => [BROWSERS],
+              SUMMARY => "redirect for search",
+              OPERATION_ID => "search-#{resource_name}",
+              DESCRIPTION => "searches #{resource_name} by name, id or keyword",
+              RESPONSES => {
+                  "302" =>   {DESCRIPTION => "Redirect to the latest semantic version API"}
+              }
+          }
+      }
+      paths["#{vroot}/#{resource_name}"] = {
           GET => {
               SUMMARY => "get list",
               TAGS => [BROWSERS],
@@ -130,7 +144,7 @@ class OpenApi3 < Output
               }
           }
       }
-      paths["/#{resource_name}/{id}"] = {
+      paths["#{vroot}/#{resource_name}/{id}"] = {
           GET => {
               SUMMARY => "get item",
               TAGS => [RECORDERS],
@@ -342,6 +356,8 @@ class OpenApi3 < Output
                   "format" => "date"})
       elsif (attype <= Integer)
         p.merge!({"type" => "integer"})
+      elsif (attype <= Version)
+        p.merge!({"type" => "string"})
       elsif (attype <= DataType)
         p.merge!({"$ref" => ref_component(:schema, attype.typename)
                  })

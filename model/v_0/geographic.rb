@@ -1,4 +1,4 @@
-require_relative '../src/data_model'
+require_relative '../../src/data_model'
 include DataModel
 
 

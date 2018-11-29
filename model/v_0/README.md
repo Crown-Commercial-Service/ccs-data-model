@@ -11,4 +11,4 @@ example. The main metamodles are
 - Catalogue
 - Questionnaire
 
-For metamodel details see [metamodel documentation](../gen/doc/metamodel.md)
+For metamodel details see [metamodel documentation](../../gen/doc/metamodel.md)

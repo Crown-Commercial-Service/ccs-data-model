@@ -1,4 +1,4 @@
-require_relative '../src/data_model'
+require_relative '../../src/data_model'
 require_relative 'unit_reference_data'
 require_relative 'item_reference_data'
 require_relative 'party_reference_data'

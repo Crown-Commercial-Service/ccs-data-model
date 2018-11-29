@@ -2,10 +2,10 @@ require_relative "src/diagram"
 require_relative "src/doc"
 require_relative "src/data"
 require_relative 'src/api'
-require_relative 'model/agreement'
-require_relative 'model/party'
-require_relative 'model/geographic'
-require_relative 'model/api'
+require_relative 'model/v_0/agreement'
+require_relative 'model/v_0/party'
+require_relative 'model/v_0/geographic'
+require_relative 'model/v_0/api'
 
 output_path = File.join(File.dirname(__FILE__), "gen")
 
@@ -23,16 +23,6 @@ data.output_metamodel *metamodels
 data = DataFile.new(output_path, "metamodel", fmt: :yaml)
 data.output_metamodel *metamodels
 
-API.new :MAIN do
-  endpoint {
-    host "ccs.gov.uk"
-    version "0.1.0"
-    resource {type Agreements::Agreement}
-    resource {type Items::ItemType}
-    resource {type Items::Item}
-  }
-end
-
 # generate reference codes
 # get each document out of each reference data domain and create a file based on it's id
 
@@ -44,6 +34,6 @@ REFERENCE_DATA.each do |dom|
 end
 
 # generate the API
-api = OpenApi3.new(output_path, "ccs_api", fmt: :yaml)
-api.output API::MAIN
+api_file = OpenApi3.new(output_path, "ccs_api", fmt: :yaml)
+api_file.output API::API_V0_1
 

@@ -3,17 +3,17 @@
     {
       "version": "0.1.0",
       "id": "sector_scheme",
-      "url": "reference.services.crowncommercial.gov.uk/0.1/sector_scheme",
+      "url": "reference.services.crowncommercial.gov.uk/v0.1/sector_scheme",
       "title": "Sector Classification Schemes",
       "description": "Scheme of codes used to decide what scheme to use to classify an item",
       "prefix": "sectorscheme",
       "code": [
         {
           "id": "ccs",
-          "uri": "reference.services.crowncommercial.gov.uk/0.1/sector_scheme#ccs",
+          "uri": "reference.services.crowncommercial.gov.uk/v0.1/sector_scheme#ccs",
           "title": "CCS sector coding",
           "description": "CCS defined sector coding",
-          "source": "reference.services.crowncommercial.gov.uk/0.1/ccs_sector_codes"
+          "source": "reference.services.crowncommercial.gov.uk/v0.1/ccs_sector_codes"
         }
       ]
     }

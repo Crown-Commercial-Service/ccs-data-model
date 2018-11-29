@@ -3,24 +3,24 @@
     {
       "version": "0.1.0",
       "id": "agreement_type_codes",
-      "url": "reference.services.crowncommercial.gov.uk/0.1/agreement_type_codes",
+      "url": "reference.services.crowncommercial.gov.uk/v0.1/agreement_type_codes",
       "prefix": "ccs_atype",
       "title": "Agreement types",
       "description": "Scheme of codes used to decide what scheme to use to classify an agreement",
       "code": [
         {
           "id": "framework",
-          "uri": "reference.services.crowncommercial.gov.uk/0.1/agreement_type_codes#framework",
+          "uri": "reference.services.crowncommercial.gov.uk/v0.1/agreement_type_codes#framework",
           "title": "Framework "
         },
         {
           "id": "lot",
-          "uri": "reference.services.crowncommercial.gov.uk/0.1/agreement_type_codes#lot",
+          "uri": "reference.services.crowncommercial.gov.uk/v0.1/agreement_type_codes#lot",
           "title": " Lot "
         },
         {
           "id": "contract",
-          "uri": "reference.services.crowncommercial.gov.uk/0.1/agreement_type_codes#contract",
+          "uri": "reference.services.crowncommercial.gov.uk/v0.1/agreement_type_codes#contract",
           "title": " Contract"
         }
       ]

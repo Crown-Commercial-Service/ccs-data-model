@@ -1,5 +1,5 @@
 
-require_relative '../src/data_model'
+require_relative '../../src/data_model'
 
 ReferenceData.new :UserNeedCodes do
   USERNEEDS = codelist {

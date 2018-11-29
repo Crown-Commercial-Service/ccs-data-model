@@ -18,7 +18,17 @@ tags:
 - name: recorder
   description: for record updaters, often suppliers
 paths:
-  "/Agreement":
+  "/api/Agreement":
+    get:
+      summary: redirect for search
+      tags:
+      - browser
+      operationId: search-Agreement
+      description: searches Agreement by name, id or keyword
+      responses:
+        '302':
+          description: Redirect to the latest semantic version API
+  "/api/v0/Agreement":
     get:
       summary: search
       tags:
@@ -53,7 +63,7 @@ paths:
           "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
-  "/Agreement/{id}":
+  "/api/v0/Agreement/{id}":
     get:
       summary: get a Agreement
       tags:
@@ -85,7 +95,17 @@ paths:
           "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
-  "/ItemType":
+  "/api/ItemType":
+    get:
+      summary: redirect for search
+      tags:
+      - browser
+      operationId: search-ItemType
+      description: searches ItemType by name, id or keyword
+      responses:
+        '302':
+          description: Redirect to the latest semantic version API
+  "/api/v0/ItemType":
     get:
       summary: search
       tags:
@@ -119,7 +139,7 @@ paths:
           "$ref": "#/components/responses/ItemType"
         4XX:
           description: error TODO
-  "/ItemType/{id}":
+  "/api/v0/ItemType/{id}":
     get:
       summary: get a ItemType
       tags:
@@ -151,7 +171,17 @@ paths:
           "$ref": "#/components/responses/ItemType"
         4XX:
           description: error TODO
-  "/Item":
+  "/api/Item":
+    get:
+      summary: redirect for search
+      tags:
+      - browser
+      operationId: search-Item
+      description: searches Item by name, id or keyword
+      responses:
+        '302':
+          description: Redirect to the latest semantic version API
+  "/api/v0/Item":
     get:
       summary: search
       tags:
@@ -183,7 +213,7 @@ paths:
           "$ref": "#/components/responses/Item"
         4XX:
           description: error TODO
-  "/Item/{id}":
+  "/api/v0/Item/{id}":
     get:
       summary: get a Item
       tags:
@@ -316,8 +346,8 @@ components:
         :unit_scheme:
           type: string
           enum:
-          - reference.services.crowncommercial.gov.uk/0.1/unit_scheme#uncefact
-          - reference.services.crowncommercial.gov.uk/0.1/unit_scheme#qudt
+          - reference.services.crowncommercial.gov.uk/v0.1/unit_scheme#uncefact
+          - reference.services.crowncommercial.gov.uk/v0.1/unit_scheme#qudt
           example: QUDT
         :unit:
           type: string

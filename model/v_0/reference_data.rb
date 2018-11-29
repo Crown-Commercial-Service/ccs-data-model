@@ -1,12 +1,10 @@
-require_relative '../src/data_model'
-require 'semantic'
-include Semantic
+require_relative '../../src/data_model'
 include DataModel
 
 REFERENCE_HOST = "reference.services.crowncommercial.gov.uk"
 
 def ref_url id, version
-  "#{REFERENCE_HOST}/#{version.major}.#{version.minor}/#{id}"
+  "#{REFERENCE_HOST}/v#{version.major}.#{version.minor}/#{id}"
 end
 
 URI_FROM_DOC_AND_ID = lambda do

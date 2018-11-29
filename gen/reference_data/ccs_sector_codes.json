@@ -3,14 +3,14 @@
     {
       "version": "0.1.0",
       "id": "ccs_sector_codes",
-      "url": "reference.services.crowncommercial.gov.uk/0.1/ccs_sector_codes",
+      "url": "reference.services.crowncommercial.gov.uk/v0.1/ccs_sector_codes",
       "title": "CCS Sector Classification Schemes",
       "description": "Scheme of codes used to decide what scheme to use to classify an item",
       "prefix": "ccs_sector",
       "code": [
         {
           "id": "education_funded",
-          "uri": "reference.services.crowncommercial.gov.uk/0.1/ccs_sector_codes#education_funded",
+          "uri": "reference.services.crowncommercial.gov.uk/v0.1/ccs_sector_codes#education_funded",
           "title": "ccs eduction funded",
           "description": "CCS sector coding for education appropriate for education frameworks"
         }
