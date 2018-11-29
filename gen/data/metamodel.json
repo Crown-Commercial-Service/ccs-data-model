@@ -3,7 +3,7 @@
     "Agreement": {
       "kind": {
         "multiplicity": "1",
-        "description": "Kind of agreement, such as Framework, Lot,\n\n\n   Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on",
+        "description": "Kind of agreement, such as Framework, Lot,Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on. See https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes for details.",
         "name": "kind",
         "type": "agreement_type_codes(framework,lot,contract)"
       },
@@ -12,7 +12,14 @@
         "description": "id of agreeement; This is the RM number for a framework, and {RM#lotnumber} for a lot",
         "name": "id",
         "type": "String",
-        "example": "RM3541"
+        "example": "rm:RM3541"
+      },
+      "id_scheme": {
+        "multiplicity": "1",
+        "description": "who to identify the agreement",
+        "name": "id_scheme",
+        "type": "agreement_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#lot_number,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#cf_contract_id)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id"
       },
       "keyword": {
         "multiplicity": "*",
@@ -40,7 +47,7 @@
       },
       "status": {
         "multiplicity": "1",
-        "description": "",
+        "description": "current status of agreementSee https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes for details.",
         "name": "status",
         "type": "agreement_status_codes(live,inactive,future,planned,underway,withdrawn,ended)"
       },
@@ -86,12 +93,6 @@
         "name": "description",
         "type": "String"
       },
-      "offerType": {
-        "multiplicity": "1",
-        "description": "Name of the subclass of the Offering, supporting the Agreement",
-        "name": "offerType",
-        "type": "String"
-      },
       "part_of_id": {
         "multiplicity": "1",
         "description": "Agreement this is part of, applicable only to Lots",
@@ -127,37 +128,71 @@
     }
   },
   "Parties": {
+    "Questionnaire": {
+      "id": {
+        "multiplicity": "1",
+        "description": "UUID for the questionnaire entry",
+        "name": "id",
+        "type": "String"
+      },
+      "completed": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "completed",
+        "type": "Date"
+      },
+      "expires": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "expires",
+        "type": "Date"
+      },
+      "question_schemes": {
+        "multiplicity": "0..1",
+        "description": "The coding schemes for the questions and answers",
+        "name": "question_schemes",
+        "type": "qualification_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/qualification_scheme#offsted_rating)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/qualification_scheme#offsted_rating"
+      },
+      "answer_codes": {
+        "multiplicity": "0..1",
+        "description": "coded answers to questions matching the schemes",
+        "name": "answer_codes",
+        "type": "String",
+        "example": "offsted_rating:Requires_Improvement"
+      }
+    },
     "Party": {
       "id": {
         "multiplicity": "1",
-        "description": "URN, should match salesforce ID; master key",
+        "description": " URN, should match salesforce ID; master key ",
         "name": "id",
+        "type": "String"
+      },
+      "org_id_scheme": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "org_id_scheme",
+        "type": "org_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe)"
+      },
+      "supplementary_org_id_schemens": {
+        "multiplicity": "*",
+        "description": "",
+        "name": "supplementary_org_id_schemens",
+        "type": "org_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe)"
+      },
+      "supplementary_org_id": {
+        "multiplicity": "*",
+        "description": "",
+        "name": "supplementary_org_id",
         "type": "String"
       },
       "parent_org_id": {
         "multiplicity": "1",
-        "description": "URN, should match salesforce ID",
+        "description": " URN, should match one of the schemes listed ",
         "name": "parent_org_id",
         "type": "String",
         "links": "Parties::Party"
-      },
-      "duns": {
-        "multiplicity": "0..1",
-        "description": "Dunn & Bradstreet number - usually suppleirs only",
-        "name": "duns",
-        "type": "String"
-      },
-      "urn": {
-        "multiplicity": "0..1",
-        "description": "Government URN, of the form 100001234",
-        "name": "urn",
-        "type": "String"
-      },
-      "company_reg_number": {
-        "multiplicity": "0..1",
-        "description": "",
-        "name": "company_reg_number",
-        "type": "String"
       },
       "org_name": {
         "multiplicity": "1",
@@ -169,48 +204,43 @@
         "multiplicity": "*",
         "description": "",
         "name": "sector_scheme",
-        "type": "sector_scheme(ccs)"
+        "type": "sector_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs)"
       },
       "sector": {
         "multiplicity": "*",
         "description": "",
         "name": "sector",
         "type": "String",
-        "example": "ccs_sector:education_funded"
+        "example": " ccs_sector : education_funded "
       },
       "trading_name": {
         "multiplicity": "0..1",
-        "description": "Salesforce only stores for supplier",
+        "description": " Salesforce only stores for supplier ",
         "name": "trading_name",
         "type": "String"
       },
-      "supplier_registration_completed": {
-        "multiplicity": "1",
-        "description": "The party is a supplier who has completed registration",
-        "name": "supplier_registration_completed",
-        "type": "Date"
-      },
-      "buyer_registration_completed": {
-        "multiplicity": "1",
-        "description": "The party is a supplier who has completed registration",
-        "name": "buyer_registration_completed",
-        "type": "Date"
-      },
       "spend_this_year": {
         "multiplicity": "0..1",
-        "description": "Salesforce only stores for buyer",
+        "description": "\n                                                                                                                                                                                                                                                                                                                                                                   Salesforce only stores for buyer ",
         "name": "spend_this_year",
-        "type": "String"
+        "type": "Float"
       },
       "documents_url": {
         "multiplicity": "0..1",
-        "description": "Salesforce links to google drive for this supplier; we will move to S3 in due course",
+        "description": "\n                                                                                                                                                                                                                                                                                                                                                                                            Salesforce links to google drive for this supplier;\n                                                                                                                                                                                                                                                                                                                                                                                                                               we will move to S3 in due course ",
         "name": "documents_url",
         "type": "String"
       },
+      "contact_scheme": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "contact_scheme",
+        "type": "contact_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact"
+      },
       "account_manager_id": {
         "multiplicity": "0..1",
-        "description": "Who manages the account for CCS",
+        "description": " Who manages the account for CCS ",
         "name": "account_manager_id",
         "type": "String"
       }
@@ -254,40 +284,53 @@
       },
       "latitutde": {
         "multiplicity": "0..1",
-        "description": "Location from the address for geo search",
+        "description": " Location from the address for geo search ",
         "name": "latitutde",
         "type": "String"
       },
       "longtitude": {
         "multiplicity": "0..1",
-        "description": "Location from the address for geo search",
+        "description": "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Location from the address for geo search ",
         "name": "longtitude",
         "type": "String"
       }
     },
     "Contact": {
+      "contact_scheme": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "contact_scheme",
+        "type": "contact_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact"
+      },
       "id": {
         "multiplicity": "1",
-        "description": "a newly minted UUID for CMp",
+        "description": " a newly minted UUID for CMp ",
         "name": "id",
         "type": "String"
       },
-      "salesforce_id": {
-        "multiplicity": "1",
-        "description": "a Salesforce Contact_ID column point; of the form CONT-000122663",
-        "name": "salesforce_id",
+      "supplementary_contact_id_schemens": {
+        "multiplicity": "*",
+        "description": "",
+        "name": "supplementary_contact_id_schemens",
+        "type": "contact_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email)"
+      },
+      "supplementary_contact_id": {
+        "multiplicity": "*",
+        "description": "",
+        "name": "supplementary_contact_id",
         "type": "String"
       },
       "party_id": {
         "multiplicity": "1",
-        "description": "contact is a link for this party",
+        "description": "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           contact is a link for this party ",
         "name": "party_id",
         "type": "String",
         "links": "Parties::Party"
       },
       "role": {
         "multiplicity": "*",
-        "description": "role for CMp",
+        "description": "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               role for CMp ",
         "name": "role",
         "type": "String"
       },
@@ -305,97 +348,75 @@
       },
       "title": {
         "multiplicity": "0..1",
-        "description": "Salesforce; not sure what the constrainst are",
+        "description": "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Salesforce; not sure what the constrainst are ",
         "name": "title",
         "type": "String"
       },
       "job_title": {
         "multiplicity": "0..1",
-        "description": "Salesforce; free text",
+        "description": " Salesforce; free text ",
         "name": "job_title",
         "type": "String"
       },
       "department": {
         "multiplicity": "0..1",
-        "description": "Salesforce - department within org, rather than gov",
+        "description": " Salesforce - department within org, rather than gov ",
         "name": "department",
         "type": "String"
       },
       "address": {
         "multiplicity": "0..1",
-        "description": "address of the contact point",
+        "description": " address of the contact point ",
         "name": "address",
         "type": "Parties::Address"
       },
       "phone": {
         "multiplicity": "*",
-        "description": "phone of the contact point; salesforce only supports one",
+        "description": " phone of the contact point; salesforce only supports one ",
         "name": "phone",
         "type": "String"
       },
       "email": {
         "multiplicity": "*",
-        "description": "email of the contact point; salesforce only supports two",
+        "description": " email of the contact point; salesforce only supports two ",
         "name": "email",
         "type": "String"
       },
       "origin": {
         "multiplicity": "0..1",
-        "description": "from Salesforce - where the data was entered",
+        "description": " from Salesforce - where the data was entered ",
         "name": "origin",
         "type": "String"
       },
       "notes": {
         "multiplicity": "0..1",
-        "description": "from Salesforce",
+        "description": " from Salesforce ",
         "name": "notes",
         "type": "String"
       },
       "status": {
         "multiplicity": "0..1",
-        "description": "from Salesforce, 'Active'",
+        "description": " from Salesforce, 'Active' ",
         "name": "status",
         "type": "String"
       },
       "user_research_participane": {
         "multiplicity": "0..1",
-        "description": "Y/N: from Salesforce",
+        "description": " Y / N : from Salesforce ",
         "name": "user_research_participane",
         "type": "String"
       },
       "not_to_receive_ccs_emails": {
         "multiplicity": "0..1",
-        "description": "Y/N: from Salesforce",
+        "description": " Y / N : from Salesforce ",
         "name": "not_to_receive_ccs_emails",
         "type": "String"
       },
       "contact_owner": {
         "multiplicity": "0..1",
-        "description": "from Salesforce",
+        "description": " from Salesforce ",
         "name": "contact_owner",
         "type": "String"
-      }
-    }
-  },
-  "Geographic": {
-    "AreaCode": {
-      "name": {
-        "multiplicity": "1",
-        "description": "",
-        "name": "name",
-        "type": "String"
-      },
-      "description": {
-        "multiplicity": "1",
-        "description": "",
-        "name": "description",
-        "type": "String"
-      },
-      "subcode": {
-        "multiplicity": "*",
-        "description": "",
-        "name": "subcode",
-        "type": "Geographic::AreaCode"
       }
     }
   }

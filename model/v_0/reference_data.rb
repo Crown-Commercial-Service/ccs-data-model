@@ -35,10 +35,16 @@ domain :ReferenceData do
     attribute :title, String, ZERO_OR_ONE
     attribute :description, String, ZERO_OR_ONE
     attribute :uri, String, "resolved uri of the code, used for selecting scheme entries"
+    attribute :pattern, String, "optional regular expression to check codes against. Should match the appropriate prefix form."
+    attribute :example, String, "example of the value"
   }
 
   datatype(:SchemeCode, extends: :Code, description: "A code which refers to a definition document, that describes another CodeList") {
-    attribute :source, String
+    attribute :source, String, "a description or url for how to build codes against this scheme"
+    attribute :prefix, String, "A prefix code for building codes from this source. " +
+        " If the referred standard has a good unique prefix that should be used, where as if it is ambiguous"+
+        " onse should be created so that coded IDs are not ambiguous in terms of format or origin." +
+        "if there is one", example: "companies-house"
   }
 
   datatype(:DataDocument,
@@ -49,7 +55,10 @@ domain :ReferenceData do
     attribute :id, String, "name of document", example: "#{EXNAME}"
     attribute :title, String, "short document title for listing and web tabs"
     attribute :version, Version
-    attribute :prefix, String, "A code used as a prefix for all codes", example: "ccv"
+    attribute :prefix, String,
+              "A code used as a prefix for all codes in the document. This is should used instead of the document URL" +
+                  "when creating codes ",
+              example: "ccv"
     attribute :description, String, ZERO_OR_ONE
   }
 

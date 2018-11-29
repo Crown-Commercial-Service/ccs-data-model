@@ -285,20 +285,20 @@ module DataModel
   end
 
   # create an enumeration class derived from Symbol
-  def Enum(scheme, *codes, code_type: :code, code_key: :id, name_key: :id, scheme_desc: :id)
-    if (!(scheme.class <= DataType))
-      raise "scheme #{scheme} for Enum needs to be a data type with many type values as an attribute 'codekey'"
+  def Enum(doc, *codes, code_type: :code, code_key: :uri, name_key: :id, doc_id: :id)
+    if (!(doc.class <= DataType))
+      raise "scheme #{doc} for Enum needs to be a data type with many type values as an attribute 'codekey'"
     end
     if (codes.length == 0)
-      codes = scheme.attributes[code_type]
+      codes = doc.attributes[code_type]
     end
     code_ids = codes.map {|code| code.attributes[code_key]}
     name_ids = codes.map {|code| code.attributes[name_key]}
-    typename = "ENUM_#{name_ids.join '_'}"
+    typename = "ENUM_#{name_ids.join '_'}".gsub(/[:-]/,'_')
     selclass = Object.const_set typename, Class.new(Selection)
     selclass.define_singleton_method(:ids) {code_ids}
-    selclass.define_singleton_method(:scheme) {scheme}
-    selclass.define_singleton_method(:to_s) {"#{self.scheme.attributes[scheme_desc]}(#{self.ids.join(',')})"}
+    selclass.define_singleton_method(:doc) {doc}
+    selclass.define_singleton_method(:to_s) {"#{self.doc.attributes[doc_id]}(#{self.ids.join(',')})"}
     return selclass
   end
 

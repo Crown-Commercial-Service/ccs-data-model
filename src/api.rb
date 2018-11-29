@@ -49,9 +49,9 @@ class OpenApi3 < Output
   CONTENT = "content"
   SCHEMA = "schema"
   APPLICATION_JSON = "application/json"
-
   PAGING_CONTROL = [:limit, :skip]
   PAGE_LIMIT = 200
+  EXAMPLE = "example"
 
   def output api
 
@@ -86,18 +86,18 @@ class OpenApi3 < Output
       resource_name = resource.type.typename
       api_root = "/api"
       vroot = "#{api_root}/v#{endpoint.version.major}"
-      paths["#{api_root}/#{resource_name}"] = {
-          GET => {
-              SUMMARY => "get latest version for api",
-              TAGS => [BROWSERS],
-              SUMMARY => "redirect for search",
-              OPERATION_ID => "search-#{resource_name}",
-              DESCRIPTION => "searches #{resource_name} by name, id or keyword",
-              RESPONSES => {
-                  "302" =>   {DESCRIPTION => "Redirect to the latest semantic version API"}
-              }
-          }
-      }
+      # paths["#{api_root}/#{resource_name}"] = {
+      #     GET => {
+      #         SUMMARY => "get latest version for api",
+      #         TAGS => [BROWSERS],
+      #         SUMMARY => "redirect for search",
+      #         OPERATION_ID => "search-#{resource_name}",
+      #         DESCRIPTION => "searches #{resource_name} by name, id or keyword",
+      #         RESPONSES => {
+      #             "302" =>   {DESCRIPTION => "Redirect to the latest semantic version API"}
+      #         }
+      #     }
+      # }
       paths["#{vroot}/#{resource_name}"] = {
           GET => {
               SUMMARY => "get list",
@@ -287,7 +287,8 @@ class OpenApi3 < Output
        {
            "type" => "object",
            "required" => ["id", NAME], #TODO all attributes that are min nonzero
-           "properties" => datatype_properties(type)
+           "properties" => datatype_properties(type),
+           "description" => type.description
        }
       ]
     when :response then
@@ -344,6 +345,7 @@ class OpenApi3 < Output
     end
   end
 
+
   def datatype_properties type
     property_set = {}
     type.attributes.each_value do |v|
@@ -356,6 +358,9 @@ class OpenApi3 < Output
                   "format" => "date"})
       elsif (attype <= Integer)
         p.merge!({"type" => "integer"})
+      elsif (attype <= Float)
+        p.merge!({"type" => "number",
+                  "format" => "float"})
       elsif (attype <= Version)
         p.merge!({"type" => "string"})
       elsif (attype <= DataType)
@@ -374,10 +379,15 @@ class OpenApi3 < Output
             "items" => p
         }
       end
-      if (nil != v[:example])
-        p["example"] = v[:example]
+      example = v[:example]
+      if (nil != example)
+        p[EXAMPLE] = example
       end
-      property_set[v[:name]] = p
+      desc = v[:description]
+      if (nil != desc && !(attype <= DataType))
+        p[DESCRIPTION] = desc
+      end
+      property_set[v[:name].to_s] = p
     end
     property_set
   end

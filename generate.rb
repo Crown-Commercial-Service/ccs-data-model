@@ -4,12 +4,12 @@ require_relative "src/data"
 require_relative 'src/api'
 require_relative 'model/v_0/agreement'
 require_relative 'model/v_0/party'
-require_relative 'model/v_0/geographic'
+require_relative 'model/v_0/geographic_reference_data'
 require_relative 'model/v_0/api'
 
 output_path = File.join(File.dirname(__FILE__), "gen")
 
-metamodels = [Agreements, Parties, Geographic]
+metamodels = [Agreements, Parties]
 
 diagram = Diagram.new(output_path, "metamodel")
 diagram.describe *metamodels
@@ -29,7 +29,7 @@ data.output_metamodel *metamodels
 REFERENCE_DATA = ReferenceData.instances
 
 REFERENCE_DATA.each do |dom|
-  data = DataFile.new(output_path, snake_case(dom.name), fmt: :json, subdir: "reference_data")
+  data = DataFile.new(output_path, snake_case(dom.name), fmt: :json, subdir: "reference_data/v0")
   data.output *dom
 end
 

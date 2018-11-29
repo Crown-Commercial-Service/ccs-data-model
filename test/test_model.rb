@@ -15,8 +15,8 @@ end
 TestRefModel.new :TESTREF do
   LIST= list {
     id :list_for_test_enum
-    code {id :one}
-    code {id :two}
+    ONE= code {id :one}
+    TWO= code {id :two}
     code {id :three}
   }
 end
@@ -42,8 +42,8 @@ domain :TestModel do
   end
 
   datatype :Kindly do
-    attribute :kind, Enum(LIST, :one, :two), "pick two ids from list"
-    attribute :allkinds, Enum(LIST, code_type: :code), "all ids"
+    attribute :kind, Enum(LIST, ONE, TWO,code_key: :id), "pick two ids from list"
+    attribute :allkinds, Enum(LIST, code_type: :code ,code_key: :id), "all ids"
   end
 
   datatype :ReferencingType do

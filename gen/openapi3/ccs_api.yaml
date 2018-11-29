@@ -2,7 +2,7 @@
 openapi: 3.0.4
 servers:
 - description: generated server for API::Endpoint
-  url: ccs.gov.uk
+  url: api.services.crowncommercial.gov.uk
 info:
   title: API::Endpoint
   description: genearated endpoint for data API::Endpoint
@@ -18,16 +18,6 @@ tags:
 - name: recorder
   description: for record updaters, often suppliers
 paths:
-  "/api/Agreement":
-    get:
-      summary: redirect for search
-      tags:
-      - browser
-      operationId: search-Agreement
-      description: searches Agreement by name, id or keyword
-      responses:
-        '302':
-          description: Redirect to the latest semantic version API
   "/api/v0/Agreement":
     get:
       summary: search
@@ -95,16 +85,6 @@ paths:
           "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
-  "/api/ItemType":
-    get:
-      summary: redirect for search
-      tags:
-      - browser
-      operationId: search-ItemType
-      description: searches ItemType by name, id or keyword
-      responses:
-        '302':
-          description: Redirect to the latest semantic version API
   "/api/v0/ItemType":
     get:
       summary: search
@@ -171,16 +151,6 @@ paths:
           "$ref": "#/components/responses/ItemType"
         4XX:
           description: error TODO
-  "/api/Item":
-    get:
-      summary: redirect for search
-      tags:
-      - browser
-      operationId: search-Item
-      description: searches Item by name, id or keyword
-      responses:
-        '302':
-          description: Redirect to the latest semantic version API
   "/api/v0/Item":
     get:
       summary: search
@@ -189,6 +159,7 @@ paths:
       operationId: search-Item
       description: searches Item by name, id or keyword
       parameters:
+      - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_limit"
       - "$ref": "#/components/parameters/q_skip"
       responses:
@@ -245,6 +216,203 @@ paths:
           "$ref": "#/components/responses/Item"
         4XX:
           description: error TODO
+  "/api/v0/Party":
+    get:
+      summary: search
+      tags:
+      - browser
+      operationId: search-Party
+      description: searches Party by name, id or keyword
+      parameters:
+      - "$ref": "#/components/parameters/q_id"
+      - "$ref": "#/components/parameters/q_limit"
+      - "$ref": "#/components/parameters/q_skip"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Partys"
+        4XX:
+          description: error TODO
+    post:
+      summary: put
+      tags:
+      - recorder
+      operationId: create-Party
+      description: add a new Party and retreive copy of it
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Party"
+        description: body should be the new Party
+      responses:
+        '200':
+          "$ref": "#/components/responses/Party"
+        4XX:
+          description: error TODO
+  "/api/v0/Party/{id}":
+    get:
+      summary: get a Party
+      tags:
+      - recorder
+      description: retrieve Party by id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Party"
+        4XX:
+          description: error TODO
+    post:
+      summary: post
+      tags:
+      - recorder
+      operationId: revise-Party
+      description: update an existing Party given its id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Party"
+        description: body should be the updated Party
+      responses:
+        '200':
+          "$ref": "#/components/responses/Party"
+        4XX:
+          description: error TODO
+  "/api/v0/Contact":
+    get:
+      summary: search
+      tags:
+      - browser
+      operationId: search-Contact
+      description: searches Contact by name, id or keyword
+      parameters:
+      - "$ref": "#/components/parameters/q_id"
+      - "$ref": "#/components/parameters/q_title"
+      - "$ref": "#/components/parameters/q_limit"
+      - "$ref": "#/components/parameters/q_skip"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Contacts"
+        4XX:
+          description: error TODO
+    post:
+      summary: put
+      tags:
+      - recorder
+      operationId: create-Contact
+      description: add a new Contact and retreive copy of it
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Contact"
+        description: body should be the new Contact
+      responses:
+        '200':
+          "$ref": "#/components/responses/Contact"
+        4XX:
+          description: error TODO
+  "/api/v0/Contact/{id}":
+    get:
+      summary: get a Contact
+      tags:
+      - recorder
+      description: retrieve Contact by id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Contact"
+        4XX:
+          description: error TODO
+    post:
+      summary: post
+      tags:
+      - recorder
+      operationId: revise-Contact
+      description: update an existing Contact given its id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Contact"
+        description: body should be the updated Contact
+      responses:
+        '200':
+          "$ref": "#/components/responses/Contact"
+        4XX:
+          description: error TODO
+  "/api/v0/Offering":
+    get:
+      summary: search
+      tags:
+      - browser
+      operationId: search-Offering
+      description: searches Offering by name, id or keyword
+      parameters:
+      - "$ref": "#/components/parameters/q_name"
+      - "$ref": "#/components/parameters/q_id"
+      - "$ref": "#/components/parameters/q_limit"
+      - "$ref": "#/components/parameters/q_skip"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Offerings"
+        4XX:
+          description: error TODO
+    post:
+      summary: put
+      tags:
+      - recorder
+      operationId: create-Offering
+      description: add a new Offering and retreive copy of it
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Offering"
+        description: body should be the new Offering
+      responses:
+        '200':
+          "$ref": "#/components/responses/Offering"
+        4XX:
+          description: error TODO
+  "/api/v0/Offering/{id}":
+    get:
+      summary: get a Offering
+      tags:
+      - recorder
+      description: retrieve Offering by id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Offering"
+        4XX:
+          description: error TODO
+    post:
+      summary: post
+      tags:
+      - recorder
+      operationId: revise-Offering
+      description: update an existing Offering given its id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Offering"
+        description: body should be the updated Offering
+      responses:
+        '200':
+          "$ref": "#/components/responses/Offering"
+        4XX:
+          description: error TODO
 components:
   schemas:
     Agreement:
@@ -253,26 +421,45 @@ components:
       - id
       - name
       properties:
-        :kind:
+        kind:
           type: string
           enum:
           - framework
           - lot
           - contract
-        :id:
+          description: Kind of agreement, such as Framework, Lot,Contract. Lots are
+            considered separateagreements, but link to their owning framework agreement.
+            Similarly Contracts should link to anylot that they are based on. See
+            https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes
+            for details.
+        id:
           type: string
-          example: RM3541
-        :keyword:
+          example: rm:RM3541
+          description: id of agreeement; This is the RM number for a framework, and
+            {RM#lotnumber} for a lot
+        id_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#lot_number
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#cf_contract_id
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
+          description: who to identify the agreement
+        keyword:
           type: array
           items:
             type: string
-        :name:
+          description: other names for the agreement
+        name:
           type: string
-        :long_name:
+          description: ''
+        long_name:
           type: string
-        :version:
+          description: ''
+        version:
           type: string
-        :status:
+          description: semantic version id of the agreement model, in the form X.Y.Z
+        status:
           type: string
           enum:
           - live
@@ -282,100 +469,463 @@ components:
           - underway
           - withdrawn
           - ended
-        :pillar:
+          description: current status of agreementSee https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes
+            for details.
+        pillar:
           type: string
-        :duration:
+          description: ''
+        duration:
           type: integer
-        :category:
+          description: Months
+        category:
           type: string
-        :start_date:
-          type: string
-          format: date
-        :end_date:
-          type: string
-          format: date
-        :original_end_date:
+          description: ''
+        start_date:
           type: string
           format: date
-        :description:
+          description: ''
+        end_date:
           type: string
-        :offerType:
+          format: date
+          description: ''
+        original_end_date:
           type: string
-        :part_of_id:
+          format: date
+          description: ''
+        description:
           type: string
-        :conforms_to_id:
+          description: Describe the agreement
+        part_of_id:
           type: string
-        :item_type:
+          description: Agreement this is part of, applicable only to Lots
+        conforms_to_id:
+          type: string
+          description: Agreement this conforms to, such as a Contract conforming to
+            a Framework
+        item_type:
           type: array
           items:
             "$ref": "#/components/schemas/ItemType"
-        :min_value:
+        min_value:
           type: integer
-        :max_value:
+          description: Minimum value of award, in pounds sterling
+        max_value:
           type: integer
+          description: Maximum value of award, in pounds sterling
+      description: General definition of Commercial Agreements
     ItemType:
       type: object
       required:
       - id
       - name
       properties:
-        :id:
-          type: string
-        :description:
-          type: string
-        :keyword:
-          type: array
-          items:
-            type: string
-        :scheme_id:
+        sector_scheme:
           type: array
           items:
             type: string
             enum:
-            - cpv
-            - cpvs
-            - gsin
-            - unspsc
-            - cpc
-          example: CPV
-        :code:
-          type: array
-          items:
-            type: string
-          example: CPV:37000000-8
-        :unit_scheme:
-          type: string
-          enum:
-          - reference.services.crowncommercial.gov.uk/v0/unit_scheme#uncefact
-          - reference.services.crowncommercial.gov.uk/v0/unit_scheme#qudt
-          example: reference.services.crowncommercial.gov.uk/v0/item_scheme#cpv
-        :unit:
-          type: string
-          example: QUDT:unit:SquareMeterPerKelvin
-        :sector_scheme:
-          type: array
-          items:
-            type: string
-            enum:
-            - ccs
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs
           example: ccsscheme
-        :sector_id:
+          description: The sector scheme id
+        sector_id:
           type: array
           items:
             type: string
           example: ccsscheme:education_funded
+          description: The sector scheme ids that define to whom the item may be sold.
+            Prefix must match one of the schemes.
+        location_scheme:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius
+          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
+          description: The schemes for identifying locations
+        location_id:
+          type: array
+          items:
+            type: string
+          example: "[UKH1, UKG2]"
+          description: The location scheme ids that defines  where the items can be
+            offered.
+        id:
+          type: string
+          example: CPV:37000000-8:CCS:2019-01:1
+          description: The composite code string, which must be unique across all
+            schemesThis should be prefixed tith ethe primary classification code
+        description:
+          type: string
+          description: long description
+        keyword:
+          type: array
+          items:
+            type: string
+          description: alternate names for the item type
+        classification_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpvs
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#gsin
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#unspsc
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpc
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv
+          description: The classiciation scheme id, which links to an entry in item_classification_schemesthe
+            item's id must be prefixed correctly for the classification, and be unique
+        classification:
+          type: string
+          example: CPV:37000000-8
+          description: Code within the primary scheme defining this type. Each code
+            should have a prefix identifying the scheme
+        additional_classification_schemes:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpvs
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#gsin
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#unspsc
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpc
+          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv]"
+          description: Additional ways to classify the item
+        additional_classifications:
+          type: array
+          items:
+            type: string
+          example: "[CPV:37000000-8]"
+          description: Code within the primary scheme defining this type. Each code
+            should have a prefix identifying the scheme
+        unit_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme#uncefact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme#qudt
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme#qudt
+          description: " define the unit scheme, from the schemes in unit_classification_schemes "
+        unit:
+          type: string
+          example: qudt:unit:SquareMeterPerKelvin
+          description: define the units, based on the unit scheme selected
+      description: Defines the items that can be offered in any selected agreementsAgreements
+        hava a number of items that can have values defining the agreement. The Items
+        shouldconstrain the key quantifiable elements of an agreement award. A supplier
+        may provide additionalvariable facts in their Offer to supplement the description
+        of how they support the agreement.
     Item:
       type: object
       required:
       - id
       - name
       properties:
-        :type_id:
+        id:
           type: string
-        :unit:
+          example: '07719842-a3a1-41c5-8320-6439295fb90e'
+          description: " a generated UUID minted for this item "
+        type_id:
           type: string
-        :value:
+          example: CPV:37000000-8:CCS:2019-01:1
+          description: " type of the item "
+        unit:
           type: string
+          description: " define the units, which should match one of the allowed unit
+            code valuesin the scheme defind in the type"
+        value:
+          type: string
+          description: an object of the type matching type->units
+      description: Specifies the value of an item that is being offered for an agreement.
+        All the data should be constrained according to the Item type in question
+    Party:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: " URN, should match salesforce ID; master key "
+        org_id_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe
+          description: ''
+        supplementary_org_id_schemens:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe
+          description: ''
+        supplementary_org_id:
+          type: array
+          items:
+            type: string
+          description: ''
+        parent_org_id:
+          type: string
+          description: " URN, should match one of the schemes listed "
+        org_name:
+          type: string
+          description: ''
+        sector_scheme:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs
+          description: ''
+        sector:
+          type: array
+          items:
+            type: string
+          example: " ccs_sector : education_funded "
+          description: ''
+        trading_name:
+          type: string
+          description: " Salesforce only stores for supplier "
+        spend_this_year:
+          type: number
+          format: float
+          description: "\n                                                                                                                                                                                                                                                                                                                                                                   Salesforce
+            only stores for buyer "
+        documents_url:
+          type: string
+          description: "\n                                                                                                                                                                                                                                                                                                                                                                                            Salesforce
+            links to google drive for this supplier;\n                                                                                                                                                                                                                                                                                                                                                                                                                               we
+            will move to S3 in due course "
+        contact_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+          description: ''
+        account_manager_id:
+          type: string
+          description: " Who manages the account for CCS "
+      description: The party is used to identify buyers and suppliers. Since some
+        organisations act asboth buyers and suppliers we use the same record for both,
+        but most organisations willbe one or the other. The onvolvement of the party
+        with an agreement determine  the role inthat contenxt.
+    Contact:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        contact_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+          description: ''
+        id:
+          type: string
+          description: " a newly minted UUID for CMp "
+        supplementary_contact_id_schemens:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email
+          description: ''
+        supplementary_contact_id:
+          type: array
+          items:
+            type: string
+          description: ''
+        party_id:
+          type: string
+          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           contact
+            is a link for this party "
+        role:
+          type: array
+          items:
+            type: string
+          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               role
+            for CMp "
+        first_name:
+          type: string
+          description: ''
+        last_name:
+          type: string
+          description: ''
+        title:
+          type: string
+          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Salesforce;
+            not sure what the constrainst are "
+        job_title:
+          type: string
+          description: " Salesforce; free text "
+        department:
+          type: string
+          description: " Salesforce - department within org, rather than gov "
+        address:
+          "$ref": "#/components/schemas/Address"
+        phone:
+          type: array
+          items:
+            type: string
+          description: " phone of the contact point; salesforce only supports one "
+        email:
+          type: array
+          items:
+            type: string
+          description: " email of the contact point; salesforce only supports two "
+        origin:
+          type: string
+          description: " from Salesforce - where the data was entered "
+        notes:
+          type: string
+          description: " from Salesforce "
+        status:
+          type: string
+          description: " from Salesforce, 'Active' "
+        user_research_participane:
+          type: string
+          description: " Y / N : from Salesforce "
+        not_to_receive_ccs_emails:
+          type: string
+          description: " Y / N : from Salesforce "
+        contact_owner:
+          type: string
+          description: " from Salesforce "
+      description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   A
+        way of contacting a party.Store contacts in a safe identity store.Do not store
+        personal details elsewhere.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       "
+    Offering:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        sector_scheme:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs
+          example: ccsscheme
+          description: The sector scheme id
+        sector_id:
+          type: array
+          items:
+            type: string
+          example: ccsscheme:education_funded
+          description: The sector scheme ids that define to whom the item may be sold.
+            Prefix must match one of the schemes.
+        location_scheme:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius
+          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
+          description: The schemes for identifying locations
+        location_id:
+          type: array
+          items:
+            type: string
+          example: "[UKH1, UKG2]"
+          description: The location scheme ids that defines  where the items can be
+            offered.
+        agreement_id:
+          type: string
+          description: The agreement this offering relates to
+        supplier_id:
+          type: string
+          example: comphouse:12345678
+          description: ''
+        id:
+          type: string
+          description: unique id for the offering across all offerings, suppliers
+            and frameworks
+        name:
+          type: string
+          description: ''
+        description:
+          type: string
+          description: ''
+        item:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Item"
+        filter:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FilterCode"
+        branch:
+          type: array
+          items:
+            type: string
+          description: where the offering can occur; contact should include address
+            details
+      description: " Supplier offering against an item or items of an agreement.This
+        may be extended for different agreements. A supplier may provide additionalvariable
+        facts in their Offer to supplement the description of how they support the
+        agreement. "
+    Address:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        street:
+          type: string
+          description: ''
+        address_2:
+          type: string
+          description: ''
+        town:
+          type: string
+          description: ''
+        county:
+          type: string
+          description: ''
+        country:
+          type: string
+          description: ''
+        postcode:
+          type: string
+          description: ''
+        latitutde:
+          type: string
+          description: " Location from the address for geo search "
+        longtitude:
+          type: string
+          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Location
+            from the address for geo search "
+      description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Address
+        should include at least address line 1 and ideally post code.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         will
+        contain lat / long if we have derived it.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "
+    FilterCode:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: ''
+        filter_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/filter_scheme#apprenticeships
+          description: ''
+      description: additional fields that help qualify the objectfilter coded items
+        are completely described by their filter value according to the schemethe
+        full detail of the filter should be included in the coding suffix
   parameters:
     q_name:
       name: q_name
@@ -468,3 +1018,45 @@ components:
             type: array
             items:
               "$ref": "#/components/schemas/Item"
+    Party:
+      description: Party matching id
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Party"
+    Partys:
+      description: array of Partys matching id
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Party"
+    Contact:
+      description: Contact matching id
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Contact"
+    Contacts:
+      description: array of Contacts matching id
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Contact"
+    Offering:
+      description: Offering matching id
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Offering"
+    Offerings:
+      description: array of Offerings matching id
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Offering"

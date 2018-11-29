@@ -16,7 +16,7 @@ ReferenceData.new :UnitScheme do
       source "http://tfig.unece.org/contents/recommendation-20.htm"
       macro &URI_FROM_DOC_AND_ID
     }
-    code {
+    QUDT= code {
       id :qudt
       macro &URI_FROM_DOC_AND_ID
       title "Quantities, Units, Dimensions and Data Types Ontologies"

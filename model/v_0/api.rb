@@ -1,4 +1,6 @@
 require_relative 'agreement'
+require_relative 'offering'
+require_relative 'party'
 
 domain(:API) {
 
@@ -17,10 +19,13 @@ domain(:API) {
 
 API.new :API_V0_1 do
   endpoint {
-    host "ccs.gov.uk"
+    host API_HOST
     version VERSION
     resource {type Agreements::Agreement}
     resource {type Items::ItemType}
     resource {type Items::Item}
+    resource {type Parties::Party}
+    resource {type Parties::Contact}
+    resource {type Offerings::Offering}
   }
 end

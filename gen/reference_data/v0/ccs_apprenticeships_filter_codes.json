@@ -1,0 +1,27 @@
+{
+  "codelist": [
+    {
+      "id": "ccs_apprenticeships_filter_codes",
+      "version": "0.1.0",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_apprenticeships_filter_codes",
+      "title": "CCS Filter Classification Schemes",
+      "description": "Scheme of codes used to filter apprenticeships",
+      "prefix": "apprenticeship-filter",
+      "code": [
+        {
+          "id": "classroom:is-shared:BOOL",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_apprenticeships_filter_codes#classroom:is-shared:bool",
+          "description": "defines if the classroom is shared",
+          "title": "classroom:is-shared:BOOL",
+          "example": "apprenticeship-filter:classroom:is-shared:true"
+        },
+        {
+          "id": "course-can-be-customised:BOOL",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_apprenticeships_filter_codes#course-can-be-customised:bool",
+          "title": "course-can-be-customised:BOOL",
+          "example": "apprenticeship-filter:course-can-be-customised:true"
+        }
+      ]
+    }
+  ]
+}

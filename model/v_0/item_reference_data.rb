@@ -1,7 +1,7 @@
 require_relative 'reference_data'
 
 ReferenceData.new :ItemScheme do
-  ALL_ITEM_SCHEMES = Enum (scheme {
+  ITEM_SCHEMES = Enum (scheme {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "ItemClassificationSchemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
@@ -44,4 +44,3 @@ ReferenceData.new :ItemScheme do
   })
 end
 
-# ALL_ITEM_SCHEMES = Enum ITEM_CLASSIFICATION_SCHEMES

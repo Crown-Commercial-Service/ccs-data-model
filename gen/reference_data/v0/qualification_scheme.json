@@ -1,0 +1,22 @@
+{
+  "scheme": [
+    {
+      "id": "qualification_scheme",
+      "version": "0.1.0",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/qualification_scheme",
+      "title": "Qualification Classification Schemes",
+      "description": "Scheme of codes used to decide what scheme to use to classify an item",
+      "prefix": "qualscheme",
+      "code": [
+        {
+          "id": "offsted_rating",
+          "prefix": "offsted_rating",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/qualification_scheme#offsted_rating",
+          "title": "Offsted Rating",
+          "description": "Offsted Rating",
+          "source": "Offsted codes TBD"
+        }
+      ]
+    }
+  ]
+}

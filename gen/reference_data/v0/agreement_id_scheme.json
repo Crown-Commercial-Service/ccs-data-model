@@ -1,0 +1,39 @@
+{
+  "scheme": [
+    {
+      "version": "0.1.0",
+      "id": "agreement_id_scheme",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme",
+      "prefix": "ccs_atype",
+      "title": "Agreement id schemes",
+      "description": "Scheme for how to identify an agreement",
+      "code": [
+        {
+          "id": "ccs_fw_id",
+          "prefix": "rm",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id",
+          "title": "Framework ID",
+          "example": "rm:RM1234",
+          "source": "Salesforce or Contracts Finder"
+        },
+        {
+          "id": "lot_number",
+          "prefix": "lot",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#lot_number",
+          "title": "Lot in Framework ",
+          "description": "Lot in Framework - form is {rm}#{lot}",
+          "example": "lot:RM1234#3",
+          "source": "Salesforce or Contracts Finder"
+        },
+        {
+          "id": "cf_contract_id",
+          "prefix": "cf",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#cf_contract_id",
+          "title": "Contract in ContractFinder",
+          "example": "cf:Notice/891b4363-fcab-4a8b-a450-5bc886508641",
+          "source": "ContractsFinder"
+        }
+      ]
+    }
+  ]
+}

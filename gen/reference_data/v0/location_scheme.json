@@ -1,0 +1,28 @@
+{
+  "scheme": [
+    {
+      "id": "location_scheme",
+      "version": "0.1.0",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme",
+      "title": "Schemes codes to locate geographic areas",
+      "description": "Scheme of codes used to decide what scheme to use to classify an item",
+      "prefix": "location_scheme",
+      "code": [
+        {
+          "id": "nuts_2016",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016",
+          "title": "NUTS coding",
+          "description": "NUTS geo coding",
+          "source": "https://en.wikipedia.org/wiki/NUTS_statistical_regions_of_the_United_Kingdom"
+        },
+        {
+          "id": "postcode_raius",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius",
+          "title": "Postcode radius coding",
+          "description": "Take a radius in miles from the centre of a postcode.code should be of the form <POSTCODE>:<RADIUS IN MILES>",
+          "source": "https://cloud.google.com/maps-platform/"
+        }
+      ]
+    }
+  ]
+}

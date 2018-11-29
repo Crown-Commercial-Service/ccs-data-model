@@ -11,19 +11,21 @@ domain :Agreements do
 
     # identify the agreement
     attribute :kind, AGREEMENT_TYPES,
-              "Kind of agreement, such as Framework, Lot,
-
-
-   Contract. Lots are considered separate" +
+              "Kind of agreement, such as Framework, Lot,Contract. Lots are considered separate" +
                   "agreements, but link to their owning framework agreement. Similarly Contracts should link to any" +
-                  "lot that they are based on"
+                  "lot that they are based on. " +
+                  "See #{AGREEMENT_TYPES.doc.url} for details."
     attribute :id, String, "id of agreeement; This is the RM number for a framework, and {RM#lotnumber} for a lot",
-              example: "RM3541"
+              example: "#{FW.prefix}:RM3541"
+    attribute :id_scheme, AGREEMENT_ID_SCHEMES, SINGLE, "who to identify the agreement", example: FW.uri
+    # TODO add selection from agremment id schemes
     attribute :keyword, String, ZERO_TO_MANY, "other names for the agreement"
     attribute :name, String
     attribute :long_name, String
     attribute :version, String, "semantic version id of the agreement model, in the form X.Y.Z"
-    attribute :status, AGREEMENT_STATUSES
+    attribute :status, AGREEMENT_STATUSES, SINGLE,
+              "current status of agreement" +
+                  "See #{AGREEMENT_STATUSES.doc.url} for details."
     attribute :pillar, String
     attribute :duration, Integer, "Months"
     attribute :category, String
@@ -31,8 +33,6 @@ domain :Agreements do
     attribute :end_date, Date
     attribute :original_end_date, Date
     attribute :description, String, "Describe the agreement"
-    attribute :offerType, String, "Name of the subclass of the Offering, supporting the Agreement"
-
 
     # structure of agreement
     attribute :part_of_id, String, "Agreement this is part of, applicable only to Lots", links: :Agreement
