@@ -1,54 +1,63 @@
 require_relative 'reference_data'
 
-ReferenceData.new :AgreementTypes do
+ReferenceData.new :AgreementTypeCodes do
   AGREEMENT_TYPES = Enum(codelist {
-    name :agreement_types
+    version  "0.1.0"
+    macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     prefix "ccs_atype"
-    url ""
-    version "0.1.0"
     title "Agreement types"
     description "Scheme of codes used to decide what scheme to use to classify an agreement"
     code {
-      id :Framework
+      id :framework
+      macro &URI_FROM_DOC_AND_ID
       title "Framework "
     }
     code {
-      id :Lot
+      id :lot
+      macro &URI_FROM_DOC_AND_ID
       title " Lot "
     }
     code {
-      id :Contract
+      id :contract
+      macro &URI_FROM_DOC_AND_ID
       title " Contract"
     }
   })
 end
 
-ReferenceData.new :AgreementStatuses do
+ReferenceData.new :AgreementStatusCodes do
   AGREEMENT_STATUSES = Enum (codelist {
-    name :agreement_statuses
     version "0.1.0"
+    macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
     description "Scheme of codes used to decide what scheme to use to classify an agreement"
     code {
-      id :Live
+      id :live
+      macro &URI_FROM_DOC_AND_ID
     }
     code {
-      id :Inactive
+      id :inactive
+      macro &URI_FROM_DOC_AND_ID
     }
     code {
-      id :Future
+      id :future
+      macro &URI_FROM_DOC_AND_ID
     }
     code {
-      id :Planned
+      id :planned
+      macro &URI_FROM_DOC_AND_ID
     }
     code {
-      id :Underway
+      id :underway
+      macro &URI_FROM_DOC_AND_ID
     }
     code {
-      id :Withdrawn
+      id :withdrawn
+      macro &URI_FROM_DOC_AND_ID
     }
     code {
-      id :Ended
+      id :ended
+      macro &URI_FROM_DOC_AND_ID
     }
   })
 end

@@ -226,9 +226,9 @@ components:
         :kind:
           type: string
           enum:
-          - Framework
-          - Lot
-          - Contract
+          - framework
+          - lot
+          - contract
         :id:
           type: string
           example: RM3541
@@ -245,13 +245,13 @@ components:
         :status:
           type: string
           enum:
-          - Live
-          - Inactive
-          - Future
-          - Planned
-          - Underway
-          - Withdrawn
-          - Ended
+          - live
+          - inactive
+          - future
+          - planned
+          - underway
+          - withdrawn
+          - ended
         :pillar:
           type: string
         :duration:
@@ -302,11 +302,11 @@ components:
           items:
             type: string
             enum:
-            - CPV
-            - CPVS
-            - GSIN
-            - UNSPSC
-            - CPC
+            - cpv
+            - cpvs
+            - gsin
+            - unspsc
+            - cpc
           example: CPV
         :code:
           type: array
@@ -316,8 +316,8 @@ components:
         :unit_scheme:
           type: string
           enum:
-          - reference.services.crowncommercial.gov.uk/unit_classification_schemes/uncefact
-          - reference.services.crowncommercial.gov.uk/unit_classification_schemes/qudt
+          - reference.services.crowncommercial.gov.uk/0.1/unit_scheme#uncefact
+          - reference.services.crowncommercial.gov.uk/0.1/unit_scheme#qudt
           example: QUDT
         :unit:
           type: string

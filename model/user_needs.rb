@@ -1,26 +1,29 @@
 
 require_relative '../src/data_model'
 
-ReferenceData.new :UserNeeds do
+ReferenceData.new :UserNeedCodes do
   USERNEEDS = codelist {
-    id :AgreementTypes
     version "0.1.0"
+    macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
     description "Scheme of codes used to decide what scheme to use to classify an agreement"
     code {
-      id :Location
+      id :location
+      macro &URI_FROM_DOC_AND_ID
       title "Location"
       description " Where is the need? " +
                       " Match location needs to locations of offers "
     }
     code {
-      id :Service
+      id :service
+      macro &URI_FROM_DOC_AND_ID
       title "Service"
       description " What sort of things do they need? " +
                       " Match the service to item types, their keywords, and offering titles."
     }
     code {
-      id :Budget
+      id :budget
+      macro &URI_FROM_DOC_AND_ID
       title "Budget"
       description "What is the budget the buyer has for their need?" +
                       "Match the budget to the value range of the agreement, and the value range of supplier offers." +
@@ -38,6 +41,6 @@ schemes, but is not a one-to-one match.") {
   attribute :buyer_id, String, "The buyer expressing the need"
   attribute :kind, Enum(USERNEEDS)
   attribute :value, String
-  attribute :unit_scheme, ALL_UNITS_SCHEMES, "The units scheme "
+  attribute :unit_scheme, UNITS_SCHEMES, "The units scheme "
   attribute :unit_scheme, String, "The units typically used to express the need"
 }

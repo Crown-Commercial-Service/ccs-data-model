@@ -19,7 +19,7 @@ domain :Items do
               example: "CPV"
     attribute :code, String, ONE_TO_MANY, "Code within the primary scheme defining this type. Each code should have a prefix identifying the scheme",
               example: "CPV:37000000-8"
-    attribute :unit_scheme, ALL_UNITS_SCHEMES, " define the unit scheme, from the schemes in unit_classification_schemes ",
+    attribute :unit_scheme, UNITS_SCHEMES, " define the unit scheme, from the schemes in unit_classification_schemes ",
               example: "QUDT"
     attribute :unit, String, "define the units, based on the unit scheme selected",
               example: "QUDT:unit:SquareMeterPerKelvin"

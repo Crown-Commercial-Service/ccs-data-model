@@ -5,7 +5,7 @@
         "multiplicity": "1",
         "description": "Kind of agreement, such as Framework, Lot,\n\n\n   Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on",
         "name": "kind",
-        "type": "(Framework,Lot,Contract)"
+        "type": "agreement_type_codes(framework,lot,contract)"
       },
       "id": {
         "multiplicity": "1",
@@ -42,7 +42,7 @@
         "multiplicity": "1",
         "description": "",
         "name": "status",
-        "type": "(Live,Inactive,Future,Planned,Underway,Withdrawn,Ended)"
+        "type": "agreement_status_codes(live,inactive,future,planned,underway,withdrawn,ended)"
       },
       "pillar": {
         "multiplicity": "1",
@@ -169,7 +169,7 @@
         "multiplicity": "*",
         "description": "",
         "name": "sector_scheme",
-        "type": "(ccs)"
+        "type": "sector_scheme(ccs)"
       },
       "sector": {
         "multiplicity": "*",

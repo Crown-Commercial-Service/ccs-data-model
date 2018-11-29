@@ -39,7 +39,7 @@ end
 REFERENCE_DATA = ReferenceData.instances
 
 REFERENCE_DATA.each do |dom|
-  data = DataFile.new(output_path, dom.name, fmt: :json, subdir: "reference_data")
+  data = DataFile.new(output_path, snake_case(dom.name), fmt: :json, subdir: "reference_data")
   data.output *dom
 end
 

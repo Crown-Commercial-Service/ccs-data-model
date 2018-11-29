@@ -4,13 +4,13 @@
 
 |attribute|type|multiplicity|description|
 |---------|----|------------|-----------|
-|kind|(Framework,Lot,Contract)|1|Kind of agreement, such as Framework, Lot,   Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on|
+|kind|agreement_type_codes(framework,lot,contract)|1|Kind of agreement, such as Framework, Lot,   Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on|
 |id|String|1|id of agreeement; This is the RM number for a framework, and {RM#lotnumber} for a lot|
 |keyword|String|*|other names for the agreement|
 |name|String|1||
 |long_name|String|1||
 |version|String|1|semantic version id of the agreement model, in the form X.Y.Z|
-|status|(Live,Inactive,Future,Planned,Underway,Withdrawn,Ended)|1||
+|status|agreement_status_codes(live,inactive,future,planned,underway,withdrawn,ended)|1||
 |pillar|String|1||
 |duration|Integer|1|Months|
 |category|String|1||
@@ -41,7 +41,7 @@ Details still to be added
 |urn|String|0..1|Government URN, of the form 100001234|
 |company_reg_number|String|0..1||
 |org_name|String|1||
-|sector_scheme|(ccs)|*||
+|sector_scheme|sector_scheme(ccs)|*||
 |sector|String|*||
 |trading_name|String|0..1|Salesforce only stores for supplier|
 |supplier_registration_completed|Date|1|The party is a supplier who has completed registration|

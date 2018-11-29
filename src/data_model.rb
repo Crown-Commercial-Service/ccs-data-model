@@ -1,4 +1,6 @@
 require 'date'
+require 'semantic'
+include Semantic
 
 module DataModel
 
@@ -103,6 +105,7 @@ module DataModel
           else
             value = args[0]
           end
+          value= check_and_convert(value, self.class.attributes[k][:type])
           if self.class.attributes[k][:multiplicity].end != 1
             @attributes[k] = [] unless @attributes[k]
             @attributes[k] << value
@@ -115,8 +118,8 @@ module DataModel
           @attributes[k] = val
           val
         end
-        if !self.respond_to? :include
-          self.define_singleton_method :include do |&block|
+        if !self.respond_to? :macro
+          self.define_singleton_method :macro do |&block|
             self.instance_exec(&block)
           end
         end
@@ -125,6 +128,13 @@ module DataModel
       if block_given?
         self.instance_exec(&initialize_block)
       end
+    end
+
+    def check_and_convert(value, type)
+      if(type <= Version && value.class <= String)
+        return Version.new value
+      end
+      value
     end
 
     def to_s
@@ -292,11 +302,18 @@ module DataModel
     return selclass
   end
 
+  #borrowed from rubocop
+  def snake_case(camel_case_string)
+    snake = camel_case_string.to_s
+                .gsub(/([^A-Z])([A-Z]+)/, '\1_\2')
+                .gsub(/([A-Z])([A-Z][^A-Z\d]+)/, '\1_\2')
+                .downcase
+    if (camel_case_string.class <= Symbol)
+      snake.to_sym
+    else
+      snake
+    end
+  end
 
 end # DataModel
 
-class Class
-  def typename
-    return self.name
-  end
-end
