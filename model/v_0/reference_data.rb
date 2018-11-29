@@ -1,10 +1,9 @@
 require_relative '../../src/data_model'
+require_relative 'host'
 include DataModel
 
-REFERENCE_HOST = "reference.services.crowncommercial.gov.uk"
-
 def ref_url id, version
-  "#{REFERENCE_HOST}/v#{version.major}.#{version.minor}/#{id}"
+  "#{REFERENCE_HOST}/v#{version.major}/#{id}"
 end
 
 URI_FROM_DOC_AND_ID = lambda do
@@ -13,9 +12,7 @@ end
 
 ID_AND_URL_FROM_DOMAIN_AND_VERSION = lambda do
   id snake_case(domain.name)
-  if nil== version
-    raise "must define version for URI"
-  end
+  version VERSION
   url ref_url(id, version)
 end
 

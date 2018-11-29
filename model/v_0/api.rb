@@ -1,5 +1,4 @@
-require_relative '../../src/data_model'
-include DataModel
+require_relative 'agreement'
 
 domain(:API) {
 
@@ -16,12 +15,10 @@ domain(:API) {
 
 }
 
-API_VERSION = Version.new "0.1.0"
-
 API.new :API_V0_1 do
   endpoint {
     host "ccs.gov.uk"
-    version API_VERSION
+    version VERSION
     resource {type Agreements::Agreement}
     resource {type Items::ItemType}
     resource {type Items::Item}

@@ -27,7 +27,6 @@ end
 
 ReferenceData.new :AgreementStatusCodes do
   AGREEMENT_STATUSES = Enum (codelist {
-    version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
     description "Scheme of codes used to decide what scheme to use to classify an agreement"

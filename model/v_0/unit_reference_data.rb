@@ -4,7 +4,6 @@ require_relative 'reference_data'
 
 ReferenceData.new :UnitScheme do
   UNITS_SCHEMES = Enum(scheme {
-    version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Unit Schemes"
     description "Scheme of codes used to decide what scheme to use to classify units"

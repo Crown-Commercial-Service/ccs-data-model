@@ -2,7 +2,6 @@ require_relative 'reference_data'
 
 ReferenceData.new :CCSSectorCodes do
   CCSSECTORS= codelist {
-    version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "CCS Sector Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
@@ -18,7 +17,6 @@ end
 
 ReferenceData.new :SectorScheme do
   SECTOR_SCHEMES = Enum (scheme {
-    version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Sector Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"

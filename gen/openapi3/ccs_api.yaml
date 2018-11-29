@@ -346,9 +346,9 @@ components:
         :unit_scheme:
           type: string
           enum:
-          - reference.services.crowncommercial.gov.uk/v0.1/unit_scheme#uncefact
-          - reference.services.crowncommercial.gov.uk/v0.1/unit_scheme#qudt
-          example: QUDT
+          - reference.services.crowncommercial.gov.uk/v0/unit_scheme#uncefact
+          - reference.services.crowncommercial.gov.uk/v0/unit_scheme#qudt
+          example: reference.services.crowncommercial.gov.uk/v0/item_scheme#cpv
         :unit:
           type: string
           example: QUDT:unit:SquareMeterPerKelvin
