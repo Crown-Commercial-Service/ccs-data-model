@@ -1,63 +1,5 @@
 ---
 :Agreements:
-  :ItemType:
-    :id:
-      :multiplicity: '1'
-      :description: The composite code string, which must be unique across all schemesMake
-        this up by taking the scheme_id and appending the code id
-      :name: :id
-      :type: String
-    :description:
-      :multiplicity: '1'
-      :description: long description
-      :name: :description
-      :type: String
-    :keyword:
-      :multiplicity: "*"
-      :description: alternate names for the item type
-      :name: :keyword
-      :type: String
-    :scheme_id:
-      :multiplicity: '1'
-      :description: The classiciation scheme id
-      :name: :scheme_id
-      :type: ItemClassificationSchemes(CPV,CPVS,GSIN,UNSPSC,CPC)
-    :code:
-      :multiplicity: '1'
-      :description: " Code within the scheme defining this type"
-      :name: :code
-      :type: String
-    :unit_scheme:
-      :multiplicity: '1'
-      :description: " define the unit scheme "
-      :name: :unit_scheme
-      :type: UnitClassificationSchemes(UNCEFACT,QUDT)
-    :unit:
-      :multiplicity: '1'
-      :description: " define the units, if one units matches "
-      :name: :unit
-      :type: String
-  :ExpressionOfNeed:
-    :buyer_id:
-      :multiplicity: '1'
-      :description: The buyer expressing the need
-      :name: :buyer_id
-      :type: String
-    :kind:
-      :multiplicity: '1'
-      :description: ''
-      :name: :kind
-      :type: AgreementTypes(Location,Service,Budget)
-    :value:
-      :multiplicity: '1'
-      :description: ''
-      :name: :value
-      :type: String
-    :unit_scheme:
-      :multiplicity: '1'
-      :description: The units typically used to express the need
-      :name: :unit_scheme
-      :type: String
   :Agreement:
     :kind:
       :multiplicity: '1'
@@ -67,7 +9,7 @@
 
            Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on
       :name: :kind
-      :type: AgreementTypes(Framework,Lot,Contract)
+      :type: "(Framework,Lot,Contract)"
     :id:
       :multiplicity: '1'
       :description: id of agreeement; This is the RM number for a framework, and {RM#lotnumber}
@@ -99,7 +41,7 @@
       :multiplicity: '1'
       :description: ''
       :name: :status
-      :type: AgreementStatuses(Live,Inactive,Future,Planned,Underway,Withdrawn,Ended)
+      :type: "(Live,Inactive,Future,Planned,Underway,Withdrawn,Ended)"
     :pillar:
       :multiplicity: '1'
       :description: ''
@@ -157,7 +99,7 @@
       :multiplicity: "*"
       :description: describe the items that can be offered under the agreement
       :name: :item_type
-      :type: Agreements::ItemType
+      :type: Items::ItemType
     :min_value:
       :multiplicity: 0..1
       :description: Minimum value of award, in pounds sterling
@@ -168,115 +110,7 @@
       :description: Maximum value of award, in pounds sterling
       :name: :max_value
       :type: Integer
-  :Item:
-    :type_id:
-      :multiplicity: '1'
-      :description: " type of the item "
-      :name: :type_id
-      :type: String
-      :links: Agreements::ItemType
-    :unit:
-      :multiplicity: '1'
-      :description: |2-
-         define the units, which should match one of the allowed unit code values
-        in the scheme defind in the type
-      :name: :unit
-      :type: String
-    :value:
-      :multiplicity: '1'
-      :description: an object of the type matching type->units
-      :name: :value
-      :type: Object
-  :Offering:
-    :agreement_id:
-      :multiplicity: '1'
-      :description: The agreement this offering relates to
-      :name: :agreement_id
-      :type: String
-      :links: Agreements::Agreement
-    :supplier_id:
-      :multiplicity: '1'
-      :description: ''
-      :name: :supplier_id
-      :type: String
-      :links: Parties::Party
-    :id:
-      :multiplicity: '1'
-      :description: unique id for the offering across all offerings, suppliers and
-        frameworks
-      :name: :id
-      :type: String
-    :name:
-      :multiplicity: '1'
-      :description: ''
-      :name: :name
-      :type: String
-    :description:
-      :multiplicity: '1'
-      :description: ''
-      :name: :description
-      :type: String
-    :item:
-      :multiplicity: "*"
-      :description: details of the item
-      :name: :item
-      :type: Agreements::Item
-    :location_id:
-      :multiplicity: 1..*
-      :description: Pick list of applicable regions. There must be at least one, even
-        if it is just ' UK '
-      :name: :location_id
-      :type: String
-      :links: Geographic::AreaCode
-    :sector_id:
-      :multiplicity: "*"
-      :description: |-
-        Pick list of applicable sectors.
-        If set offering is only to be shown to users proven to belong to the sectors given
-      :name: :sector_id
-      :type: String
-      :links: Parties::Sector
-  :Catalogue:
-    :offers:
-      :multiplicity: "*"
-      :description: description of the item
-      :name: :offers
-      :type: Agreements::Offering
-  :Involvement:
-    :agreement_id:
-      :multiplicity: '1'
-      :description: The agreement this interest relates to
-      :name: :agreement_id
-      :type: String
-      :links: Agreements::Agreement
-    :party_id:
-      :multiplicity: '1'
-      :description: The party this interest relates to
-      :name: :party_id
-      :type: String
-      :links: Parties::Party
-    :role:
-      :multiplicity: '1'
-      :description: The role of the party in the involvment
-      :name: :role
-      :type: String
 :Parties:
-  :Sector:
-    :name:
-      :multiplicity: '1'
-      :description: ''
-      :name: :name
-      :type: String
-    :description:
-      :multiplicity: '1'
-      :description: ''
-      :name: :description
-      :type: String
-    :subsector:
-      :multiplicity: "*"
-      :description: ''
-      :name: :subsector
-      :type: Parties::Sector
   :Party:
     :id:
       :multiplicity: '1'
@@ -309,11 +143,17 @@
       :description: ''
       :name: :org_name
       :type: String
+    :sector_scheme:
+      :multiplicity: "*"
+      :description: ''
+      :name: :sector_scheme
+      :type: "(ccs)"
     :sector:
       :multiplicity: "*"
       :description: ''
       :name: :sector
-      :type: Parties::Sector
+      :type: String
+      :example: ccs_sector:education_funded
     :trading_name:
       :multiplicity: 0..1
       :description: Salesforce only stores for supplier
@@ -347,7 +187,7 @@
       :type: String
   :Address:
     :street:
-      :multiplicity: '1'
+      :multiplicity: 0..1
       :description: ''
       :name: :street
       :type: String

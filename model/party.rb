@@ -1,16 +1,8 @@
 require_relative '../src/data_model'
+require_relative 'party_reference_data'
 include DataModel
 
 domain(:Parties) {
-
-  datatype(:Sector, description: "
-  Hierarchy of sector codes delineating the party organisation
-  ") {
-    attribute :name, String
-    attribute :description, String
-    attribute :subsector, :Sector, ZERO_TO_MANY
-  }
-
   datatype(:Party, description: "
   The party is used to identify buyers and suppliers. Since some organisations act as
 both buyers and suppliers we use the same record for both, but most organisations will
@@ -23,7 +15,8 @@ Details still to be added") {
     attribute :urn, String, ZERO_OR_ONE, "Government URN, of the form 100001234"
     attribute :company_reg_number, String, ZERO_OR_ONE
     attribute :org_name, String
-    attribute :sector, :Sector, ZERO_TO_MANY
+    attribute :sector_scheme, SECTOR_SCHEMES, ZERO_TO_MANY
+    attribute :sector, String, ZERO_TO_MANY, example: "ccs_sector:education_funded"
     attribute :trading_name, String, ZERO_OR_ONE, "Salesforce only stores for supplier"
     # Supplier registration
     attribute :supplier_registration_completed, Date, "The party is a supplier who has completed registration"
@@ -37,7 +30,7 @@ Details still to be added") {
   datatype(:Address, description: "Address should include at least address line 1 and ideally post code.
 will contain lat/long if we have derived it.
   ") {
-    attribute :street, String
+    attribute :street, String, ZERO_OR_ONE
     attribute :address_2, String, ZERO_OR_ONE
     attribute :town, String, ZERO_OR_ONE
     attribute :county, String, ZERO_OR_ONE
@@ -72,26 +65,3 @@ will contain lat/long if we have derived it.
 
 }
 
-Parties.new :SECTORS do
-
-  # made up codes
-  ALL_UK_GOV = sector do
-    name :All_UK_gov
-    description "All UK Government including Central, Wider, and others"
-    CENTRAL = subsector do
-      name :Central_Gov; description "Central Government";
-      subsector do
-        name :example_dept; description "E.g. a dept";
-      end
-    end
-    WIDER = subsector do
-      name :Wider_Gov; description "Wider Government";
-      ED= subsector do
-        name :education; description "All education";
-        PUB_ED = subsector do
-          name :public_education; description "Public education";
-        end
-      end
-    end
-  end
-end

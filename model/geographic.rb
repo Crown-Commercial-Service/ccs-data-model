@@ -1,6 +1,7 @@
 require_relative '../src/data_model'
 include DataModel
 
+
 domain :Geographic do
 
   datatype :AreaCode do

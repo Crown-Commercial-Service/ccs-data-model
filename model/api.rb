@@ -4,8 +4,7 @@ include DataModel
 domain(:API) {
 
   datatype(:Resource, description: "
-  Specify how to access a data type
-  ") {
+  Specify how to access a data type ") {
     attribute :type, DataType
   }
 

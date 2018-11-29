@@ -23,34 +23,20 @@ data.output_metamodel *metamodels
 data = DataFile.new(output_path, "metamodel", fmt: :yaml)
 data.output_metamodel *metamodels
 
-reference_models = [
-    Geographic::NUTS,
-    Parties::SECTORS
-]
-
-data = DataFile.new(output_path, "reference_models", fmt: :json)
-data.output *reference_models
-data = DataFile.new(output_path, "reference_models", fmt: :jsonlines)
-data.output *reference_models
-data = DataFile.new(output_path, "reference_models", fmt: :yaml)
-data.output *reference_models
-
 API.new :MAIN do
   endpoint {
     host "ccs.gov.uk"
     version "0.1.0"
-    resource {
-      type Agreements::Agreement
-    }
+    resource {type Agreements::Agreement}
+    resource {type Items::ItemType}
+    resource {type Items::Item}
   }
 end
 
 # generate reference codes
 # get each document out of each reference data domain and create a file based on it's id
 
-REFERENCE_DATA= [
-    ReferenceData::AgreementReferenceData
-]
+REFERENCE_DATA = ReferenceData.instances
 
 REFERENCE_DATA.each do |dom|
   data = DataFile.new(output_path, dom.name, fmt: :json, subdir: "reference_data")

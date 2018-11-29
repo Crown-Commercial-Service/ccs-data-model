@@ -1,11 +1,11 @@
 ---
 openapi: 3.0.4
 servers:
-- description: generated server for Endpoint
+- description: generated server for API::Endpoint
   url: ccs.gov.uk
 info:
-  title: :Endpoint
-  description: genearated endpoint for data Endpoint
+  title: API::Endpoint
+  description: genearated endpoint for data API::Endpoint
   version: 0.1.0
   contact:
     email: admin@ccs.gov.uk
@@ -83,6 +83,136 @@ paths:
       responses:
         '200':
           "$ref": "#/components/responses/Agreement"
+        4XX:
+          description: error TODO
+  "/ItemType":
+    get:
+      summary: search
+      tags:
+      - browser
+      operationId: search-ItemType
+      description: searches ItemType by name, id or keyword
+      parameters:
+      - "$ref": "#/components/parameters/q_id"
+      - "$ref": "#/components/parameters/q_keyword"
+      - "$ref": "#/components/parameters/q_limit"
+      - "$ref": "#/components/parameters/q_skip"
+      responses:
+        '200':
+          "$ref": "#/components/responses/ItemTypes"
+        4XX:
+          description: error TODO
+    post:
+      summary: put
+      tags:
+      - recorder
+      operationId: create-ItemType
+      description: add a new ItemType and retreive copy of it
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ItemType"
+        description: body should be the new ItemType
+      responses:
+        '200':
+          "$ref": "#/components/responses/ItemType"
+        4XX:
+          description: error TODO
+  "/ItemType/{id}":
+    get:
+      summary: get a ItemType
+      tags:
+      - recorder
+      description: retrieve ItemType by id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      responses:
+        '200':
+          "$ref": "#/components/responses/ItemType"
+        4XX:
+          description: error TODO
+    post:
+      summary: post
+      tags:
+      - recorder
+      operationId: revise-ItemType
+      description: update an existing ItemType given its id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ItemType"
+        description: body should be the updated ItemType
+      responses:
+        '200':
+          "$ref": "#/components/responses/ItemType"
+        4XX:
+          description: error TODO
+  "/Item":
+    get:
+      summary: search
+      tags:
+      - browser
+      operationId: search-Item
+      description: searches Item by name, id or keyword
+      parameters:
+      - "$ref": "#/components/parameters/q_limit"
+      - "$ref": "#/components/parameters/q_skip"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Items"
+        4XX:
+          description: error TODO
+    post:
+      summary: put
+      tags:
+      - recorder
+      operationId: create-Item
+      description: add a new Item and retreive copy of it
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Item"
+        description: body should be the new Item
+      responses:
+        '200':
+          "$ref": "#/components/responses/Item"
+        4XX:
+          description: error TODO
+  "/Item/{id}":
+    get:
+      summary: get a Item
+      tags:
+      - recorder
+      description: retrieve Item by id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Item"
+        4XX:
+          description: error TODO
+    post:
+      summary: post
+      tags:
+      - recorder
+      operationId: revise-Item
+      description: update an existing Item given its id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Item"
+        description: body should be the updated Item
+      responses:
+        '200':
+          "$ref": "#/components/responses/Item"
         4XX:
           description: error TODO
 components:
@@ -168,21 +298,53 @@ components:
           items:
             type: string
         :scheme_id:
-          type: string
-          enum:
-          - CPV
-          - CPVS
-          - GSIN
-          - UNSPSC
-          - CPC
+          type: array
+          items:
+            type: string
+            enum:
+            - CPV
+            - CPVS
+            - GSIN
+            - UNSPSC
+            - CPC
+          example: CPV
         :code:
-          type: string
+          type: array
+          items:
+            type: string
+          example: CPV:37000000-8
         :unit_scheme:
           type: string
           enum:
-          - UNCEFACT
-          - QUDT
+          - reference.services.crowncommercial.gov.uk/unit_classification_schemes/uncefact
+          - reference.services.crowncommercial.gov.uk/unit_classification_schemes/qudt
+          example: QUDT
         :unit:
+          type: string
+          example: QUDT:unit:SquareMeterPerKelvin
+        :sector_scheme:
+          type: array
+          items:
+            type: string
+            enum:
+            - ccs
+          example: ccsscheme
+        :sector_id:
+          type: array
+          items:
+            type: string
+          example: ccsscheme:education_funded
+    Item:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        :type_id:
+          type: string
+        :unit:
+          type: string
+        :value:
           type: string
   parameters:
     q_name:
@@ -248,3 +410,31 @@ components:
             type: array
             items:
               "$ref": "#/components/schemas/Agreement"
+    ItemType:
+      description: ItemType matching id
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/ItemType"
+    ItemTypes:
+      description: array of ItemTypes matching id
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/ItemType"
+    Item:
+      description: Item matching id
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Item"
+    Items:
+      description: array of Items matching id
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Item"

@@ -20,13 +20,6 @@ module DataModel
         @description = description
         @instances = []
 
-        self.define_singleton_method :domain do
-          @domain
-        end
-        self.define_singleton_method :description do
-          @description
-        end
-
         self.define_singleton_method(:attributes) do |inherited = true|
           if inherited && self.superclass.respond_to?(:attributes)
             self.superclass.attributes.merge @attributes
@@ -37,6 +30,14 @@ module DataModel
 
       end
 
+      def domain
+        @domain
+      end
+
+      def description
+        @description
+      end
+
       def instances
         @instances
       end
@@ -45,7 +46,7 @@ module DataModel
         @typename
       end
 
-      alias name typename
+      # alias name typename
 
       def extends
         @extends < DataType ? @extends.name : nil
@@ -78,10 +79,12 @@ module DataModel
 
     end
 
-    attr_reader :name, :attributes
+    attr_reader :name, :domain, :attributes
+    attr_accessor :container
 
-    def initialize(name, attributes = {}, &initialize_block)
+    def initialize(name, domain, attributes = {}, &initialize_block)
       @name = name
+      @domain = domain
       @attributes = attributes
 
       self.class.instances << self
@@ -131,8 +134,10 @@ module DataModel
     private
 
     def valueof(sym, *args, &block)
+      type = self
       if self.class.attributes[sym][:type] < DataType
-        at = self.class.attributes[sym][:type].new(self.class.attributes[sym][:name])
+        at = self.class.attributes[sym][:type].new(self.class.attributes[sym][:name], self)
+        at.container = type
         if nil == block
           raise "Need a block for a nested type #{sym} in #{self}"
         end
@@ -148,6 +153,21 @@ module DataModel
   class Domain
 
     class << self
+
+      def init(name)
+        @name = name
+        @instances = []
+
+      end
+
+      def instances
+        @instances
+      end
+
+      def neme
+        @name
+      end
+
       def datatype(name, extends: DataType, description: "", &block)
         unless instance_variable_defined? :@types
           @types = {}
@@ -176,7 +196,7 @@ module DataModel
         elsif typeref.class == Class
           return typeref
         else
-          raise "type refs must be symbol or DataType class"
+          raise "type specifications must be symbol or DataType class"
         end
       end
 
@@ -189,6 +209,9 @@ module DataModel
       @name = name.to_sym
       self.class.const_set name.to_sym, self
 
+      self.class.instances << self
+      dom = self
+
       self.class.types.values.each do |t|
         # add a definition / accessor for each type
         k = t.typename.downcase
@@ -199,7 +222,7 @@ module DataModel
             end
             return @contents[k]
           end
-          decl = t.new(k)
+          decl = t.new(k, dom)
           @contents[k] = [] unless @contents[k]
           @contents[k] << decl
           if block_given?
@@ -223,6 +246,11 @@ module DataModel
 
   def domain(name, &block)
     dom = Object.const_set name.to_sym, Class.new(Domain)
+
+    dom.instance_exec do
+      init name
+    end
+
     if block_given?
       dom.instance_exec(&block)
     end
@@ -247,14 +275,16 @@ module DataModel
   end
 
   # create an enumeration class derived from Symbol
-  def Enum(scheme, *code_ids, code_type: :code, code_key: :id, scheme_desc: :id)
-    if( !(scheme.class <= DataType))
-      raise "doc for Enum needs to be a data type with many type values as an attribute 'codekey'"
+  def Enum(scheme, *codes, code_type: :code, code_key: :id, name_key: :id, scheme_desc: :id)
+    if (!(scheme.class <= DataType))
+      raise "scheme #{scheme} for Enum needs to be a data type with many type values as an attribute 'codekey'"
     end
-    if (code_ids.length == 0)
-      code_ids = scheme.attributes[code_type].map {|code| code.attributes[code_key]}
+    if (codes.length == 0)
+      codes = scheme.attributes[code_type]
     end
-    typename = "ENUM_#{code_ids.join '_'}"
+    code_ids = codes.map {|code| code.attributes[code_key]}
+    name_ids = codes.map {|code| code.attributes[name_key]}
+    typename = "ENUM_#{name_ids.join '_'}"
     selclass = Object.const_set typename, Class.new(Selection)
     selclass.define_singleton_method(:ids) {code_ids}
     selclass.define_singleton_method(:scheme) {scheme}
