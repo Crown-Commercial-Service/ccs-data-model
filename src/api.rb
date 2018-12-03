@@ -118,7 +118,7 @@ class OpenApi3 < Output
                   }
               }
           },
-          POST => {
+          PUT => {
               SUMMARY => "put a new element",
               TAGS => [RECORDERS],
               SUMMARY => "put",

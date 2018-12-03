@@ -2,7 +2,7 @@
   "scheme": [
     {
       "id": "filter_scheme",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/filter_scheme",
       "title": "Filter Classification Schemes",
       "description": "Scheme of codes used to filter offerings and other catalogue entries",
