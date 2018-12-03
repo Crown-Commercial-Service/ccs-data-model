@@ -121,7 +121,7 @@ class OpenApi3 < Output
           POST => {
               SUMMARY => "put a new element",
               TAGS => [RECORDERS],
-              SUMMARY => "post",
+              SUMMARY => "put",
               OPERATION_ID => "create-#{resource_name}",
               DESCRIPTION => "add a new #{resource_name} and retreive copy of it",
               REQUEST_BODY => {
@@ -160,10 +160,10 @@ class OpenApi3 < Output
                   }
               }
           },
-          PUT => {
+          POST => {
               SUMMARY => "post a new element",
               TAGS => [RECORDERS],
-              SUMMARY => "put",
+              SUMMARY => "post",
               OPERATION_ID => "revise-#{resource_name}",
               DESCRIPTION => "update an existing #{resource_name} given its id",
               PARAMETERS => [{REF => ref_component(:path, "id")}],
