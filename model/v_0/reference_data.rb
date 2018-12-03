@@ -22,7 +22,6 @@ ONE_CONTAINER_TYPE = lambda do
   end
 end
 
-
 domain :ReferenceData do
 
   datatype(:Code) {
@@ -42,7 +41,7 @@ domain :ReferenceData do
   datatype(:SchemeCode, extends: :Code, description: "A code which refers to a definition document, that describes another CodeList") {
     attribute :source, String, "a description or url for how to build codes against this scheme"
     attribute :prefix, String, "A prefix code for building codes from this source. " +
-        " If the referred standard has a good unique prefix that should be used, where as if it is ambiguous"+
+        " If the referred standard has a good unique prefix that should be used, where as if it is ambiguous" +
         " onse should be created so that coded IDs are not ambiguous in terms of format or origin." +
         "if there is one", example: "companies-house"
   }
