@@ -86,23 +86,10 @@ class OpenApi3 < Output
       resource_name = resource.type.typename
       api_root = "/api"
       vroot = "#{api_root}/v#{endpoint.version.major}"
-      # paths["#{api_root}/#{resource_name}"] = {
-      #     GET => {
-      #         SUMMARY => "get latest version for api",
-      #         TAGS => [BROWSERS],
-      #         SUMMARY => "redirect for search",
-      #         OPERATION_ID => "search-#{resource_name}",
-      #         DESCRIPTION => "searches #{resource_name} by name, id or keyword",
-      #         RESPONSES => {
-      #             "302" =>   {DESCRIPTION => "Redirect to the latest semantic version API"}
-      #         }
-      #     }
-      # }
       paths["#{vroot}/#{resource_name}"] = {
           GET => {
-              SUMMARY => "get list",
               TAGS => [BROWSERS],
-              SUMMARY => "search",
+              SUMMARY => "search #{resource_name}",
               OPERATION_ID => "search-#{resource_name}",
               DESCRIPTION => "searches #{resource_name} by name, id or keyword",
               PARAMETERS => std_qry_params
@@ -118,10 +105,9 @@ class OpenApi3 < Output
                   }
               }
           },
-          PUT => {
-              SUMMARY => "put a new element",
+          POST => {
               TAGS => [RECORDERS],
-              SUMMARY => "put",
+              SUMMARY => "post (create) a new #{resource_name}",
               OPERATION_ID => "create-#{resource_name}",
               DESCRIPTION => "add a new #{resource_name} and retreive copy of it",
               REQUEST_BODY => {
@@ -146,9 +132,8 @@ class OpenApi3 < Output
       }
       paths["#{vroot}/#{resource_name}/{id}"] = {
           GET => {
-              SUMMARY => "get item",
               TAGS => [RECORDERS],
-              SUMMARY => "get a #{resource_name}",
+              SUMMARY => "get an existing #{resource_name}",
               DESCRIPTION => "retrieve #{resource_name} by id",
               PARAMETERS => [{REF => ref_component(:path, "id")}],
               RESPONSES => {
@@ -160,10 +145,9 @@ class OpenApi3 < Output
                   }
               }
           },
-          POST => {
-              SUMMARY => "post a new element",
+          PUT => {
               TAGS => [RECORDERS],
-              SUMMARY => "post",
+              SUMMARY => "put (revise) #{resource_name}",
               OPERATION_ID => "revise-#{resource_name}",
               DESCRIPTION => "update an existing #{resource_name} given its id",
               PARAMETERS => [{REF => ref_component(:path, "id")}],
@@ -209,7 +193,7 @@ class OpenApi3 < Output
     end
 
     std_path_params.each do |p|
-      param = detail_component_param(:path, p, description: "optional id parameter")
+      param = detail_component_param(:path, p, description: "resource id parameter")
       parameters[param[0]] = param[1]
     end
 

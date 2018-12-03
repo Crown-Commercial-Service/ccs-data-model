@@ -22,9 +22,18 @@
 |part_of_id|String -> Agreements::Agreement|1|Agreement this is part of, applicable only to Lots|
 |conforms_to_id|String -> Agreements::Agreement|1|Agreement this conforms to, such as a Contract conforming to a Framework|
 |item_type|Items::ItemType|*|describe the items that can be offered under the agreement|
+|supplier_qualification_scheme|String|*|schemes describing coding for suppliers qualification questionnaires|
 |min_value|Integer|0..1|Minimum value of award, in pounds sterling|
 |max_value|Integer|0..1|Maximum value of award, in pounds sterling|
 # Data model: Parties
+## Question
+  A managed set of qualification questions andwered at a point in time for a period of time
+
+|attribute|type|multiplicity|description|
+|---------|----|------------|-----------|
+|id|String|1|UUID for the questionnaire entry|
+|answer_code|String|0..1|coded answers to questions matching the schemes|
+|supplementary|Supplementary::Field|*|additional filters used to qulify the item. Filter schemes should obviously be relevant to the item|
 ## Questionnaire
   A managed set of qualification questions andwered at a point in time for a period of time
 
@@ -33,8 +42,8 @@
 |id|String|1|UUID for the questionnaire entry|
 |completed|Date|1||
 |expires|Date|1||
-|question_schemes|qualification_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/qualification_scheme#offsted_rating)|0..1|The coding schemes for the questions and answers|
-|answer_codes|String|0..1|coded answers to questions matching the schemes|
+|question_schemes|String|*|The coding schemes for the questions and answers|
+|question|Parties::Question|0..1|coded answers to questions matching the schemes|
 ## Party
   The party is used to identify buyers and suppliers. Since some organisations act asboth buyers and suppliers we use the same record for both, but most organisations willbe one or the other. The onvolvement of the party with an agreement determine  the role inthat contenxt.
 

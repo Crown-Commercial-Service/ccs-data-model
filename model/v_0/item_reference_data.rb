@@ -5,7 +5,6 @@ ReferenceData.new :ItemScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "ItemClassificationSchemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    prefix "itemscheme"
     CPV= code {
       id :cpv
       macro &URI_FROM_DOC_AND_ID

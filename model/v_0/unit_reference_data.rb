@@ -7,7 +7,6 @@ ReferenceData.new :UnitScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Unit Schemes"
     description "Scheme of codes used to decide what scheme to use to classify units"
-    prefix "unitscheme"
     code {
       id :uncefact
       macro &URI_FROM_DOC_AND_ID

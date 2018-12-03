@@ -1,17 +1,12 @@
 require_relative '../../src/data_model'
 require_relative 'agreement'
 require_relative 'offering_reference_data'
+require_relative 'education_reference_data'
 require_relative 'party'
 include DataModel
 
 domain :Offerings do
 
-  datatype(:FilterCode, description: "additional fields that help qualify the object"+
-           "filter coded items are completely described by their filter value according to the scheme" +
-           "the full detail of the filter should be included in the coding suffix"){
-    attribute :id, String
-    attribute :filter_scheme, FILTER_SCHEMES
-  }
 
   datatype(:Offering, extends: Items::Classified,
            description: " Supplier offering against an item or items of an agreement." +
@@ -25,7 +20,9 @@ domain :Offerings do
     attribute :name, String
     attribute :description, String
     attribute :item, Items::Item, ZERO_TO_MANY, "values for the items"
-    attribute :filter, :FilterCode, ZERO_TO_MANY, "filters for the offer"
+    attribute :supplementary, Supplementary::Field, ZERO_TO_MANY,
+              "additional filters used to qulify the offering. Filter schemes should obviously be relevant to the item's schemes",
+              example: "#{PROVIDER_OFFSTED.prefix}:#{START_DATE.id}"
     attribute :branch, String, ZERO_TO_MANY, "where the offering can occur; contact should include address details", links: Parties::Contact
   }
 

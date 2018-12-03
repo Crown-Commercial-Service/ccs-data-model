@@ -101,6 +101,12 @@
       :description: describe the items that can be offered under the agreement
       :name: :item_type
       :type: Items::ItemType
+    :supplier_qualification_scheme:
+      :multiplicity: "*"
+      :description: schemes describing coding for suppliers qualification questionnaires
+      :name: :supplier_qualification_scheme
+      :type: String
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme
     :min_value:
       :multiplicity: 0..1
       :description: Minimum value of award, in pounds sterling
@@ -112,6 +118,24 @@
       :name: :max_value
       :type: Integer
 :Parties:
+  :Question:
+    :id:
+      :multiplicity: '1'
+      :description: UUID for the questionnaire entry
+      :name: :id
+      :type: String
+    :answer_code:
+      :multiplicity: 0..1
+      :description: coded answers to questions matching the schemes
+      :name: :answer_code
+      :type: String
+      :example: offsted_rating:Requires_Improvement
+    :supplementary:
+      :multiplicity: "*"
+      :description: additional filters used to qulify the item. Filter schemes should
+        obviously be relevant to the item
+      :name: :supplementary
+      :type: Supplementary::Field
   :Questionnaire:
     :id:
       :multiplicity: '1'
@@ -129,17 +153,16 @@
       :name: :expires
       :type: Date
     :question_schemes:
-      :multiplicity: 0..1
+      :multiplicity: "*"
       :description: The coding schemes for the questions and answers
       :name: :question_schemes
-      :type: qualification_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/qualification_scheme#offsted_rating)
-      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/qualification_scheme#offsted_rating
-    :answer_codes:
+      :type: String
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme
+    :question:
       :multiplicity: 0..1
       :description: coded answers to questions matching the schemes
-      :name: :answer_codes
-      :type: String
-      :example: offsted_rating:Requires_Improvement
+      :name: :question
+      :type: Parties::Question
   :Party:
     :id:
       :multiplicity: '1'

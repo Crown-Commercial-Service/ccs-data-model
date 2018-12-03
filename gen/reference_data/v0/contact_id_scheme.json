@@ -6,7 +6,6 @@
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme",
       "title": "Contact id  Schemes",
       "description": "How to identify a link to a contact",
-      "prefix": "org_id",
       "code": [
         {
           "id": "sf_contact",

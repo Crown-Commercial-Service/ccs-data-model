@@ -4,7 +4,6 @@ ReferenceData.new :AgreementTypeCodes do
   AGREEMENT_TYPES = Enum(codelist {
     version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    prefix "ccs_atype"
     title "Agreement types"
     description "Scheme of codes used to decide what scheme to use to classify an agreement"
     code {
@@ -29,7 +28,6 @@ ReferenceData.new :AgreementIDScheme do
   AGREEMENT_ID_SCHEMES = Enum(scheme {
     version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    prefix "ccs_atype"
     title "Agreement id schemes"
     description "Scheme for how to identify an agreement"
     FW = code {

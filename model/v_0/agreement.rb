@@ -1,6 +1,7 @@
 require_relative '../../src/data_model'
 require_relative 'item'
 require_relative 'agreement_reference_data'
+require_relative 'education_reference_data'
 
 include DataModel
 
@@ -40,6 +41,10 @@ domain :Agreements do
 
     attribute :item_type, Items::ItemType, ZERO_TO_MANY,
               "describe the items that can be offered under the agreement"
+
+    attribute :supplier_qualification_scheme, String, ZERO_TO_MANY,
+              "schemes describing coding for suppliers qualification questionnaires",
+              example: APPRENTICESHIP_QUALIFICATION.url
 
     # Qualifications
     attribute :min_value, Integer, ZERO_OR_ONE, "Minimum value of award, in pounds sterling"

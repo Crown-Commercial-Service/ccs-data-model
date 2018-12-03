@@ -5,7 +5,6 @@ ReferenceData.new :CCSSectorCodes do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "CCS Sector Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    prefix "ccs_sector"
     code {
       id :education_funded
       macro &URI_FROM_DOC_AND_ID
@@ -21,7 +20,6 @@ ReferenceData.new :SectorScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Sector Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    prefix "sectorscheme"
     code {
       id :ccs
       macro &URI_FROM_DOC_AND_ID
@@ -33,30 +31,12 @@ ReferenceData.new :SectorScheme do
 end
 
 
-ReferenceData.new :QualificationScheme do
-  QUALIFICATION_SCHEMES = Enum (scheme {
-    macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "Qualification Classification Schemes"
-    description "Scheme of codes used to decide what scheme to use to classify an item"
-    prefix "qualscheme"
-    OFFSTED= code {
-      id :offsted_rating
-      prefix id
-      macro &URI_FROM_DOC_AND_ID
-      title "Offsted Rating"
-      description title
-      source "Offsted codes TBD"
-    }
-  })
-end
-
 
 ReferenceData.new :OrgIdScheme do
   ORG_ID_SCHEMES = Enum (scheme {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Organisation id Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    prefix "org_id"
     code {
       id :sf_org_id
       macro &URI_FROM_DOC_AND_ID
@@ -97,7 +77,6 @@ ReferenceData.new :ContactIdScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Contact id  Schemes"
     description "How to identify a link to a contact"
-    prefix "org_id"
     SF_CONTACT= code {
       id :sf_contact
       macro &URI_FROM_DOC_AND_ID

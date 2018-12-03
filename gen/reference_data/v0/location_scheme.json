@@ -6,7 +6,6 @@
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme",
       "title": "Schemes codes to locate geographic areas",
       "description": "Scheme of codes used to decide what scheme to use to classify an item",
-      "prefix": "location_scheme",
       "code": [
         {
           "id": "nuts_2016",

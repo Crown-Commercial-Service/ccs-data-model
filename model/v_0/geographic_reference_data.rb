@@ -5,7 +5,6 @@ ReferenceData.new :LocationScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Schemes codes to locate geographic areas"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    prefix id
     NUTS= code {
       id :nuts_2016
       macro &URI_FROM_DOC_AND_ID

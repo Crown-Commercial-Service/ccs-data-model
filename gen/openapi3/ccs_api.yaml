@@ -20,9 +20,9 @@ tags:
 paths:
   "/api/v0/Agreement":
     get:
-      summary: search
       tags:
       - browser
+      summary: search Agreement
       operationId: search-Agreement
       description: searches Agreement by name, id or keyword
       parameters:
@@ -37,9 +37,9 @@ paths:
         4XX:
           description: error TODO
     post:
-      summary: put
       tags:
       - recorder
+      summary: post (create) a new Agreement
       operationId: create-Agreement
       description: add a new Agreement and retreive copy of it
       requestBody:
@@ -55,9 +55,9 @@ paths:
           description: error TODO
   "/api/v0/Agreement/{id}":
     get:
-      summary: get a Agreement
       tags:
       - recorder
+      summary: get an existing Agreement
       description: retrieve Agreement by id
       parameters:
       - "$ref": "#/components/parameters/id"
@@ -66,10 +66,10 @@ paths:
           "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
-    post:
-      summary: post
+    put:
       tags:
       - recorder
+      summary: put (revise) Agreement
       operationId: revise-Agreement
       description: update an existing Agreement given its id
       parameters:
@@ -87,9 +87,9 @@ paths:
           description: error TODO
   "/api/v0/ItemType":
     get:
-      summary: search
       tags:
       - browser
+      summary: search ItemType
       operationId: search-ItemType
       description: searches ItemType by name, id or keyword
       parameters:
@@ -103,9 +103,9 @@ paths:
         4XX:
           description: error TODO
     post:
-      summary: put
       tags:
       - recorder
+      summary: post (create) a new ItemType
       operationId: create-ItemType
       description: add a new ItemType and retreive copy of it
       requestBody:
@@ -121,9 +121,9 @@ paths:
           description: error TODO
   "/api/v0/ItemType/{id}":
     get:
-      summary: get a ItemType
       tags:
       - recorder
+      summary: get an existing ItemType
       description: retrieve ItemType by id
       parameters:
       - "$ref": "#/components/parameters/id"
@@ -132,10 +132,10 @@ paths:
           "$ref": "#/components/responses/ItemType"
         4XX:
           description: error TODO
-    post:
-      summary: post
+    put:
       tags:
       - recorder
+      summary: put (revise) ItemType
       operationId: revise-ItemType
       description: update an existing ItemType given its id
       parameters:
@@ -153,9 +153,9 @@ paths:
           description: error TODO
   "/api/v0/Item":
     get:
-      summary: search
       tags:
       - browser
+      summary: search Item
       operationId: search-Item
       description: searches Item by name, id or keyword
       parameters:
@@ -168,9 +168,9 @@ paths:
         4XX:
           description: error TODO
     post:
-      summary: put
       tags:
       - recorder
+      summary: post (create) a new Item
       operationId: create-Item
       description: add a new Item and retreive copy of it
       requestBody:
@@ -186,9 +186,9 @@ paths:
           description: error TODO
   "/api/v0/Item/{id}":
     get:
-      summary: get a Item
       tags:
       - recorder
+      summary: get an existing Item
       description: retrieve Item by id
       parameters:
       - "$ref": "#/components/parameters/id"
@@ -197,10 +197,10 @@ paths:
           "$ref": "#/components/responses/Item"
         4XX:
           description: error TODO
-    post:
-      summary: post
+    put:
       tags:
       - recorder
+      summary: put (revise) Item
       operationId: revise-Item
       description: update an existing Item given its id
       parameters:
@@ -218,9 +218,9 @@ paths:
           description: error TODO
   "/api/v0/Party":
     get:
-      summary: search
       tags:
       - browser
+      summary: search Party
       operationId: search-Party
       description: searches Party by name, id or keyword
       parameters:
@@ -233,9 +233,9 @@ paths:
         4XX:
           description: error TODO
     post:
-      summary: put
       tags:
       - recorder
+      summary: post (create) a new Party
       operationId: create-Party
       description: add a new Party and retreive copy of it
       requestBody:
@@ -251,9 +251,9 @@ paths:
           description: error TODO
   "/api/v0/Party/{id}":
     get:
-      summary: get a Party
       tags:
       - recorder
+      summary: get an existing Party
       description: retrieve Party by id
       parameters:
       - "$ref": "#/components/parameters/id"
@@ -262,10 +262,10 @@ paths:
           "$ref": "#/components/responses/Party"
         4XX:
           description: error TODO
-    post:
-      summary: post
+    put:
       tags:
       - recorder
+      summary: put (revise) Party
       operationId: revise-Party
       description: update an existing Party given its id
       parameters:
@@ -283,9 +283,9 @@ paths:
           description: error TODO
   "/api/v0/Contact":
     get:
-      summary: search
       tags:
       - browser
+      summary: search Contact
       operationId: search-Contact
       description: searches Contact by name, id or keyword
       parameters:
@@ -299,9 +299,9 @@ paths:
         4XX:
           description: error TODO
     post:
-      summary: put
       tags:
       - recorder
+      summary: post (create) a new Contact
       operationId: create-Contact
       description: add a new Contact and retreive copy of it
       requestBody:
@@ -317,9 +317,9 @@ paths:
           description: error TODO
   "/api/v0/Contact/{id}":
     get:
-      summary: get a Contact
       tags:
       - recorder
+      summary: get an existing Contact
       description: retrieve Contact by id
       parameters:
       - "$ref": "#/components/parameters/id"
@@ -328,10 +328,10 @@ paths:
           "$ref": "#/components/responses/Contact"
         4XX:
           description: error TODO
-    post:
-      summary: post
+    put:
       tags:
       - recorder
+      summary: put (revise) Contact
       operationId: revise-Contact
       description: update an existing Contact given its id
       parameters:
@@ -349,9 +349,9 @@ paths:
           description: error TODO
   "/api/v0/Offering":
     get:
-      summary: search
       tags:
       - browser
+      summary: search Offering
       operationId: search-Offering
       description: searches Offering by name, id or keyword
       parameters:
@@ -365,9 +365,9 @@ paths:
         4XX:
           description: error TODO
     post:
-      summary: put
       tags:
       - recorder
+      summary: post (create) a new Offering
       operationId: create-Offering
       description: add a new Offering and retreive copy of it
       requestBody:
@@ -383,9 +383,9 @@ paths:
           description: error TODO
   "/api/v0/Offering/{id}":
     get:
-      summary: get a Offering
       tags:
       - recorder
+      summary: get an existing Offering
       description: retrieve Offering by id
       parameters:
       - "$ref": "#/components/parameters/id"
@@ -394,10 +394,10 @@ paths:
           "$ref": "#/components/responses/Offering"
         4XX:
           description: error TODO
-    post:
-      summary: post
+    put:
       tags:
       - recorder
+      summary: put (revise) Offering
       operationId: revise-Offering
       description: update an existing Offering given its id
       parameters:
@@ -506,6 +506,12 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/ItemType"
+        supplier_qualification_scheme:
+          type: array
+          items:
+            type: string
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme
+          description: schemes describing coding for suppliers qualification questionnaires
         min_value:
           type: integer
           description: Minimum value of award, in pounds sterling
@@ -589,13 +595,13 @@ components:
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#gsin
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#unspsc
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpc
-          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv]"
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes
           description: Additional ways to classify the item
         additional_classifications:
           type: array
           items:
             type: string
-          example: "[CPV:37000000-8]"
+          example: CPV:37000000-8
           description: Code within the primary scheme defining this type. Each code
             should have a prefix identifying the scheme
         unit_scheme:
@@ -609,6 +615,11 @@ components:
           type: string
           example: qudt:unit:SquareMeterPerKelvin
           description: define the units, based on the unit scheme selected
+        currency:
+          type: string
+          example: GBP
+          description: define the currency of the per-unit-price, as ISO 4217 currency
+            code. If absent, presume GDP,
       description: Defines the items that can be offered in any selected agreementsAgreements
         hava a number of items that can have values defining the agreement. The Items
         shouldconstrain the key quantifiable elements of an agreement award. A supplier
@@ -624,17 +635,24 @@ components:
           type: string
           example: '07719842-a3a1-41c5-8320-6439295fb90e'
           description: " a generated UUID minted for this item "
-        type_id:
+        item_type_id:
           type: string
           example: CPV:37000000-8:CCS:2019-01:1
           description: " type of the item "
-        unit:
+        unit_quantity:
           type: string
+          example: '100'
           description: " define the units, which should match one of the allowed unit
             code valuesin the scheme defind in the type"
-        value:
-          type: string
-          description: an object of the type matching type->units
+        unit_price:
+          type: number
+          format: float
+          example: 110
+          description: an number giving the price per unit as dictated by item_type->unit
+        supplementary:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Field"
       description: Specifies the value of an item that is being offered for an agreement.
         All the data should be constrained according to the Item type in question
     Party:
@@ -861,10 +879,11 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/Item"
-        filter:
+        supplementary:
           type: array
           items:
-            "$ref": "#/components/schemas/FilterCode"
+            "$ref": "#/components/schemas/Field"
+          example: education_ratings_scheme:course_start_date
         branch:
           type: array
           items:
@@ -875,6 +894,88 @@ components:
         may be extended for different agreements. A supplier may provide additionalvariable
         facts in their Offer to supplement the description of how they support the
         agreement. "
+    Field:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: ''
+        role_id:
+          type: string
+          example: educ
+          description: Scheme uri code taht defines the role of the supplementary
+            field, which should be prefixed by a scheme id in the enclosing type
+        type_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#string
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#date
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#int
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#float
+          example: &2 !ruby/object:ReferenceData::Code
+            name: :code
+            domain: &1 !ruby/object:ReferenceData::CodeList
+              name: :codelist
+              domain: !ruby/object:ReferenceData
+                contents:
+                  :codelist:
+                  - *1
+                name: :SupplementaryDataTypeCodes
+              attributes:
+                :id: :supplementary_data_type_codes
+                :version: !ruby/object:Semantic::Version
+                  major: 0
+                  minor: 1
+                  patch: 1
+                  pre: 
+                  build: 
+                  version: 0.1.1
+                :url: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes
+                :title: SupplementaryDataType
+                :description: Identify the types in supplementary data of a filter
+                :code:
+                - *2
+                - !ruby/object:ReferenceData::Code
+                  name: :code
+                  domain: *1
+                  attributes:
+                    :id: :date
+                    :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#date
+                    :title: date filter
+                    :description: supplementary is a date in iso 860 format.
+                  container: *1
+                - !ruby/object:ReferenceData::Code
+                  name: :code
+                  domain: *1
+                  attributes:
+                    :id: :int
+                    :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#int
+                    :title: integer filter
+                    :description: supplementary is a signed int in 64 bit range.
+                  container: *1
+                - !ruby/object:ReferenceData::Code
+                  name: :code
+                  domain: *1
+                  attributes:
+                    :id: :float
+                    :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#float
+                    :title: floating point numbner filter
+                  container: *1
+            attributes:
+              :id: :string
+              :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#string
+              :title: string filter
+              :description: supplementary is a unicode UTF8 encoded string of indeterminate
+                lengh, but no more than 10k in size.
+            container: *1
+          description: type scheme should be appropriate for the filter scheme
+        value:
+          "$ref": "#/components/schemas/Value"
+          example: A descriptive string
+      description: an additional field that helps qualify the object
     Address:
       type: object
       required:
@@ -909,23 +1010,32 @@ components:
       description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Address
         should include at least address line 1 and ideally post code.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         will
         contain lat / long if we have derived it.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "
-    FilterCode:
+    Value:
       type: object
       required:
       - id
       - name
       properties:
-        id:
+        string:
           type: string
-          description: ''
-        filter_scheme:
+          example: Some text is here
+          description: UTF8 string
+        date:
           type: string
-          enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/filter_scheme#apprenticeships
+          format: date
+          example: '2019-03-01'
           description: ''
-      description: additional fields that help qualify the objectfilter coded items
-        are completely described by their filter value according to the schemethe
-        full detail of the filter should be included in the coding suffix
+        float:
+          type: number
+          format: float
+          example: '1.23'
+          description: ''
+        int:
+          type: integer
+          example: '123'
+          description: ''
+      description: A supplementary value which can be any one of the below types.
+        Only one will be set.
   parameters:
     q_name:
       name: q_name
@@ -955,7 +1065,7 @@ components:
       name: id
       in: path
       required: true
-      description: optional id parameter
+      description: resource id parameter
       schema:
         type: string
     q_limit:

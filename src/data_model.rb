@@ -14,13 +14,14 @@ module DataModel
 
     class << self
 
-      def init(name, domain, extends, description)
+      def init(name: , domain: , extends: , union: false, description: )
         @attributes = {}
         @typename = name
         @domain = domain
         @extends = extends
         @description = description
         @instances = []
+        @union= union
 
         self.define_singleton_method(:attributes) do |inherited = true|
           if inherited && self.superclass.respond_to?(:attributes)
@@ -48,7 +49,9 @@ module DataModel
         @typename
       end
 
-      # alias name typename
+      def union
+        @union
+      end
 
       def extends
         @extends < DataType ? @extends.name : nil
@@ -105,7 +108,7 @@ module DataModel
           else
             value = args[0]
           end
-          value= check_and_convert(value, self.class.attributes[k][:type])
+          value = check_and_convert(value, self.class.attributes[k][:type])
           if self.class.attributes[k][:multiplicity].end != 1
             @attributes[k] = [] unless @attributes[k]
             @attributes[k] << value
@@ -131,7 +134,7 @@ module DataModel
     end
 
     def check_and_convert(value, type)
-      if(type <= Version && value.class <= String)
+      if (type <= Version && value.class <= String)
         return Version.new value
       end
       value
@@ -178,7 +181,7 @@ module DataModel
         @name
       end
 
-      def datatype(name, extends: DataType, description: "", &block)
+      def datatype(name, extends: DataType, description: "", union: false, &block)
         unless instance_variable_defined? :@types
           @types = {}
           self.define_singleton_method(:types) {@types}
@@ -188,7 +191,7 @@ module DataModel
         @types[name] = type
         dom = self
         type.instance_exec do
-          init name, dom, extends, description
+          init(name: name, domain: dom, extends: extends, union: false, description: description)
         end
         type.instance_exec(&block)
         type
@@ -200,13 +203,13 @@ module DataModel
         end
         if typeref.class == Symbol
           if !types[typeref]
-            raise "Can't find type #{typeref} in #{typeref}"
+            raise "Can't find type #{typeref} "
           end
           return types[typeref]
         elsif typeref.class == Class
           return typeref
         else
-          raise "type specifications must be symbol or DataType class"
+          raise "type specifications must be symbol or DataType class '#{typeref}'"
         end
       end
 
@@ -294,7 +297,7 @@ module DataModel
     end
     code_ids = codes.map {|code| code.attributes[code_key]}
     name_ids = codes.map {|code| code.attributes[name_key]}
-    typename = "ENUM_#{name_ids.join '_'}".gsub(/[:-]/,'_')
+    typename = "ENUM_#{name_ids.join '_'}".gsub(/[:-]/, '_')
     selclass = Object.const_set typename, Class.new(Selection)
     selclass.define_singleton_method(:ids) {code_ids}
     selclass.define_singleton_method(:doc) {doc}

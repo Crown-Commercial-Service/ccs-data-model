@@ -1,18 +1,29 @@
 require_relative '../../src/data_model'
 require_relative 'party_reference_data'
+require_relative 'supplementary_reference_data'
 include DataModel
 
 domain(:Parties) {
+
+  datatype(:Question,
+           description: "A managed set of qualification questions andwered at a point in time for a period of time") {
+
+    attribute :id, String, "UUID for the questionnaire entry"
+    attribute :answer_code, String, ZERO_OR_ONE, "coded answers to questions matching the schemes",
+              example: "#{OFFSTED_RATING.id}:Requires_Improvement"
+    attribute :supplementary, Supplementary::Field, ZERO_TO_MANY,
+              "additional filters used to qulify the item. Filter schemes should obviously be relevant to the item"
+  }
+
   datatype(:Questionnaire,
            description: "A managed set of qualification questions andwered at a point in time for a period of time") {
 
     attribute :id, String, "UUID for the questionnaire entry"
     attribute :completed, Date
     attribute :expires, Date
-    attribute :question_schemes, QUALIFICATION_SCHEMES, ZERO_OR_ONE, "The coding schemes for the questions and answers",
-              example: OFFSTED.uri
-    attribute :answer_codes, String, ZERO_OR_ONE, "coded answers to questions matching the schemes",
-              example: "#{OFFSTED.id}:Requires_Improvement"
+    attribute :question_schemes, String, ZERO_TO_MANY, "The coding schemes for the questions and answers",
+              example: APPRENTICESHIP_QUALIFICATION.url
+    attribute :question, :Question, ZERO_OR_ONE, "coded answers to questions matching the schemes"
   }
 
 
