@@ -191,7 +191,7 @@ module DataModel
         @types[name] = type
         dom = self
         type.instance_exec do
-          init(name: name, domain: dom, extends: extends, union: false, description: description)
+          init(name: name, domain: dom, extends: extends, union: union, description: description)
         end
         type.instance_exec(&block)
         type

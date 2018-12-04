@@ -1,6 +1,56 @@
 ---
 :Agreements:
+  :Restriction:
+    :sector_scheme:
+      :multiplicity: "*"
+      :description: The sector scheme id
+      :name: :sector_scheme
+      :type: sector_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other)
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
+    :sector_id:
+      :multiplicity: "*"
+      :description: The sector scheme ids that define to whom the item may be sold.
+        Prefix must match one of the schemes.
+      :name: :sector_id
+      :type: String
+      :example: ccs_sector_codes:ccs_sector_codes
+    :location_scheme:
+      :multiplicity: "*"
+      :description: The schemes for identifying locations
+      :name: :location_scheme
+      :type: location_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius)
+      :example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
+    :location_id:
+      :multiplicity: "*"
+      :description: The location scheme ids that defines  where the items can be offered.
+      :name: :location_id
+      :type: String
+      :example: "[UKH1, UKG2]"
   :Agreement:
+    :version_id:
+      :multiplicity: '1'
+      :description: UUID of this version of the entry
+      :name: :version_id
+      :type: String
+      :example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+    :supercedes_id:
+      :multiplicity: '1'
+      :description: UUID of this version superceded
+      :name: :supercedes_id
+      :type: String
+      :example: e030f1b1-647d-4ed7-8d84-ac9790563362
+    :date_added:
+      :multiplicity: '1'
+      :description: Date of creation or update
+      :name: :date_added
+      :type: DateTime
+      :example: '2019-09-28T18:34:23.45Z'
+    :checksum:
+      :multiplicity: '1'
+      :description: MD5
+      :name: :checksum
+      :type: String
+      :example: 90b4c251f8649a4f9c86d6d20ee6e9e9
     :kind:
       :multiplicity: '1'
       :description: Kind of agreement, such as Framework, Lot,Contract. Lots are considered
@@ -8,7 +58,8 @@
         Contracts should link to anylot that they are based on. See https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes
         for details.
       :name: :kind
-      :type: agreement_type_codes(framework,lot,contract)
+      :type: agreement_type_codes(framework,lot,callof,contract)
+      :example: :framework
     :id:
       :multiplicity: '1'
       :description: id of agreeement; This is the RM number for a framework, and {RM#lotnumber}
@@ -32,16 +83,13 @@
       :description: ''
       :name: :name
       :type: String
+      :example: Supply Teachers
     :long_name:
       :multiplicity: '1'
       :description: ''
       :name: :long_name
       :type: String
-    :version:
-      :multiplicity: '1'
-      :description: semantic version id of the agreement model, in the form X.Y.Z
-      :name: :version
-      :type: String
+      :example: Supply Teachers Framework 2018
     :status:
       :multiplicity: '1'
       :description: current status of agreementSee https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes
@@ -83,6 +131,11 @@
       :description: Describe the agreement
       :name: :description
       :type: String
+    :restriction:
+      :multiplicity: 0..1
+      :description: Restrictions that may apply
+      :name: :restriction
+      :type: Agreements::Restriction
     :part_of_id:
       :multiplicity: '1'
       :description: Agreement this is part of, applicable only to Lots
@@ -119,6 +172,30 @@
       :type: Integer
 :Parties:
   :Question:
+    :version_id:
+      :multiplicity: '1'
+      :description: UUID of this version of the entry
+      :name: :version_id
+      :type: String
+      :example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+    :supercedes_id:
+      :multiplicity: '1'
+      :description: UUID of this version superceded
+      :name: :supercedes_id
+      :type: String
+      :example: e030f1b1-647d-4ed7-8d84-ac9790563362
+    :date_added:
+      :multiplicity: '1'
+      :description: Date of creation or update
+      :name: :date_added
+      :type: DateTime
+      :example: '2019-09-28T18:34:23.45Z'
+    :checksum:
+      :multiplicity: '1'
+      :description: MD5
+      :name: :checksum
+      :type: String
+      :example: 90b4c251f8649a4f9c86d6d20ee6e9e9
     :id:
       :multiplicity: '1'
       :description: UUID for the questionnaire entry
@@ -129,7 +206,7 @@
       :description: coded answers to questions matching the schemes
       :name: :answer_code
       :type: String
-      :example: offsted_rating:Requires_Improvement
+      :example: offsted:Requires_Improvement
     :supplementary:
       :multiplicity: "*"
       :description: additional filters used to qulify the item. Filter schemes should
@@ -199,7 +276,7 @@
       :multiplicity: "*"
       :description: ''
       :name: :sector_scheme
-      :type: sector_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs)
+      :type: sector_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other)
     :sector:
       :multiplicity: "*"
       :description: ''
@@ -213,15 +290,13 @@
       :type: String
     :spend_this_year:
       :multiplicity: 0..1
-      :description: "\n                                                                                                                                                                                                                                                                                                                                                                   Salesforce
-        only stores for buyer "
+      :description: "\n Salesforce only stores for buyer "
       :name: :spend_this_year
       :type: Float
     :documents_url:
       :multiplicity: 0..1
-      :description: "\n                                                                                                                                                                                                                                                                                                                                                                                            Salesforce
-        links to google drive for this supplier;\n                                                                                                                                                                                                                                                                                                                                                                                                                               we
-        will move to S3 in due course "
+      :description: "\n Salesforce links to google drive for this supplier;\n we will
+        move to S3 in due course "
       :name: :documents_url
       :type: String
     :contact_scheme:
@@ -273,8 +348,7 @@
       :type: String
     :longtitude:
       :multiplicity: 0..1
-      :description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Location
-        from the address for geo search "
+      :description: " Location from the address for geo search "
       :name: :longtitude
       :type: String
   :Contact:
@@ -301,15 +375,13 @@
       :type: String
     :party_id:
       :multiplicity: '1'
-      :description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           contact
-        is a link for this party "
+      :description: " contact is a link for this party "
       :name: :party_id
       :type: String
       :links: Parties::Party
     :role:
       :multiplicity: "*"
-      :description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               role
-        for CMp "
+      :description: " role for CMp "
       :name: :role
       :type: String
     :first_name:
@@ -324,8 +396,7 @@
       :type: String
     :title:
       :multiplicity: 0..1
-      :description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Salesforce;
-        not sure what the constrainst are "
+      :description: " Salesforce; not sure what the constrainst are "
       :name: :title
       :type: String
     :job_title:

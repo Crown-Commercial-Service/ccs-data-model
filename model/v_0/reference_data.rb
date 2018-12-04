@@ -32,6 +32,15 @@ def link_scheme_from_code(to, from)
   to.description = from.description
 end
 
+def link_scheme_from_scheme(to, from)
+  to.source = from.url
+  to.id = from.id
+  to.uri = from.url
+  to.prefix = from.id
+  to.title = from.title
+  to.description = from.description
+end
+
 domain :ReferenceData do
 
   datatype(:Code) {
@@ -44,7 +53,7 @@ domain :ReferenceData do
     attribute :title, String, ZERO_OR_ONE, "short name for the entry"
     attribute :description, String, ZERO_OR_ONE, "description on what the entry is for"
     attribute :uri, String, "resolved uri of the entry, used for selecting the entry in docs, and referring to it long form"
-    attribute :pattern, String, "optional regular expression to check entries against. Should also match the appropriate prefix form."
+    attribute :pattern, String, "optional regular expression to check entries against."
     attribute :example, String, "example of the value"
   }
 

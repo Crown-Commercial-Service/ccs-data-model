@@ -6,17 +6,22 @@ ReferenceData.new :AgreementTypeCodes do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
     description "Scheme of codes used to decide what scheme to use to classify an agreement"
-    code {
+    FW = code {
       id :framework
       macro &URI_FROM_DOC_AND_ID
       title "Framework "
     }
-    code {
+    LOT = code {
       id :lot
       macro &URI_FROM_DOC_AND_ID
       title " Lot "
     }
-    code {
+    CALLOFF = code {
+      id :callof
+      macro &URI_FROM_DOC_AND_ID
+      title " Calloff"
+    }
+    CONTRACT = code {
       id :contract
       macro &URI_FROM_DOC_AND_ID
       title " Contract"
@@ -30,7 +35,7 @@ ReferenceData.new :AgreementIDScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement id schemes"
     description "Scheme for how to identify an agreement"
-    FW = code {
+    CCS_FW_CODE = code {
       id :ccs_fw_id
       prefix :rm
       macro &URI_FROM_DOC_AND_ID

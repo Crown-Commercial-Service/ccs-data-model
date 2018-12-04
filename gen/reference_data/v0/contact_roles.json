@@ -1,0 +1,31 @@
+{
+  "codelist": [
+    {
+      "id": "contact_roles",
+      "version": "0.1.1",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles",
+      "title": "Contact Roles",
+      "description": " To be verified",
+      "code": [
+        {
+          "id": "org_administrator",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles#org_administrator",
+          "title": "org_administrator",
+          "description": "org_administrator"
+        },
+        {
+          "id": "ccs_admin",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles#ccs_admin",
+          "title": "ccs_admin",
+          "description": "ccs_admin"
+        },
+        {
+          "id": "commercial_contact",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles#commercial_contact",
+          "title": "commercial_contact",
+          "description": "commercial_contact"
+        }
+      ]
+    }
+  ]
+}

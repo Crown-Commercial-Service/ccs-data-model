@@ -329,34 +329,29 @@ class OpenApi3 < Output
     end
   end
 
+  def primitive( props, clas)
+    if (attype <= String)
+      p.merge!({"type" => "string"})
+    elsif (attype <= Date)
+      p.merge!({"type" => "string",
+                "format" => "date"})
+    elsif (attype <= Integer)
+      p.merge!({"type" => "integer"})
+    elsif (attype <= Float)
+      p.merge!({"type" => "number",
+                "format" => "float"})
+    elsif (attype <= Version)
+      p.merge!({"type" => "string"})
+    else
+      return false;
+    end
+    true
+  end
 
   def datatype_properties type
     property_set = {}
     type.attributes.each_value do |v|
-      p = {}
-      attype = v[:type]
-      if (attype <= String)
-        p.merge!({"type" => "string"})
-      elsif (attype <= Date)
-        p.merge!({"type" => "string",
-                  "format" => "date"})
-      elsif (attype <= Integer)
-        p.merge!({"type" => "integer"})
-      elsif (attype <= Float)
-        p.merge!({"type" => "number",
-                  "format" => "float"})
-      elsif (attype <= Version)
-        p.merge!({"type" => "string"})
-      elsif (attype <= DataType)
-        p.merge!({"$ref" => ref_component(:schema, attype.typename)
-                 })
-      elsif (attype <= Selection)
-        p.merge!({"type" => "string",
-                  "enum" => attype.ids.map {|c| c.to_s}})
-      else
-        print("Warning: don't understand schema for #{attype.to_s}\n")
-        p.merge!({"type" => "string"})
-      end
+      p = type_map( v[:type])
       if v[:multiplicity].end > 1 || v[:multiplicity].end < 0
         p = {
             "type" => "array",
@@ -368,12 +363,45 @@ class OpenApi3 < Output
         p[EXAMPLE] = example
       end
       desc = v[:description]
-      if (nil != desc && !(attype <= DataType))
+      if (nil != desc && !(v[:type] <= DataType))
         p[DESCRIPTION] = desc
       end
       property_set[v[:name].to_s] = p
     end
     property_set
+  end
+
+  def type_map(attype)
+    p= {}
+    if (attype <= String)
+      p.merge!({"type" => "string"})
+    elsif (attype <= Date)
+      p.merge!({"type" => "string",
+                "format" => "date"})
+    elsif (attype <= Integer)
+      p.merge!({"type" => "integer"})
+    elsif (attype <= Float)
+      p.merge!({"type" => "number",
+                "format" => "float"})
+    elsif (attype <= Version)
+      p.merge!({"type" => "string"})
+    elsif (attype <= DataType)
+      if true == attype.union
+        p.merge!({
+                     "oneOf" => attype.attributes.each_value.map {|at| type_map(at[:type])}
+                 })
+      else
+        p.merge!({"$ref" => ref_component(:schema, attype.typename)
+                 })
+      end
+    elsif (attype <= Selection)
+      p.merge!({"type" => "string",
+                "enum" => attype.ids.map {|c| c.to_s}})
+    else
+      print("Warning: don't understand schema for #{attype.to_s}\n")
+      p.merge!({"type" => "string"})
+    end
+    p
   end
 
   def save(map)

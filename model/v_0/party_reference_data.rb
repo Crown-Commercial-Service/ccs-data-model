@@ -5,7 +5,7 @@ ReferenceData.new :CCSSectorCodes do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "CCS Sector Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    code {
+    ED= code {
       id :education_funded
       macro &URI_FROM_DOC_AND_ID
       title "ccs eduction funded"
@@ -21,11 +21,15 @@ ReferenceData.new :SectorScheme do
     title "Sector Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
     code {
-      id :ccs
+      link_scheme_from_scheme( self, CCSSECTORS)
+    }
+    code {
+      id :other
       macro &URI_FROM_DOC_AND_ID
-      title "CCS sector coding"
-      description "CCS defined sector coding"
-      source CCSSECTORS.url
+      prefix :other
+      title "Other sector coding"
+      description "Other / unknown sector coding scheme"
+      source "none"
     }
   })
 end
@@ -90,6 +94,32 @@ ReferenceData.new :ContactIdScheme do
       title "CCS Salesforce id"
       description title
       source "CCS Salesforce"
+    }
+  })
+end
+
+ReferenceData.new :ContactRoles do
+  CONTACT_ROLES= Enum( codelist {
+    macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
+    title "Contact Roles"
+    description " To be verified"
+    code {
+      id :org_administrator
+      macro &URI_FROM_DOC_AND_ID
+      title id
+      description id
+    }
+    code {
+      id :ccs_admin
+      macro &URI_FROM_DOC_AND_ID
+      title id
+      description id
+    }
+    code {
+      id :commercial_contact
+      macro &URI_FROM_DOC_AND_ID
+      title id
+      description id
     }
   })
 end

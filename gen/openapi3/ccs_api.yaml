@@ -421,12 +421,31 @@ components:
       - id
       - name
       properties:
+        version_id:
+          type: string
+          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+          description: UUID of this version of the entry
+        supercedes_id:
+          type: string
+          example: e030f1b1-647d-4ed7-8d84-ac9790563362
+          description: UUID of this version superceded
+        date_added:
+          type: string
+          format: date
+          example: '2019-09-28T18:34:23.45Z'
+          description: Date of creation or update
+        checksum:
+          type: string
+          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+          description: MD5
         kind:
           type: string
           enum:
           - framework
           - lot
+          - callof
           - contract
+          example: :framework
           description: Kind of agreement, such as Framework, Lot,Contract. Lots are
             considered separateagreements, but link to their owning framework agreement.
             Similarly Contracts should link to anylot that they are based on. See
@@ -452,13 +471,12 @@ components:
           description: other names for the agreement
         name:
           type: string
+          example: Supply Teachers
           description: ''
         long_name:
           type: string
+          example: Supply Teachers Framework 2018
           description: ''
-        version:
-          type: string
-          description: semantic version id of the agreement model, in the form X.Y.Z
         status:
           type: string
           enum:
@@ -495,6 +513,8 @@ components:
         description:
           type: string
           description: Describe the agreement
+        restriction:
+          "$ref": "#/components/schemas/Restriction"
         part_of_id:
           type: string
           description: Agreement this is part of, applicable only to Lots
@@ -525,37 +545,23 @@ components:
       - id
       - name
       properties:
-        sector_scheme:
-          type: array
-          items:
-            type: string
-            enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs
-          example: ccsscheme
-          description: The sector scheme id
-        sector_id:
-          type: array
-          items:
-            type: string
-          example: ccsscheme:education_funded
-          description: The sector scheme ids that define to whom the item may be sold.
-            Prefix must match one of the schemes.
-        location_scheme:
-          type: array
-          items:
-            type: string
-            enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius
-          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
-          description: The schemes for identifying locations
-        location_id:
-          type: array
-          items:
-            type: string
-          example: "[UKH1, UKG2]"
-          description: The location scheme ids that defines  where the items can be
-            offered.
+        version_id:
+          type: string
+          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+          description: UUID of this version of the entry
+        supercedes_id:
+          type: string
+          example: e030f1b1-647d-4ed7-8d84-ac9790563362
+          description: UUID of this version superceded
+        date_added:
+          type: string
+          format: date
+          example: '2019-09-28T18:34:23.45Z'
+          description: Date of creation or update
+        checksum:
+          type: string
+          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+          description: MD5
         id:
           type: string
           example: CPV:37000000-8:CCS:2019-01:1
@@ -631,6 +637,23 @@ components:
       - id
       - name
       properties:
+        version_id:
+          type: string
+          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+          description: UUID of this version of the entry
+        supercedes_id:
+          type: string
+          example: e030f1b1-647d-4ed7-8d84-ac9790563362
+          description: UUID of this version superceded
+        date_added:
+          type: string
+          format: date
+          example: '2019-09-28T18:34:23.45Z'
+          description: Date of creation or update
+        checksum:
+          type: string
+          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+          description: MD5
         id:
           type: string
           example: '07719842-a3a1-41c5-8320-6439295fb90e'
@@ -698,7 +721,8 @@ components:
           items:
             type: string
             enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other
           description: ''
         sector:
           type: array
@@ -712,12 +736,10 @@ components:
         spend_this_year:
           type: number
           format: float
-          description: "\n                                                                                                                                                                                                                                                                                                                                                                   Salesforce
-            only stores for buyer "
+          description: "\n Salesforce only stores for buyer "
         documents_url:
           type: string
-          description: "\n                                                                                                                                                                                                                                                                                                                                                                                            Salesforce
-            links to google drive for this supplier;\n                                                                                                                                                                                                                                                                                                                                                                                                                               we
+          description: "\n Salesforce links to google drive for this supplier;\n we
             will move to S3 in due course "
         contact_scheme:
           type: string
@@ -732,7 +754,7 @@ components:
       description: The party is used to identify buyers and suppliers. Since some
         organisations act asboth buyers and suppliers we use the same record for both,
         but most organisations willbe one or the other. The onvolvement of the party
-        with an agreement determine  the role inthat contenxt.
+        with an agreement determine the role inthat contenxt.
     Contact:
       type: object
       required:
@@ -764,14 +786,12 @@ components:
           description: ''
         party_id:
           type: string
-          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           contact
-            is a link for this party "
+          description: " contact is a link for this party "
         role:
           type: array
           items:
             type: string
-          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               role
-            for CMp "
+          description: " role for CMp "
         first_name:
           type: string
           description: ''
@@ -780,8 +800,7 @@ components:
           description: ''
         title:
           type: string
-          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Salesforce;
-            not sure what the constrainst are "
+          description: " Salesforce; not sure what the constrainst are "
         job_title:
           type: string
           description: " Salesforce; free text "
@@ -818,57 +837,58 @@ components:
         contact_owner:
           type: string
           description: " from Salesforce "
-      description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   A
-        way of contacting a party.Store contacts in a safe identity store.Do not store
-        personal details elsewhere.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       "
+      description: 'A way of contacting a party.Store contacts in a safe identity
+        store.Do not store personal details elsewhere. '
     Offering:
       type: object
       required:
       - id
       - name
       properties:
-        sector_scheme:
-          type: array
-          items:
-            type: string
-            enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs
-          example: ccsscheme
-          description: The sector scheme id
-        sector_id:
-          type: array
-          items:
-            type: string
-          example: ccsscheme:education_funded
-          description: The sector scheme ids that define to whom the item may be sold.
-            Prefix must match one of the schemes.
-        location_scheme:
-          type: array
-          items:
-            type: string
-            enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius
-          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
-          description: The schemes for identifying locations
-        location_id:
-          type: array
-          items:
-            type: string
-          example: "[UKH1, UKG2]"
-          description: The location scheme ids that defines  where the items can be
-            offered.
+        version_id:
+          type: string
+          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+          description: UUID of this version of the entry
+        supercedes_id:
+          type: string
+          example: e030f1b1-647d-4ed7-8d84-ac9790563362
+          description: UUID of this version superceded
+        date_added:
+          type: string
+          format: date
+          example: '2019-09-28T18:34:23.45Z'
+          description: Date of creation or update
+        checksum:
+          type: string
+          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+          description: MD5
+        id:
+          type: string
+          example: db1fa9ac-1b83-4c27-8c80-ded2f0120c54
+          description: unique uuid for the offering
+        agreement_id_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#lot_number
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#cf_contract_id
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
+          description: who to identify the agreement
         agreement_id:
           type: string
           description: The agreement this offering relates to
+        supplier_id_scheme:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe
+          description: ''
         supplier_id:
           type: string
           example: comphouse:12345678
           description: ''
-        id:
-          type: string
-          description: unique id for the offering across all offerings, suppliers
-            and frameworks
         name:
           type: string
           description: ''
@@ -894,6 +914,46 @@ components:
         may be extended for different agreements. A supplier may provide additionalvariable
         facts in their Offer to supplement the description of how they support the
         agreement. "
+    Restriction:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        sector_scheme:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
+          description: The sector scheme id
+        sector_id:
+          type: array
+          items:
+            type: string
+          example: ccs_sector_codes:ccs_sector_codes
+          description: The sector scheme ids that define to whom the item may be sold.
+            Prefix must match one of the schemes.
+        location_scheme:
+          type: array
+          items:
+            type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius
+          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
+          description: The schemes for identifying locations
+        location_id:
+          type: array
+          items:
+            type: string
+          example: "[UKH1, UKG2]"
+          description: The location scheme ids that defines  where the items can be
+            offered.
+      description: a type with a number of classification attributes, such as sector,
+        location
     Field:
       type: object
       required:
@@ -903,11 +963,6 @@ components:
         id:
           type: string
           description: ''
-        role_id:
-          type: string
-          example: educ
-          description: Scheme uri code taht defines the role of the supplementary
-            field, which should be prefixed by a scheme id in the enclosing type
         type_scheme:
           type: string
           enum:
@@ -915,65 +970,16 @@ components:
           - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#date
           - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#int
           - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#float
-          example: &2 !ruby/object:ReferenceData::Code
-            name: :code
-            domain: &1 !ruby/object:ReferenceData::CodeList
-              name: :codelist
-              domain: !ruby/object:ReferenceData
-                contents:
-                  :codelist:
-                  - *1
-                name: :SupplementaryDataTypeCodes
-              attributes:
-                :id: :supplementary_data_type_codes
-                :version: !ruby/object:Semantic::Version
-                  major: 0
-                  minor: 1
-                  patch: 1
-                  pre: 
-                  build: 
-                  version: 0.1.1
-                :url: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes
-                :title: SupplementaryDataType
-                :description: Identify the types in supplementary data of a filter
-                :code:
-                - *2
-                - !ruby/object:ReferenceData::Code
-                  name: :code
-                  domain: *1
-                  attributes:
-                    :id: :date
-                    :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#date
-                    :title: date filter
-                    :description: supplementary is a date in iso 860 format.
-                  container: *1
-                - !ruby/object:ReferenceData::Code
-                  name: :code
-                  domain: *1
-                  attributes:
-                    :id: :int
-                    :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#int
-                    :title: integer filter
-                    :description: supplementary is a signed int in 64 bit range.
-                  container: *1
-                - !ruby/object:ReferenceData::Code
-                  name: :code
-                  domain: *1
-                  attributes:
-                    :id: :float
-                    :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#float
-                    :title: floating point numbner filter
-                  container: *1
-            attributes:
-              :id: :string
-              :uri: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#string
-              :title: string filter
-              :description: supplementary is a unicode UTF8 encoded string of indeterminate
-                lengh, but no more than 10k in size.
-            container: *1
+          example: string
           description: type scheme should be appropriate for the filter scheme
         value:
-          "$ref": "#/components/schemas/Value"
+          oneOf:
+          - type: string
+          - type: string
+            format: date
+          - type: number
+            format: float
+          - type: integer
           example: A descriptive string
       description: an additional field that helps qualify the object
     Address:
@@ -1005,11 +1011,9 @@ components:
           description: " Location from the address for geo search "
         longtitude:
           type: string
-          description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Location
-            from the address for geo search "
-      description: "\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Address
-        should include at least address line 1 and ideally post code.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         will
-        contain lat / long if we have derived it.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "
+          description: " Location from the address for geo search "
+      description: "\n Address should include at least address line 1 and ideally
+        post code.\n will contain lat / long if we have derived it.\n "
     Value:
       type: object
       required:

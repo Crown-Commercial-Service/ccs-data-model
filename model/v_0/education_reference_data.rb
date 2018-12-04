@@ -21,12 +21,13 @@ ReferenceData.new :EducationRatingsScheme do
     title "Qualification Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
     OFFSTED_RATING= code {
-      id :offsted_rating
-      prefix id
+      id :offsted
+      prefix :offsted_rating
       macro &URI_FROM_DOC_AND_ID
       title "Offsted Rating"
-      description title
-      source "Offsted codes TBD"
+      description "Using offsted standard for valid ratings codes"
+      pattern "(offsted:)(Outstanding|Good|Requires Improvement|Inadequate)"
+      source "https://www.gov.uk/government/organisations/ofsted"
     }
   }
 end

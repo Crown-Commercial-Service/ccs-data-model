@@ -1,0 +1,19 @@
+{
+  "codelist": [
+    {
+      "id": "course_related_codes",
+      "version": "0.1.1",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes",
+      "title": "Filter Classification Codes specific to Apprenticeships questions",
+      "description": "Codes of codes used to filter offerings and other catalogue entries",
+      "code": [
+        {
+          "id": "course_start_date",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes#course_start_date",
+          "title": "When does a course start - provide a Date in line with https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#date",
+          "description": "When describing course offerings, this can describe the start date of the course"
+        }
+      ]
+    }
+  ]
+}

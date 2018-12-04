@@ -8,11 +8,20 @@
       "description": "Scheme of codes used to decide what scheme to use to classify an item",
       "code": [
         {
-          "id": "ccs",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#ccs",
-          "title": "CCS sector coding",
-          "description": "CCS defined sector coding",
-          "source": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes"
+          "source": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes",
+          "id": "ccs_sector_codes",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes",
+          "prefix": "ccs_sector_codes",
+          "title": "CCS Sector Classification Schemes",
+          "description": "Scheme of codes used to decide what scheme to use to classify an item"
+        },
+        {
+          "id": "other",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other",
+          "prefix": "other",
+          "title": "Other sector coding",
+          "description": "Other / unknown sector coding scheme",
+          "source": "none"
         }
       ]
     }

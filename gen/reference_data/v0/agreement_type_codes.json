@@ -18,6 +18,11 @@
           "title": " Lot "
         },
         {
+          "id": "callof",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes#callof",
+          "title": " Calloff"
+        },
+        {
           "id": "contract",
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes#contract",
           "title": " Contract"
