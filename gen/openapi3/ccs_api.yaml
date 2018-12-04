@@ -6,7 +6,7 @@ servers:
 info:
   title: API::Endpoint
   description: genearated endpoint for data API::Endpoint
-  version: 0.1.1
+  version: 0.1.2
   contact:
     email: admin@ccs.gov.uk
   license:

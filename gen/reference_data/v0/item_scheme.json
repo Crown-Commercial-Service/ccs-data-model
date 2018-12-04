@@ -2,7 +2,7 @@
   "scheme": [
     {
       "id": "item_scheme",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme",
       "title": "ItemClassificationSchemes",
       "description": "Scheme of codes used to decide what scheme to use to classify an item",

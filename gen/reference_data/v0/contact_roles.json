@@ -2,7 +2,7 @@
   "codelist": [
     {
       "id": "contact_roles",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles",
       "title": "Contact Roles",
       "description": " To be verified",

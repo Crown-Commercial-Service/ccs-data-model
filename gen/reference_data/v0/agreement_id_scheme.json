@@ -1,7 +1,7 @@
 {
   "scheme": [
     {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "id": "agreement_id_scheme",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme",
       "title": "Agreement id schemes",

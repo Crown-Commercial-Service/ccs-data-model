@@ -2,7 +2,7 @@
   "scheme": [
     {
       "id": "contact_id_scheme",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme",
       "title": "Contact id  Schemes",
       "description": "How to identify a link to a contact",
