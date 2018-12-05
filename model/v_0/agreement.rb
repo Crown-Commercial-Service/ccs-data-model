@@ -8,15 +8,15 @@ include DataModel
 domain :Agreements do
 
   datatype(:Restriction, description: "a type with a number of classification attributes, such as sector, location") {
-    attribute :sector_scheme, SECTOR_SCHEMES, ZERO_TO_MANY, "The sector scheme id", example: CCSSECTORS.url
+    attribute :sector_standard, SECTOR_STANDARDS, ZERO_TO_MANY, "The sector standard id", example: CCSSECTORS.url
     attribute :sector_id, String, ZERO_TO_MANY,
-              "The sector scheme ids that define to whom the item may be sold. Prefix must match one of the schemes.",
-              example: "#{CCSSECTORS.id}:#{CCSSECTORS.id}"
-    attribute :location_scheme, LOCATION_SCHEMES, ZERO_TO_MANY, "The schemes for identifying locations",
+              "The sector standard ids that define to whom the item may be sold. Prefix must match one of the standards.",
+              example: "#{ED.container.id}:#{ED.id}"
+    attribute :location_standard, LOCATION_STANDARDS, ZERO_TO_MANY, "The standards for identifying locations",
               example: "[#{NUTS.uri}]"
     attribute :location_id, String, ZERO_TO_MANY,
-              "The location scheme ids that defines  where the items can be offered.",
-              example: "[UKH1, UKG2]"
+              "The location standard ids that defines  where the items can be offered.",
+              example: "UKH1"
   }
 
   datatype(:Agreement, extends: Register::Record,
@@ -31,7 +31,7 @@ domain :Agreements do
               example: FW.id
     attribute :id, String, "id of agreeement; This is the RM number for a framework, and {RM#lotnumber} for a lot",
               example: "#{CCS_FW_CODE.prefix}:RM3541"
-    attribute :id_scheme, AGREEMENT_ID_SCHEMES, SINGLE, "who to identify the agreement", example: CCS_FW_CODE.uri
+    attribute :id_standard, AGREEMENT_ID_STANDARDS, SINGLE, "who to identify the agreement", example: CCS_FW_CODE.uri
 
     attribute :keyword, String, ZERO_TO_MANY, "other names for the agreement"
     attribute :name, String, example: "Supply Teachers"
@@ -42,28 +42,26 @@ domain :Agreements do
 
     attribute :description, String, "Describe the agreement"
 
-    attribute :start_date, Date
-    attribute :end_date, Date
-    attribute :duration, Integer, "Months"
+    attribute :start_date, Date, example: "2019-01-01"
+    attribute :end_date, Date, example: "2020-01-10"
+    attribute :duration, Integer, "Months", example: 5
 
-    attribute :original_end_date, Date
-    attribute :pillar, String
-    attribute :category, String
+    attribute :org_structure_standard, ORG_STRUCT_STANDARDS, "Standard identifying prefixes for organisation responbsible for this agreement. ", example: CCS_ORG_CODES.url
+    attribute :owning_org_unit_name, String, ONE_TO_MANY, "Commercial category org unit responsible for this agreement. Usually the CCS pillar name and a category name", example: "#{CCS_ORG_CODES.id}:#{BUILDINGS.id}"
+=begin
+    attribute :contact_standard, CONTACT_ID_STANDARDS, "The standard used to link to contacts in this agreement record. ", SINGLE, example: EMAIL.uri
+=end
+    attribute :owner_id, String, ONE_TO_MANY, "Individual accountable for the agreement", example: "#{EMAIL.id}example_owner@crowncommercial.gov.uk"
 
-    attribute :restriction, :Restriction, ZERO_OR_ONE, "Restrictions that may apply"
+    attribute :restriction, :Restriction, ZERO_OR_ONE, "Restrictions that may apply, such as government sectors and locations. "
 
     # structure of agreement
-    attribute :part_of_id, String, "Agreement this is part of, applicable only to Lots", links: :Agreement
+    attribute :part_of_id, String, "Agreement this is part of; typically applicable only to *Lots*. ", links: :Agreement
     attribute :conforms_to_id, String, "Agreement this conforms to, such as a Contract conforming to a Framework", links: :Agreement
 
     attribute :item_type, Items::ItemType, ZERO_TO_MANY,
               "describe the items that can be offered under the agreement"
 
-    attribute :supplier_qualification_scheme, String, ZERO_TO_MANY,
-              "schemes describing coding for suppliers qualification questionnaires",
-              example: APPRENTICESHIP_QUALIFICATION.url
-
-    # Qualifications
     attribute :min_value, Integer, ZERO_OR_ONE, "Minimum value of award, in pounds sterling"
     attribute :max_value, Integer, ZERO_OR_ONE, "Maximum value of award, in pounds sterling"
 

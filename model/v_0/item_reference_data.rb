@@ -1,10 +1,10 @@
 require_relative 'reference_data'
 
-ReferenceData.new :ItemScheme do
-  ITEM_SCHEMES = Enum (scheme {
+ReferenceData.new :ItemStandard do
+  ITEM_STANDARDS = Enum (standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "ItemClassificationSchemes"
-    description "Scheme of codes used to decide what scheme to use to classify an item"
+    title "ItemClassificationStandards"
+    description "Standard of codes used to decide what standard to use to classify an item"
     CPV= ref {
       id :cpv
       macro &URI_FROM_DOC_AND_ID
@@ -30,7 +30,7 @@ ReferenceData.new :ItemScheme do
       id :unspsc
       macro &URI_FROM_DOC_AND_ID
       title "United Nations Standard Products and Services Code	"
-      description "The United Nations Standard Products and Services Code (UNSPSC) is a hierarchical convention that is used to classify all products and services. Machine readable metadata for UNSPSC is not provided as open data: and so publishers should consider alternative classification schemes that do provide open data lookup tables wherever possible.	"
+      description "The United Nations Standard Products and Services Code (UNSPSC) is a hierarchical convention that is used to classify all products and services. Machine readable metadata for UNSPSC is not provided as open data: and so publishers should consider alternative classification standards that do provide open data lookup tables wherever possible.	"
       source "http://www.unspsc.org/codeset-downloads"
     }
     ref {

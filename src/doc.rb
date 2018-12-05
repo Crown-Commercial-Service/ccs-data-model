@@ -46,12 +46,12 @@ class Document < Output
                   file.print " extends #{type.extends}"
                 end
                 file.print "\n  #{type.description}\n\n"
-                file.print "|attribute|description|type|multiplicity|\n"
-                file.print "|---------|-----------|----|------------|\n"
+                file.print "|attribute|description|example|type|multiplicity|\n"
+                file.print "|---------|-----------|-------|----|------------|\n"
               end,
               attribute: lambda do |id:, val:, type:, depth:, index:, total:|
                 desc = val[:description].gsub(/\n/,"")
-                file.print "|#{val[:name]}|#{desc}|#{type_and_link(val)}|#{pretty_multiplicity(val)}|\n"
+                file.print "|#{val[:name]} |#{desc} |#{val[:example]} |#{type_and_link(val)} |#{pretty_multiplicity(val)} |\n"
               end,
           }, *models)
     end

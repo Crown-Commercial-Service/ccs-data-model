@@ -5,7 +5,7 @@ ReferenceData.new :AgreementTypeCodes do
     version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
-    description "Scheme of codes used to decide what scheme to use to classify an agreement"
+    description "Standard of codes used to decide what standard to use to classify an agreement"
     FW = code {
       id :framework
       macro &URI_FROM_DOC_AND_ID
@@ -29,12 +29,12 @@ ReferenceData.new :AgreementTypeCodes do
   }, code_type: :code)
 end
 
-ReferenceData.new :AgreementIDScheme do
-  AGREEMENT_ID_SCHEMES = Enum(scheme {
+ReferenceData.new :AgreementIDStandard do
+  AGREEMENT_ID_STANDARDS = Enum(standard {
     version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "Agreement id schemes"
-    description "Scheme for how to identify an agreement"
+    title "Agreement id standards"
+    description "Standard for how to identify an agreement"
     CCS_FW_CODE = ref {
       id :ccs_fw_id
       prefix :rm
@@ -63,11 +63,12 @@ ReferenceData.new :AgreementIDScheme do
   })
 end
 
+
 ReferenceData.new :AgreementStatusCodes do
   AGREEMENT_STATUSES = Enum(codelist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
-    description "Scheme of codes used to decide what scheme to use to classify an agreement"
+    description "Standard of codes used to decide what standard to use to classify an agreement"
     code {
       id :live
       macro &URI_FROM_DOC_AND_ID

@@ -3,13 +3,13 @@
     {
       "id": "org_id_scheme",
       "version": "0.1.3",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json",
       "title": "Organisation id Classification Schemes",
       "description": "Scheme of codes used to decide what scheme to use to classify an item",
       "ref": [
         {
           "id": "sf_org_id",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json.json#sf_org_id",
           "title": "CCS Salesforce id",
           "description": "CCS Salesforce id",
           "source": "CCS Salesforce",
@@ -17,7 +17,7 @@
         },
         {
           "id": "companies_house",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json.json#companies_house",
           "title": "Companies House",
           "description": "Companies House",
           "source": "Use CH register",
@@ -25,7 +25,7 @@
         },
         {
           "id": "dun",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json.json#dun",
           "title": "Dun & Bradstreet",
           "description": "Dun & Bradstreet",
           "source": "Use D&B register",
@@ -33,7 +33,7 @@
         },
         {
           "id": "dfe",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json.json#dfe",
           "title": "DfE",
           "description": "DfE",
           "source": "Use DfE&B register",

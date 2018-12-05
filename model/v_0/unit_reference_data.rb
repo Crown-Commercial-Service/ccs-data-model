@@ -2,11 +2,11 @@ require_relative 'reference_data'
 
 
 
-ReferenceData.new :UnitScheme do
-  UNITS_SCHEMES = Enum(scheme {
+ReferenceData.new :UnitStandard do
+  UNITS_STANDARDS = Enum(standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "Unit Schemes"
-    description "Scheme of codes used to decide what scheme to use to classify units"
+    title "Unit Standards"
+    description "Standard of codes used to decide what standard to use to classify units"
     ref {
       id :uncefact
       macro &URI_FROM_DOC_AND_ID

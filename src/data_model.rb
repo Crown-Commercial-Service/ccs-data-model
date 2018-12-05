@@ -292,7 +292,7 @@ module DataModel
   def Enum(doc, *codes, code_type: :ref, code_key: :uri, name_key: :id, doc_id: :id)
     begin
       if (!(doc.class <= DataType))
-        raise "scheme #{doc} for Enum needs to be a data type with many type values as an attribute 'codekey'"
+        raise "standard #{doc} for Enum needs to be a data type with many type values as an attribute 'codekey'"
       end
       if (codes.length == 0)
         codes = doc.attributes[code_type]
@@ -304,6 +304,9 @@ module DataModel
       selclass = Object.const_set typename, Class.new(Selection)
       selclass.define_singleton_method(:ids) {code_ids}
       selclass.define_singleton_method(:doc) {doc}
+      selclass.define_singleton_method(:id) {doc.id}
+      selclass.define_singleton_method(:uri) {doc.uri}
+      selclass.define_singleton_method(:url) {doc.url}
       selclass.define_singleton_method(:to_s) {"#{self.doc.attributes[doc_id]}( #{self.ids.join(', ')})"}
       return selclass
     rescue StandardError => err

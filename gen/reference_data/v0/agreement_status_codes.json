@@ -3,9 +3,9 @@
     {
       "id": "agreement_status_codes",
       "version": "0.1.3",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes.json",
       "title": "Agreement types",
-      "description": "Scheme of codes used to decide what scheme to use to classify an agreement",
+      "description": "Standard of codes used to decide what standard to use to classify an agreement",
       "code": [
         {
           "id": "live",

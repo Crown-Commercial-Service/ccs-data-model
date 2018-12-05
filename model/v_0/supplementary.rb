@@ -21,8 +21,8 @@ domain :Supplementary do
 
   datatype(:Field, description: "an additional field that helps qualify the object") {
     attribute :id, String
-    attribute :role_id, String, "Scheme uri code that defines the role of the supplementary field, which"+
-        " should be prefixed by a scheme id in the enclosing *Item type*, ", example: "#{OFFER_COURSE_START_DATE.prefix}:#{OFFER_COURSE_START_DATE.id}"
+    attribute :role_id, String, "Standard uri code that defines the role of the supplementary field, which"+
+        " should be prefixed by a standard id in the enclosing *Item type*, ", example: "#{OFFER_COURSE_START_DATE.prefix}:#{OFFER_COURSE_START_DATE.id}"
     attribute :type_id, SUPPLEMENTARY_TYPE_CODES, "Type of the field - which should be appropriate for the role. ",
               example: "string"
     attribute :value, :Value, "Supplementary data matching the type",

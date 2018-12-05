@@ -52,11 +52,11 @@ ReferenceData.new :ApprenticeSpecificOfferingCodes do
   }
   end
 
-ReferenceData.new :EducationRatingsScheme do
-  EDU_RATINGS = scheme {
+ReferenceData.new :EducationRatingsStandard do
+  EDU_RATINGS = standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "Qualification Classification Schemes"
-    description "Scheme of codes used to decide what scheme to use to classify an item"
+    title "Qualification Classification Standards"
+    description "Standard of codes used to decide what standard to use to classify an item"
     OFFSTED_RATING = ref {
       id :offsted
       prefix :offsted_rating
@@ -69,13 +69,13 @@ ReferenceData.new :EducationRatingsScheme do
   }
 end
 
-ReferenceData.new :ApprenticeshipQualificationQuestionnaireScheme do
-  APPRENTICESHIP_QUALIFICATION = scheme {
+ReferenceData.new :ApprenticeshipQualificationQuestionnaireStandard do
+  APPRENTICESHIP_QUALIFICATION = standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Apprenticeships qualifications questions for suppliers"
-    description "Scheme of codes used to decide what scheme to use to classify an item"
+    description "Standard of codes used to decide what standard to use to classify an item"
     PROVIDER_OFFSTED = ref {
-      link_scheme_from_code(self, OFFSTED_RATING)
+      link_standard_from_code(self, OFFSTED_RATING)
     }
     ref {
       id :supplier_has_experience
@@ -88,24 +88,24 @@ ReferenceData.new :ApprenticeshipQualificationQuestionnaireScheme do
   }
 end
 
-ReferenceData.new :ApprenticeshipOfferScheme do
-  APPRENTICESHIP_OFFER = scheme {
+ReferenceData.new :ApprenticeshipOfferStandard do
+  APPRENTICESHIP_OFFER = standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Apprenticeships qualifications questions for suppliers"
-    description "Scheme of codes used to decide what scheme to use to classify an item." +
+    description "Standard of codes used to decide what standard to use to classify an item." +
                     "This is a mix of custom codes and course codes."
 
     OFFER_COURSE_START_DATE = ref {
-      link_scheme_from_code(self, START_DATE)
+      link_standard_from_code(self, START_DATE)
     }
     ref {
-      link_scheme_from_code(self, COURSE_LOC)
+      link_standard_from_code(self, COURSE_LOC)
     }
     ref {
-      link_scheme_from_code(self, SHARED)
+      link_standard_from_code(self, SHARED)
     }
     ref {
-      link_scheme_from_code( self, IN_ESFA_FUNDING)
+      link_standard_from_code( self, IN_ESFA_FUNDING)
     }
   }
 end

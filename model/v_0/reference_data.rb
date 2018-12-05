@@ -3,11 +3,11 @@ require_relative 'host'
 include DataModel
 
 def ref_url id, version
-  "#{REFERENCE_HOST}/v#{version.major}/#{id}"
+  "#{REFERENCE_HOST}/v#{version.major}/#{id}#{REFERENCE_DOC_EXT}"
 end
 
 URI_FROM_DOC_AND_ID = lambda do
-  uri "#{self.container.url}.json##{id.to_s.downcase}"
+  uri "#{self.container.url}##{id.to_s.downcase}"
 end
 
 ID_AND_URL_FROM_DOMAIN_AND_VERSION = lambda do
@@ -22,8 +22,8 @@ ONE_CONTAINER_TYPE = lambda do
   end
 end
 
-# point an entry in a scheme to a code listed elsewhere
-def link_scheme_from_code(to, from)
+# point an entry in a standard to a code listed elsewhere
+def link_standard_from_code(to, from)
   to.source = from.container.url
   to.id = from.id
   to.uri = from.uri
@@ -33,7 +33,7 @@ def link_scheme_from_code(to, from)
   to.pattern = from.pattern
 end
 
-def link_scheme_from_scheme(to, from)
+def link_standard_from_codelist(to, from)
   to.source = from.url
   to.id = from.id
   to.uri = from.url
@@ -45,12 +45,12 @@ end
 domain :ReferenceData do
 
   datatype(:Code) {
-    attribute :id, String, "short code unique within the Code's scheme" +
+    attribute :id, String, "short code unique within the Code's standard" +
         "this should be prefixed with the prefix code of the associated DataDocument," +
         " forming a [curie](https://www.w3.org/TR/curie/#sec_2.1.)" +
         "the prefix is matched to the URL of the reference document, and the second part" +
         "of the code becomes an extension of the base url to allow the individial value to be found",
-              example: "scheme_prefix:item_code"
+              example: "standard_prefix:item_code"
     attribute :title, String, ZERO_OR_ONE, "short name for the entry"
     attribute :description, String, ZERO_OR_ONE, "description on what the entry is for"
     attribute :uri, String, "resolved uri of the entry, used for selecting the entry in docs, and referring to it long form"
@@ -59,20 +59,20 @@ domain :ReferenceData do
   }
 
   datatype(:DataDocRef, extends: :Code, description: "A code which refers to a definition document, that describes another CodeList") {
-    attribute :source, String, "a description or url for how to build codes against this scheme"
+    attribute :source, String, "a description or url for how to build codes against this standard"
     attribute :prefix, String, "A prefix code for building codes from this source. " +
         " If the referred standard has a good unique prefix that should be used, where as if it is unclear " +
         " a prefix should be defined so that coded IDs are not ambiguous in terms of format or origin." +
         "if there is one", example: "companies-house"
     attribute :supplementals, :DataDocRef,
-              " schemes supporting the code supplementary codes that can be used with this scheme" +
+              " standards supporting the code supplementary codes that can be used with this standard" +
                   "which should also specify the field type to be used in each case"
   }
 
   datatype(:DataDocument,
            description: "A data document is a static versioned set of code values used to classify other dynamic elements." +
                "For example, a list of status codes that an Agreement can be in.") {
-    EXNAME = "item_classification_schemes"
+    EXNAME = "item_classification_standards"
     attribute :url, String, "the URL of the data document", example: ref_url("#{EXNAME}", Version.new("1.1.0"))
     attribute :id, String, "name of document", example: "#{EXNAME}"
     attribute :title, String, "short document title for listing and web tabs"
@@ -80,13 +80,13 @@ domain :ReferenceData do
     attribute :description, String, ZERO_OR_ONE
   }
 
-  datatype(:Scheme, extends: :DataDocument,
-           description: "A scheme is a list of coded values where each value points to another code list") {
+  datatype(:Standard, extends: :DataDocument,
+           description: "A standard is a list of coded values where each value points to another code list") {
     attribute :ref, :DataDocRef, ZERO_TO_MANY
   }
 
   datatype(:CodeList, extends: :DataDocument,
-           description: "A scheme is a list of coded values where each value points to another code list") {
+           description: "A standard is a list of coded values where each value points to another code list") {
     attribute :code, :Code, ZERO_TO_MANY
   }
 

@@ -5,7 +5,7 @@ ReferenceData.new :UserNeedCodes do
   USERNEEDS = codelist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
-    description "Scheme of codes used to decide what scheme to use to classify an agreement"
+    description "Standard of codes used to decide what standard to use to classify an agreement"
     code {
       id :location
       macro &URI_FROM_DOC_AND_ID
@@ -36,10 +36,10 @@ datatype(:ExpressionOfNeed,
          description:
              " Defines a buyer 's need which can be matched to agreement items and other details
 The need matches closely to our definitions of agreements under ' items types ' and their classification
-schemes, but is not a one-to-one match.") {
+standards, but is not a one-to-one match.") {
   attribute :buyer_id, String, "The buyer expressing the need"
   attribute :kind, Enum(USERNEEDS)
   attribute :value, String
-  attribute :unit_scheme, UNITS_SCHEMES, "The units scheme "
-  attribute :unit_scheme, String, "The units typically used to express the need"
+  attribute :unit_standard, UNITS_STANDARDS, "The units standard "
+  attribute :unit_standard, String, "The units typically used to express the need"
 }

@@ -3,8 +3,8 @@ require_relative 'reference_data'
 ReferenceData.new :CCSSectorCodes do
   CCSSECTORS= codelist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "CCS Sector Classification Schemes"
-    description "Scheme of codes used to decide what scheme to use to classify an item"
+    title "CCS Sector Classification Standards"
+    description "Standard of codes used to decide what standard to use to classify an item"
     ED= code {
       id :education_funded
       macro &URI_FROM_DOC_AND_ID
@@ -15,32 +15,60 @@ ReferenceData.new :CCSSectorCodes do
   }
 end
 
-ReferenceData.new :SectorScheme do
-  SECTOR_SCHEMES = Enum (scheme {
+ReferenceData.new :SectorStandard do
+  SECTOR_STANDARDS = Enum (standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "Sector Classification Schemes"
-    description "Scheme of codes used to decide what scheme to use to classify an item"
+    title "Sector Classification Standards"
+    description "Standard of codes used to decide what standard to use to classify an item"
     ref {
-      link_scheme_from_scheme( self, CCSSECTORS)
+      link_standard_from_codelist(self, CCSSECTORS)
     }
     ref {
       id :other
       macro &URI_FROM_DOC_AND_ID
       prefix :other
       title "Other sector coding"
-      description "Other / unknown sector coding scheme"
+      description "Other / unknown sector coding standard"
       source "none"
+    }
+  })
+end
+
+ReferenceData.new :CCSOrg do
+  CCS_ORG_CODES = Enum(codelist {
+    macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
+    title "CCS Org structure"
+    description "CCS Structure codes"
+    BUILDINGS= code {
+      id :pillar_buildings
+      macro &URI_FROM_DOC_AND_ID
+    }
+    EDUCATION= code {
+      id :category_education
+      macro &URI_FROM_DOC_AND_ID
+    }
+  }, code_type: :code, code_key: :id)
+end
+
+ReferenceData.new :OrgStructureStandard do
+  ORG_STRUCT_STANDARDS = Enum(standard {
+    macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
+    title "Org structure standards"
+    description "How to classify organisation units"
+    ref {
+      id :ccs_org
+      link_standard_from_codelist( self, CCS_ORG_CODES.doc)
     }
   })
 end
 
 
 
-ReferenceData.new :OrgIdScheme do
-  ORG_ID_SCHEMES = Enum (scheme {
+ReferenceData.new :OrgIdStandard do
+  ORG_ID_STANDARDS = Enum (standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "Organisation id Classification Schemes"
-    description "Scheme of codes used to decide what scheme to use to classify an item"
+    title "Organisation id Classification Standards"
+    description "Standard of codes used to decide what standard to use to classify an item"
     ref {
       id :sf_org_id
       macro &URI_FROM_DOC_AND_ID
@@ -76,10 +104,10 @@ ReferenceData.new :OrgIdScheme do
   })
 end
 
-ReferenceData.new :ContactIdScheme do
-  CONTACT_ID_SCHEMES = Enum (scheme {
+ReferenceData.new :ContactIdStandard do
+  CONTACT_ID_STANDARDS = Enum (standard {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
-    title "Contact id  Schemes"
+    title "Contact id  Standards"
     description "How to identify a link to a contact"
     SF_CONTACT= ref {
       id :sf_contact

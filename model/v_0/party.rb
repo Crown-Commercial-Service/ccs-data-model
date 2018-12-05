@@ -9,14 +9,14 @@ domain(:Parties) {
            description: "A managed set of qualification questions andwered at a point in time for a period of time") {
 
     attribute :id, String, "UUID for the questionnaire entry"
-    attribute :classification, String, SINGLE, "coded answers to questions matching the schemes",
+    attribute :classification, String, SINGLE, "coded answers to questions matching the standards",
               example: "#{APPRENTICESHIP_QUALIFICATION.url}"
-    attribute :answer_code, String, ZERO_OR_ONE, "coded answers to questions matching the schemes",
+    attribute :answer_code, String, ZERO_OR_ONE, "coded answers to questions matching the standards",
               example: "#{OFFSTED_RATING.id}:Requires_Improvement"
-    attribute :supplementary_classification, String, ZERO_TO_MANY, "coded answers to questions matching the schemes",
+    attribute :supplementary_classification, String, ZERO_TO_MANY, "coded answers to questions matching the standards",
     example: "#{APPRENTICESHIP_QUALIFICATION.url}"
     attribute :supplementary_fields, Supplementary::Field, ZERO_TO_MANY,
-              "additional filters used to qulify the item. Filter schemes should obviously be relevant to the item"
+              "additional filters used to qulify the item. Filter standards should obviously be relevant to the item"
   }
 
   datatype(:Questionnaire,
@@ -25,9 +25,9 @@ domain(:Parties) {
     attribute :id, String, "UUID for the questionnaire entry"
     attribute :completed, Date
     attribute :expires, Date
-    attribute :question_schemes, String, ZERO_TO_MANY, "The coding schemes for the questions and answers",
+    attribute :question_standards, String, ZERO_TO_MANY, "The coding standards for the questions and answers",
               example: APPRENTICESHIP_QUALIFICATION.url
-    attribute :question, :Question, ZERO_OR_ONE, "coded answers to questions matching the schemes"
+    attribute :question, :Question, ZERO_OR_ONE, "coded answers to questions matching the standards"
   }
 
   datatype(:Party, description:
@@ -36,17 +36,17 @@ domain(:Parties) {
           "be one or the other. The onvolvement of the party with an agreement determine the role in" +
           "that contenxt.") {
     attribute :id, String, " URN, should match salesforce ID; master key "
-    attribute :org_id_scheme, ORG_ID_SCHEMES
-    attribute :supplementary_org_id_schemens, ORG_ID_SCHEMES, ZERO_TO_MANY
+    attribute :org_id_standard, ORG_ID_STANDARDS
+    attribute :supplementary_org_id_standard, ORG_ID_STANDARDS, ZERO_TO_MANY
     attribute :supplementary_org_id, String, ZERO_TO_MANY
-    attribute :parent_org_id, String, " URN, should match one of the schemes listed ", links: :Party
+    attribute :parent_org_id, String, " URN, should match one of the standards listed ", links: :Party
     attribute :org_name, String
-    attribute :sector_scheme, SECTOR_SCHEMES, ZERO_TO_MANY
+    attribute :sector_standard, SECTOR_STANDARDS, ZERO_TO_MANY
     attribute :sector, String, ZERO_TO_MANY, example: "ccs_sector:education_funded"
     attribute :trading_name, String, ZERO_OR_ONE, " Salesforce only stores for supplier. "
     attribute :spend_this_year, Float, ZERO_OR_ONE, " Salesforce only stores this for buyers. "
     attribute :documents_url, String, ZERO_OR_ONE, " Salesforce links to google drive folder for this supplier; we will move to S3 in due course. "
-    attribute :contact_scheme, CONTACT_ID_SCHEMES, ZERO_OR_ONE, example: SF_CONTACT.uri
+    attribute :contact_standard, CONTACT_ID_STANDARDS, ZERO_OR_ONE, example: SF_CONTACT.uri
     attribute :account_manager_id, String, ZERO_OR_ONE, " Who manages the account for CCS "
   }
 
@@ -65,13 +65,13 @@ domain(:Parties) {
   }
 
   datatype(:Contact, description:
-      "A way of contacting a party.Store contacts in a safe identity store.Do not store personal details elsewhere. ") {
-    attribute :contact_scheme, CONTACT_ID_SCHEMES, SINGLE, example: SF_CONTACT.uri
+      "A way of contacting a party. Store contacts in a safe identity store. Do not store personal details elsewhere. ") {
+    attribute :contact_standard, CONTACT_ID_STANDARDS, SINGLE, example: SF_CONTACT.uri
     attribute :id, String, " a newly minted UUID for CMp "
-    attribute :supplementary_contact_id_schemens, CONTACT_ID_SCHEMES, ZERO_TO_MANY
+    attribute :supplementary_contact_standard, CONTACT_ID_STANDARDS, ZERO_TO_MANY
     attribute :supplementary_contact_id, String, ZERO_TO_MANY
     attribute :party_id, String, " contact is a link for this party ", links: :Party
-    #TODO ID Scheme
+    #TODO ID Standard
     attribute :role, String, ZERO_TO_MANY, " role for CMp "
     attribute :first_name, String
     attribute :last_name, String
@@ -84,9 +84,11 @@ domain(:Parties) {
     attribute :origin, String, ZERO_OR_ONE, " from Salesforce - where the data was entered "
     attribute :notes, String, ZERO_OR_ONE, " from Salesforce "
     attribute :status, String, ZERO_OR_ONE, " from Salesforce, 'Active' "
-    attribute :user_research_participane, String, ZERO_OR_ONE, " Y / N : from Salesforce " #TODO implement Boolean
+    attribute :user_research_participant, String, ZERO_OR_ONE, " Y / N : from Salesforce " #TODO implement Boolean
     attribute :not_to_receive_ccs_emails, String, ZERO_OR_ONE, " Y / N : from Salesforce " #TODO implement Boolean
     attribute :contact_owner, String, ZERO_OR_ONE, " from Salesforce "
+    attribute :org_structure_standard, ORG_STRUCT_STANDARDS, "Standard identifying prefixes for organisation responbsible for this agreement. ", example: CCS_ORG_CODES.doc.url
+    attribute :org_unit, String, ONE_TO_MANY, "Category org unit responsible for this agreement. ", example: "#{CCS_ORG_CODES.id}#{BUILDINGS.id}"
   }
 
 }

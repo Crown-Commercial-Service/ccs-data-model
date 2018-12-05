@@ -1,33 +1,33 @@
 {
   "Agreements": {
     "Restriction": {
-      "sector_scheme": {
+      "sector_standard": {
         "multiplicity": "*",
-        "description": "The sector scheme id",
-        "name": "sector_scheme",
-        "type": "sector_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme.json#other)",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes"
+        "description": "The sector standard id",
+        "name": "sector_standard",
+        "type": "sector_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json"
       },
       "sector_id": {
         "multiplicity": "*",
-        "description": "The sector scheme ids that define to whom the item may be sold. Prefix must match one of the schemes.",
+        "description": "The sector standard ids that define to whom the item may be sold. Prefix must match one of the standards.",
         "name": "sector_id",
         "type": "String",
-        "example": "ccs_sector_codes:ccs_sector_codes"
+        "example": "ccs_sector_codes:education_funded"
       },
-      "location_scheme": {
+      "location_standard": {
         "multiplicity": "*",
-        "description": "The schemes for identifying locations",
-        "name": "location_scheme",
-        "type": "location_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#nuts_2016, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#postcode_raius)",
-        "example": "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#nuts_2016]"
+        "description": "The standards for identifying locations",
+        "name": "location_standard",
+        "type": "location_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json#nuts_2016, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json#postcode_radius)",
+        "example": "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json#nuts_2016]"
       },
       "location_id": {
         "multiplicity": "*",
-        "description": "The location scheme ids that defines  where the items can be offered.",
+        "description": "The location standard ids that defines  where the items can be offered.",
         "name": "location_id",
         "type": "String",
-        "example": "[UKH1, UKG2]"
+        "example": "UKH1"
       }
     },
     "Agreement": {
@@ -68,7 +68,7 @@
       },
       "kind": {
         "multiplicity": "1",
-        "description": "Kind of agreement, such as Framework, Lot,Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on. See https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes for details.",
+        "description": "Kind of agreement, such as Framework, Lot,Contract. Lots are considered separateagreements, but link to their owning framework agreement. Similarly Contracts should link to anylot that they are based on. See https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json for details.",
         "name": "kind",
         "type": "agreement_type_codes( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#framework, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#lot, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#callof, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#contract)",
         "example": "framework"
@@ -80,12 +80,12 @@
         "type": "String",
         "example": "rm:RM3541"
       },
-      "id_scheme": {
+      "id_standard": {
         "multiplicity": "1",
         "description": "who to identify the agreement",
-        "name": "id_scheme",
-        "type": "agreement_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#lot_number, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#cf_contract_id)",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id"
+        "name": "id_standard",
+        "type": "agreement_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_standard.json#ccs_fw_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_standard.json#lot_number, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_standard.json#cf_contract_id)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_standard.json#ccs_fw_id"
       },
       "keyword": {
         "multiplicity": "*",
@@ -109,7 +109,7 @@
       },
       "status": {
         "multiplicity": "1",
-        "description": "current status of agreementSee https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes for details.",
+        "description": "current status of agreementSee https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes.json for details.",
         "name": "status",
         "type": "agreement_status_codes( live, inactive, future, planned, underway, withdrawn, ended)"
       },
@@ -123,47 +123,60 @@
         "multiplicity": "1",
         "description": "",
         "name": "start_date",
-        "type": "Date"
+        "type": "Date",
+        "example": "2019-01-01"
       },
       "end_date": {
         "multiplicity": "1",
         "description": "",
         "name": "end_date",
-        "type": "Date"
+        "type": "Date",
+        "example": "2020-01-10"
       },
       "duration": {
         "multiplicity": "1",
         "description": "Months",
         "name": "duration",
-        "type": "Integer"
+        "type": "Integer",
+        "example": 5
       },
-      "original_end_date": {
+      "org_structure_standard": {
         "multiplicity": "1",
-        "description": "",
-        "name": "original_end_date",
-        "type": "Date"
+        "description": "Standard identifying prefixes for organisation responbsible for this agreement. ",
+        "name": "org_structure_standard",
+        "type": "org_structure_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json"
       },
-      "pillar": {
-        "multiplicity": "1",
-        "description": "",
-        "name": "pillar",
-        "type": "String"
+      "owning_org_unit_name": {
+        "multiplicity": "1..*",
+        "description": "Commercial category org unit responsible for this agreement. Usually the CCS pillar name and a category name",
+        "name": "owning_org_unit_name",
+        "type": "String",
+        "example": "ccs_org:pillar_buildings"
       },
-      "category": {
+      "contact_standard": {
         "multiplicity": "1",
-        "description": "",
-        "name": "category",
-        "type": "String"
+        "description": "The standard used to link to contacts in this agreement record. ",
+        "name": "contact_standard",
+        "type": "contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email"
+      },
+      "owner_id": {
+        "multiplicity": "1..*",
+        "description": "Individual accountable for the agreement",
+        "name": "owner_id",
+        "type": "String",
+        "example": "emailexample_owner@crowncommercial.gov.uk"
       },
       "restriction": {
         "multiplicity": "0..1",
-        "description": "Restrictions that may apply",
+        "description": "Restrictions that may apply, such as government sectors and locations. ",
         "name": "restriction",
         "type": "Agreements::Restriction"
       },
       "part_of_id": {
         "multiplicity": "1",
-        "description": "Agreement this is part of, applicable only to Lots",
+        "description": "Agreement this is part of; typically applicable only to *Lots*. ",
         "name": "part_of_id",
         "type": "String",
         "links": "Agreements::Agreement"
@@ -180,13 +193,6 @@
         "description": "describe the items that can be offered under the agreement",
         "name": "item_type",
         "type": "Items::ItemType"
-      },
-      "supplier_qualification_scheme": {
-        "multiplicity": "*",
-        "description": "schemes describing coding for suppliers qualification questionnaires",
-        "name": "supplier_qualification_scheme",
-        "type": "String",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme"
       },
       "min_value": {
         "multiplicity": "0..1",
@@ -247,28 +253,28 @@
       },
       "classification": {
         "multiplicity": "1",
-        "description": "coded answers to questions matching the schemes",
+        "description": "coded answers to questions matching the standards",
         "name": "classification",
         "type": "String",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme"
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
       },
       "answer_code": {
         "multiplicity": "0..1",
-        "description": "coded answers to questions matching the schemes",
+        "description": "coded answers to questions matching the standards",
         "name": "answer_code",
         "type": "String",
         "example": "offsted:Requires_Improvement"
       },
       "supplementary_classification": {
         "multiplicity": "*",
-        "description": "coded answers to questions matching the schemes",
+        "description": "coded answers to questions matching the standards",
         "name": "supplementary_classification",
         "type": "String",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme"
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
       },
       "supplementary_fields": {
         "multiplicity": "*",
-        "description": "additional filters used to qulify the item. Filter schemes should obviously be relevant to the item",
+        "description": "additional filters used to qulify the item. Filter standards should obviously be relevant to the item",
         "name": "supplementary_fields",
         "type": "Supplementary::Field"
       }
@@ -292,16 +298,16 @@
         "name": "expires",
         "type": "Date"
       },
-      "question_schemes": {
+      "question_standards": {
         "multiplicity": "*",
-        "description": "The coding schemes for the questions and answers",
-        "name": "question_schemes",
+        "description": "The coding standards for the questions and answers",
+        "name": "question_standards",
         "type": "String",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme"
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
       },
       "question": {
         "multiplicity": "0..1",
-        "description": "coded answers to questions matching the schemes",
+        "description": "coded answers to questions matching the standards",
         "name": "question",
         "type": "Parties::Question"
       }
@@ -313,17 +319,17 @@
         "name": "id",
         "type": "String"
       },
-      "org_id_scheme": {
+      "org_id_standard": {
         "multiplicity": "1",
         "description": "",
-        "name": "org_id_scheme",
-        "type": "org_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe)"
+        "name": "org_id_standard",
+        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)"
       },
-      "supplementary_org_id_schemens": {
+      "supplementary_org_id_standard": {
         "multiplicity": "*",
         "description": "",
-        "name": "supplementary_org_id_schemens",
-        "type": "org_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe)"
+        "name": "supplementary_org_id_standard",
+        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)"
       },
       "supplementary_org_id": {
         "multiplicity": "*",
@@ -333,7 +339,7 @@
       },
       "parent_org_id": {
         "multiplicity": "1",
-        "description": " URN, should match one of the schemes listed ",
+        "description": " URN, should match one of the standards listed ",
         "name": "parent_org_id",
         "type": "String",
         "links": "Parties::Party"
@@ -344,11 +350,11 @@
         "name": "org_name",
         "type": "String"
       },
-      "sector_scheme": {
+      "sector_standard": {
         "multiplicity": "*",
         "description": "",
-        "name": "sector_scheme",
-        "type": "sector_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme.json#other)"
+        "name": "sector_standard",
+        "type": "sector_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other)"
       },
       "sector": {
         "multiplicity": "*",
@@ -375,12 +381,12 @@
         "name": "documents_url",
         "type": "String"
       },
-      "contact_scheme": {
+      "contact_standard": {
         "multiplicity": "0..1",
         "description": "",
-        "name": "contact_scheme",
-        "type": "contact_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email)",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact"
+        "name": "contact_standard",
+        "type": "contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact"
       },
       "account_manager_id": {
         "multiplicity": "0..1",
@@ -440,12 +446,12 @@
       }
     },
     "Contact": {
-      "contact_scheme": {
+      "contact_standard": {
         "multiplicity": "1",
         "description": "",
-        "name": "contact_scheme",
-        "type": "contact_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email)",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact"
+        "name": "contact_standard",
+        "type": "contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact"
       },
       "id": {
         "multiplicity": "1",
@@ -453,11 +459,11 @@
         "name": "id",
         "type": "String"
       },
-      "supplementary_contact_id_schemens": {
+      "supplementary_contact_standard": {
         "multiplicity": "*",
         "description": "",
-        "name": "supplementary_contact_id_schemens",
-        "type": "contact_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email)"
+        "name": "supplementary_contact_standard",
+        "type": "contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email)"
       },
       "supplementary_contact_id": {
         "multiplicity": "*",
@@ -544,10 +550,10 @@
         "name": "status",
         "type": "String"
       },
-      "user_research_participane": {
+      "user_research_participant": {
         "multiplicity": "0..1",
         "description": " Y / N : from Salesforce ",
-        "name": "user_research_participane",
+        "name": "user_research_participant",
         "type": "String"
       },
       "not_to_receive_ccs_emails": {
@@ -561,6 +567,20 @@
         "description": " from Salesforce ",
         "name": "contact_owner",
         "type": "String"
+      },
+      "org_structure_standard": {
+        "multiplicity": "1",
+        "description": "Standard identifying prefixes for organisation responbsible for this agreement. ",
+        "name": "org_structure_standard",
+        "type": "org_structure_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json"
+      },
+      "org_unit": {
+        "multiplicity": "1..*",
+        "description": "Category org unit responsible for this agreement. ",
+        "name": "org_unit",
+        "type": "String",
+        "example": "ccs_orgpillar_buildings"
       }
     }
   }

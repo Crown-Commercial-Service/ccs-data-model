@@ -3,7 +3,7 @@
     {
       "id": "contact_roles",
       "version": "0.1.3",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json",
       "title": "Contact Roles",
       "description": " To be verified",
       "code": [
