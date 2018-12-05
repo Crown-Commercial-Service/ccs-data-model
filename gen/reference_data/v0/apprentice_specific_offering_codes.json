@@ -1,0 +1,20 @@
+{
+  "codelist": [
+    {
+      "id": "apprentice_specific_offering_codes",
+      "version": "0.1.3",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprentice_specific_offering_codes",
+      "title": "Filter Classification Codes specific to Apprenticeships offering filters",
+      "description": "",
+      "code": [
+        {
+          "id": "funding_band",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprentice_specific_offering_codes.json#funding_band",
+          "title": "within funding band?",
+          "pattern": "apprentice_specific_offering_codes:funding_band:(true|false)",
+          "description": "course is within the maximum ESFA cover"
+        }
+      ]
+    }
+  ]
+}

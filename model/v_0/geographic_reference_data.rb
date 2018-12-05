@@ -5,14 +5,14 @@ ReferenceData.new :LocationScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Schemes codes to locate geographic areas"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    NUTS= code {
+    NUTS= ref {
       id :nuts_2016
       macro &URI_FROM_DOC_AND_ID
       title "NUTS coding"
       description "NUTS geo coding"
       source "https://en.wikipedia.org/wiki/NUTS_statistical_regions_of_the_United_Kingdom"
     }
-    code {
+    ref {
       id :postcode_raius
       macro &URI_FROM_DOC_AND_ID
       title "Postcode radius coding"

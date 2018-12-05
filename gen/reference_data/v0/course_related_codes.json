@@ -2,16 +2,38 @@
   "codelist": [
     {
       "id": "course_related_codes",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes",
       "title": "Filter Classification Codes specific to Apprenticeships questions",
       "description": "Codes of codes used to filter offerings and other catalogue entries",
       "code": [
         {
           "id": "course_start_date",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes#course_start_date",
-          "title": "When does a course start - provide a Date in line with https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#date",
-          "description": "When describing course offerings, this can describe the start date of the course"
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json#course_start_date",
+          "title": "When does a course start - provide a Date in line with https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes.json#date",
+          "description": "When describing course offerings, this can describe the start date of the course",
+          "pattern": "course_related_codes:course_start_date:(DATE)"
+        },
+        {
+          "id": "course_location",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json#course_location",
+          "title": "Where is the course - provide a branch location for the supplier",
+          "description": "Where is the course? Can be multiple options",
+          "pattern": "course_related_codes:course_location:(branch_id)"
+        },
+        {
+          "id": "is_bespoke_course",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json#is_bespoke_course",
+          "title": "bespoke?",
+          "pattern": "course_related_codes:is_bespoke_course:(true|false)",
+          "description": "Can the course be bespoked"
+        },
+        {
+          "id": "is_classroom_shared",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json#is_classroom_shared",
+          "title": "shared?",
+          "pattern": "course_related_codes:is_classroom_shared:(true|false)",
+          "description": "Classroom is shared"
         }
       ]
     }

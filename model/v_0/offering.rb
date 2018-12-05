@@ -25,11 +25,12 @@ domain :Offerings do
     attribute :description, String
     attribute :item, Items::Item, ZERO_TO_MANY, "values for the items, matching the definitions in agreement->item_type"
     attribute :supplementary, Supplementary::Field, ZERO_TO_MANY,
-              "additional data used to qualify the offering."+
-                  " Data schemes should obviously be relevant to the item's schemes, meaning the supplementary prefix"+
-        "codes should match one of the schemes in item->itemtype->classification|additional_classifications",
+              "Additional data used to qualify the offering over and above the item details. " +
+                  "Supplementary data's role prefix should obviously be relevant to the item's schemes, meaning the supplementary prefix" +
+                  "codes should match one of the schemes in `item->itemtype->classification|additional_classifications`.",
               example: "#{PROVIDER_OFFSTED.prefix}:#{START_DATE.id}"
-    attribute :branch, String, ZERO_TO_MANY, "where the offering can occur; contact should include address details", links: Parties::Contact
+    attribute :branch, String, ZERO_TO_MANY,
+              "Id of contact point where the offering can occur; contact should include address details.", links: Parties::Contact
   }
 
   datatype(:Catalogue,

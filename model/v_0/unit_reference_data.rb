@@ -7,7 +7,7 @@ ReferenceData.new :UnitScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Unit Schemes"
     description "Scheme of codes used to decide what scheme to use to classify units"
-    code {
+    ref {
       id :uncefact
       macro &URI_FROM_DOC_AND_ID
       title "UN/CEFACT Recommendation 20"
@@ -15,7 +15,7 @@ ReferenceData.new :UnitScheme do
       source "http://tfig.unece.org/contents/recommendation-20.htm"
       macro &URI_FROM_DOC_AND_ID
     }
-    QUDT= code {
+    QUDT= ref {
       id :qudt
       macro &URI_FROM_DOC_AND_ID
       title "Quantities, Units, Dimensions and Data Types Ontologies"

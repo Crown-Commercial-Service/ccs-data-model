@@ -1,7 +1,7 @@
 {
   "codelist": [
     {
-      "version": "0.1.2",
+      "version": "0.1.3",
       "id": "agreement_type_codes",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes",
       "title": "Agreement types",
@@ -9,22 +9,22 @@
       "code": [
         {
           "id": "framework",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes#framework",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#framework",
           "title": "Framework "
         },
         {
           "id": "lot",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes#lot",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#lot",
           "title": " Lot "
         },
         {
           "id": "callof",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes#callof",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#callof",
           "title": " Calloff"
         },
         {
           "id": "contract",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes#contract",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#contract",
           "title": " Contract"
         }
       ]

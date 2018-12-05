@@ -2,18 +2,27 @@
   "scheme": [
     {
       "id": "apprenticeship_qualification_questionnaire_scheme",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme",
       "title": "Apprenticeships qualifications questions for suppliers",
       "description": "Scheme of codes used to decide what scheme to use to classify an item",
-      "code": [
+      "ref": [
         {
           "source": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/education_ratings_scheme",
           "id": "offsted",
-          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/education_ratings_scheme#offsted",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/education_ratings_scheme.json#offsted",
           "prefix": "education_ratings_scheme",
           "title": "Offsted Rating",
-          "description": "Using offsted standard for valid ratings codes"
+          "description": "Using offsted standard for valid ratings codes",
+          "pattern": "(offsted:)(Outstanding|Good|Requires Improvement|Inadequate)"
+        },
+        {
+          "id": "supplier_has_experience",
+          "prefix": "apprenticeship_qualification_questionnaire_scheme",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme.json#supplier_has_experience",
+          "title": "supplier has experience?",
+          "pattern": "apprenticeship_qualification_questionnaire_scheme:supplier_has_experience:(true|false)",
+          "description": "supplier has experirence in apprenticeships"
         }
       ]
     }

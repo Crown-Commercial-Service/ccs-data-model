@@ -7,7 +7,7 @@ def ref_url id, version
 end
 
 URI_FROM_DOC_AND_ID = lambda do
-  uri "#{self.container.url}##{id.to_s.downcase}"
+  uri "#{self.container.url}.json##{id.to_s.downcase}"
 end
 
 ID_AND_URL_FROM_DOMAIN_AND_VERSION = lambda do
@@ -30,6 +30,7 @@ def link_scheme_from_code(to, from)
   to.prefix = from.container.id
   to.title = from.title
   to.description = from.description
+  to.pattern = from.pattern
 end
 
 def link_scheme_from_scheme(to, from)
@@ -46,10 +47,10 @@ domain :ReferenceData do
   datatype(:Code) {
     attribute :id, String, "short code unique within the Code's scheme" +
         "this should be prefixed with the prefix code of the associated DataDocument," +
-        " forming a [curie](https://en.wikipedia.org/wiki/CURIE)" +
+        " forming a [curie](https://www.w3.org/TR/curie/#sec_2.1.)" +
         "the prefix is matched to the URL of the reference document, and the second part" +
         "of the code becomes an extension of the base url to allow the individial value to be found",
-              example: "social_care"
+              example: "scheme_prefix:item_code"
     attribute :title, String, ZERO_OR_ONE, "short name for the entry"
     attribute :description, String, ZERO_OR_ONE, "description on what the entry is for"
     attribute :uri, String, "resolved uri of the entry, used for selecting the entry in docs, and referring to it long form"
@@ -63,8 +64,9 @@ domain :ReferenceData do
         " If the referred standard has a good unique prefix that should be used, where as if it is unclear " +
         " a prefix should be defined so that coded IDs are not ambiguous in terms of format or origin." +
         "if there is one", example: "companies-house"
-    attribute :additional_fields, :DataDocRef,
-              "additional fields supporting the code definition, which should also specify the field type to be used in each case"
+    attribute :supplementals, :DataDocRef,
+              " schemes supporting the code supplementary codes that can be used with this scheme" +
+                  "which should also specify the field type to be used in each case"
   }
 
   datatype(:DataDocument,
@@ -80,13 +82,14 @@ domain :ReferenceData do
 
   datatype(:Scheme, extends: :DataDocument,
            description: "A scheme is a list of coded values where each value points to another code list") {
-    attribute :code, :DataDocRef, ZERO_TO_MANY
+    attribute :ref, :DataDocRef, ZERO_TO_MANY
   }
 
   datatype(:CodeList, extends: :DataDocument,
            description: "A scheme is a list of coded values where each value points to another code list") {
     attribute :code, :Code, ZERO_TO_MANY
   }
+
 
 
 end

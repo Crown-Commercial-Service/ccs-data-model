@@ -5,7 +5,8 @@
       :multiplicity: "*"
       :description: The sector scheme id
       :name: :sector_scheme
-      :type: sector_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other)
+      :type: sector_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme.json#other)
       :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
     :sector_id:
       :multiplicity: "*"
@@ -18,8 +19,9 @@
       :multiplicity: "*"
       :description: The schemes for identifying locations
       :name: :location_scheme
-      :type: location_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius)
-      :example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
+      :type: location_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#nuts_2016,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#postcode_raius)
+      :example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#nuts_2016]"
     :location_id:
       :multiplicity: "*"
       :description: The location scheme ids that defines  where the items can be offered.
@@ -34,23 +36,31 @@
       :type: String
       :example: 90ccab31-84fb-486c-84ba-77a66ff686ea
     :supercedes_id:
-      :multiplicity: '1'
-      :description: UUID of this version superceded
+      :multiplicity: 0..1
+      :description: UUID of this version superceded. May be empty only if this is
+        the  first version
       :name: :supercedes_id
       :type: String
       :example: e030f1b1-647d-4ed7-8d84-ac9790563362
-    :date_added:
+    :datetime:
       :multiplicity: '1'
-      :description: Date of creation or update
-      :name: :date_added
+      :description: 'Date of creation or update of this record, date of creation of
+        this version. '
+      :name: :datetime
       :type: DateTime
       :example: '2019-09-28T18:34:23.45Z'
     :checksum:
       :multiplicity: '1'
-      :description: MD5
+      :description: MD5 checksum of the record
       :name: :checksum
       :type: String
       :example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+    :url:
+      :multiplicity: '1'
+      :description: URL which will retreive this version of the record
+      :name: :url
+      :type: String
+      :example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
     :kind:
       :multiplicity: '1'
       :description: Kind of agreement, such as Framework, Lot,Contract. Lots are considered
@@ -58,7 +68,10 @@
         Contracts should link to anylot that they are based on. See https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes
         for details.
       :name: :kind
-      :type: agreement_type_codes(framework,lot,callof,contract)
+      :type: agreement_type_codes( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#framework,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#lot,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#callof,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#contract)
       :example: :framework
     :id:
       :multiplicity: '1'
@@ -71,8 +84,10 @@
       :multiplicity: '1'
       :description: who to identify the agreement
       :name: :id_scheme
-      :type: agreement_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#lot_number,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#cf_contract_id)
-      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
+      :type: agreement_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#lot_number,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#cf_contract_id)
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id
     :keyword:
       :multiplicity: "*"
       :description: other names for the agreement
@@ -95,21 +110,12 @@
       :description: current status of agreementSee https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes
         for details.
       :name: :status
-      :type: agreement_status_codes(live,inactive,future,planned,underway,withdrawn,ended)
-    :pillar:
+      :type: agreement_status_codes( live, inactive, future, planned, underway, withdrawn,
+        ended)
+    :description:
       :multiplicity: '1'
-      :description: ''
-      :name: :pillar
-      :type: String
-    :duration:
-      :multiplicity: '1'
-      :description: Months
-      :name: :duration
-      :type: Integer
-    :category:
-      :multiplicity: '1'
-      :description: ''
-      :name: :category
+      :description: Describe the agreement
+      :name: :description
       :type: String
     :start_date:
       :multiplicity: '1'
@@ -121,15 +127,25 @@
       :description: ''
       :name: :end_date
       :type: Date
+    :duration:
+      :multiplicity: '1'
+      :description: Months
+      :name: :duration
+      :type: Integer
     :original_end_date:
       :multiplicity: '1'
       :description: ''
       :name: :original_end_date
       :type: Date
-    :description:
+    :pillar:
       :multiplicity: '1'
-      :description: Describe the agreement
-      :name: :description
+      :description: ''
+      :name: :pillar
+      :type: String
+    :category:
+      :multiplicity: '1'
+      :description: ''
+      :name: :category
       :type: String
     :restriction:
       :multiplicity: 0..1
@@ -179,39 +195,59 @@
       :type: String
       :example: 90ccab31-84fb-486c-84ba-77a66ff686ea
     :supercedes_id:
-      :multiplicity: '1'
-      :description: UUID of this version superceded
+      :multiplicity: 0..1
+      :description: UUID of this version superceded. May be empty only if this is
+        the  first version
       :name: :supercedes_id
       :type: String
       :example: e030f1b1-647d-4ed7-8d84-ac9790563362
-    :date_added:
+    :datetime:
       :multiplicity: '1'
-      :description: Date of creation or update
-      :name: :date_added
+      :description: 'Date of creation or update of this record, date of creation of
+        this version. '
+      :name: :datetime
       :type: DateTime
       :example: '2019-09-28T18:34:23.45Z'
     :checksum:
       :multiplicity: '1'
-      :description: MD5
+      :description: MD5 checksum of the record
       :name: :checksum
       :type: String
       :example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+    :url:
+      :multiplicity: '1'
+      :description: URL which will retreive this version of the record
+      :name: :url
+      :type: String
+      :example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
     :id:
       :multiplicity: '1'
       :description: UUID for the questionnaire entry
       :name: :id
       :type: String
+    :classification:
+      :multiplicity: '1'
+      :description: coded answers to questions matching the schemes
+      :name: :classification
+      :type: String
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme
     :answer_code:
       :multiplicity: 0..1
       :description: coded answers to questions matching the schemes
       :name: :answer_code
       :type: String
       :example: offsted:Requires_Improvement
-    :supplementary:
+    :supplementary_classification:
+      :multiplicity: "*"
+      :description: coded answers to questions matching the schemes
+      :name: :supplementary_classification
+      :type: String
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_scheme
+    :supplementary_fields:
       :multiplicity: "*"
       :description: additional filters used to qulify the item. Filter schemes should
         obviously be relevant to the item
-      :name: :supplementary
+      :name: :supplementary_fields
       :type: Supplementary::Field
   :Questionnaire:
     :id:
@@ -250,12 +286,18 @@
       :multiplicity: '1'
       :description: ''
       :name: :org_id_scheme
-      :type: org_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe)
+      :type: org_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe)
     :supplementary_org_id_schemens:
       :multiplicity: "*"
       :description: ''
       :name: :supplementary_org_id_schemens
-      :type: org_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe)
+      :type: org_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe)
     :supplementary_org_id:
       :multiplicity: "*"
       :description: ''
@@ -276,35 +318,37 @@
       :multiplicity: "*"
       :description: ''
       :name: :sector_scheme
-      :type: sector_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other)
+      :type: sector_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme.json#other)
     :sector:
       :multiplicity: "*"
       :description: ''
       :name: :sector
       :type: String
-      :example: " ccs_sector : education_funded "
+      :example: ccs_sector:education_funded
     :trading_name:
       :multiplicity: 0..1
-      :description: " Salesforce only stores for supplier "
+      :description: " Salesforce only stores for supplier. "
       :name: :trading_name
       :type: String
     :spend_this_year:
       :multiplicity: 0..1
-      :description: "\n Salesforce only stores for buyer "
+      :description: " Salesforce only stores this for buyers. "
       :name: :spend_this_year
       :type: Float
     :documents_url:
       :multiplicity: 0..1
-      :description: "\n Salesforce links to google drive for this supplier;\n we will
-        move to S3 in due course "
+      :description: " Salesforce links to google drive folder for this supplier; we
+        will move to S3 in due course. "
       :name: :documents_url
       :type: String
     :contact_scheme:
       :multiplicity: 0..1
       :description: ''
       :name: :contact_scheme
-      :type: contact_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email)
-      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+      :type: contact_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email)
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact
     :account_manager_id:
       :multiplicity: 0..1
       :description: " Who manages the account for CCS "
@@ -356,8 +400,9 @@
       :multiplicity: '1'
       :description: ''
       :name: :contact_scheme
-      :type: contact_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email)
-      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+      :type: contact_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email)
+      :example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact
     :id:
       :multiplicity: '1'
       :description: " a newly minted UUID for CMp "
@@ -367,7 +412,8 @@
       :multiplicity: "*"
       :description: ''
       :name: :supplementary_contact_id_schemens
-      :type: contact_id_scheme(https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact,https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email)
+      :type: contact_id_scheme( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact,
+        https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email)
     :supplementary_contact_id:
       :multiplicity: "*"
       :description: ''

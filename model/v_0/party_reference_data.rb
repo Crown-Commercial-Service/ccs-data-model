@@ -20,10 +20,10 @@ ReferenceData.new :SectorScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Sector Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    code {
+    ref {
       link_scheme_from_scheme( self, CCSSECTORS)
     }
-    code {
+    ref {
       id :other
       macro &URI_FROM_DOC_AND_ID
       prefix :other
@@ -41,7 +41,7 @@ ReferenceData.new :OrgIdScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Organisation id Classification Schemes"
     description "Scheme of codes used to decide what scheme to use to classify an item"
-    code {
+    ref {
       id :sf_org_id
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
@@ -49,7 +49,7 @@ ReferenceData.new :OrgIdScheme do
       source "CCS Salesforce"
       prefix id
     }
-    code {
+    ref {
       id :companies_house
       macro &URI_FROM_DOC_AND_ID
       title "Companies House"
@@ -57,7 +57,7 @@ ReferenceData.new :OrgIdScheme do
       source "Use CH register"
       prefix id
     }
-    code {
+    ref {
       id :dun
       macro &URI_FROM_DOC_AND_ID
       title "Dun & Bradstreet"
@@ -65,7 +65,7 @@ ReferenceData.new :OrgIdScheme do
       source "Use D&B register"
       prefix id
     }
-    code {
+    ref {
       id :dfe
       macro &URI_FROM_DOC_AND_ID
       title "DfE"
@@ -81,14 +81,14 @@ ReferenceData.new :ContactIdScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Contact id  Schemes"
     description "How to identify a link to a contact"
-    SF_CONTACT= code {
+    SF_CONTACT= ref {
       id :sf_contact
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
       description title
       source "CCS Salesforce"
     }
-    EMAIL= code {
+    EMAIL= ref {
       id :email
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
@@ -121,5 +121,5 @@ ReferenceData.new :ContactRoles do
       title id
       description id
     }
-  })
+  }, code_type: :code)
 end

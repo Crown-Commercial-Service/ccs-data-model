@@ -9,9 +9,13 @@ domain(:Parties) {
            description: "A managed set of qualification questions andwered at a point in time for a period of time") {
 
     attribute :id, String, "UUID for the questionnaire entry"
+    attribute :classification, String, SINGLE, "coded answers to questions matching the schemes",
+              example: "#{APPRENTICESHIP_QUALIFICATION.url}"
     attribute :answer_code, String, ZERO_OR_ONE, "coded answers to questions matching the schemes",
               example: "#{OFFSTED_RATING.id}:Requires_Improvement"
-    attribute :supplementary, Supplementary::Field, ZERO_TO_MANY,
+    attribute :supplementary_classification, String, ZERO_TO_MANY, "coded answers to questions matching the schemes",
+    example: "#{APPRENTICESHIP_QUALIFICATION.url}"
+    attribute :supplementary_fields, Supplementary::Field, ZERO_TO_MANY,
               "additional filters used to qulify the item. Filter schemes should obviously be relevant to the item"
   }
 
@@ -38,13 +42,10 @@ domain(:Parties) {
     attribute :parent_org_id, String, " URN, should match one of the schemes listed ", links: :Party
     attribute :org_name, String
     attribute :sector_scheme, SECTOR_SCHEMES, ZERO_TO_MANY
-    attribute :sector, String, ZERO_TO_MANY, example: " ccs_sector : education_funded "
-    attribute :trading_name, String, ZERO_OR_ONE, " Salesforce only stores for supplier "
-    attribute :spend_this_year, Float, ZERO_OR_ONE, "
- Salesforce only stores for buyer "
-    attribute :documents_url, String, ZERO_OR_ONE, "
- Salesforce links to google drive for this supplier;
- we will move to S3 in due course "
+    attribute :sector, String, ZERO_TO_MANY, example: "ccs_sector:education_funded"
+    attribute :trading_name, String, ZERO_OR_ONE, " Salesforce only stores for supplier. "
+    attribute :spend_this_year, Float, ZERO_OR_ONE, " Salesforce only stores this for buyers. "
+    attribute :documents_url, String, ZERO_OR_ONE, " Salesforce links to google drive folder for this supplier; we will move to S3 in due course. "
     attribute :contact_scheme, CONTACT_ID_SCHEMES, ZERO_OR_ONE, example: SF_CONTACT.uri
     attribute :account_manager_id, String, ZERO_OR_ONE, " Who manages the account for CCS "
   }

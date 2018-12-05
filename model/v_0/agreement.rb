@@ -39,13 +39,16 @@ domain :Agreements do
     attribute :status, AGREEMENT_STATUSES, SINGLE,
               "current status of agreement" +
                   "See #{AGREEMENT_STATUSES.doc.url} for details."
-    attribute :pillar, String
-    attribute :duration, Integer, "Months"
-    attribute :category, String
+
+    attribute :description, String, "Describe the agreement"
+
     attribute :start_date, Date
     attribute :end_date, Date
+    attribute :duration, Integer, "Months"
+
     attribute :original_end_date, Date
-    attribute :description, String, "Describe the agreement"
+    attribute :pillar, String
+    attribute :category, String
 
     attribute :restriction, :Restriction, ZERO_OR_ONE, "Restrictions that may apply"
 

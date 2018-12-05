@@ -1,7 +1,7 @@
 require_relative 'reference_data'
 
 ReferenceData.new :AgreementTypeCodes do
-  AGREEMENT_TYPES = Enum(codelist {
+  AGREEMENT_TYPES = Enum( codelist {
     version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement types"
@@ -26,7 +26,7 @@ ReferenceData.new :AgreementTypeCodes do
       macro &URI_FROM_DOC_AND_ID
       title " Contract"
     }
-  }, code_key: :id)
+  }, code_type: :code)
 end
 
 ReferenceData.new :AgreementIDScheme do
@@ -35,7 +35,7 @@ ReferenceData.new :AgreementIDScheme do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement id schemes"
     description "Scheme for how to identify an agreement"
-    CCS_FW_CODE = code {
+    CCS_FW_CODE = ref {
       id :ccs_fw_id
       prefix :rm
       macro &URI_FROM_DOC_AND_ID
@@ -43,7 +43,7 @@ ReferenceData.new :AgreementIDScheme do
       example "#{prefix}:RM1234"
       source "Salesforce or Contracts Finder"
     }
-    code {
+    ref {
       id :lot_number
       prefix :lot
       macro &URI_FROM_DOC_AND_ID
@@ -52,7 +52,7 @@ ReferenceData.new :AgreementIDScheme do
       example "#{prefix}:RM1234#3"
       source "Salesforce or Contracts Finder"
     }
-    code {
+    ref {
       id :cf_contract_id
       prefix :cf
       macro &URI_FROM_DOC_AND_ID
@@ -96,5 +96,5 @@ ReferenceData.new :AgreementStatusCodes do
       id :ended
       macro &URI_FROM_DOC_AND_ID
     }
-  }, code_key: :id)
+  }, code_type: :code, code_key: :id)
 end

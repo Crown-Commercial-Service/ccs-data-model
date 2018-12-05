@@ -6,7 +6,7 @@ servers:
 info:
   title: API::Endpoint
   description: genearated endpoint for data API::Endpoint
-  version: 0.1.2
+  version: 0.1.3
   contact:
     email: admin@ccs.gov.uk
   license:
@@ -93,6 +93,7 @@ paths:
       operationId: search-ItemType
       description: searches ItemType by name, id or keyword
       parameters:
+      - "$ref": "#/components/parameters/q_name"
       - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_keyword"
       - "$ref": "#/components/parameters/q_limit"
@@ -428,23 +429,29 @@ components:
         supercedes_id:
           type: string
           example: e030f1b1-647d-4ed7-8d84-ac9790563362
-          description: UUID of this version superceded
-        date_added:
+          description: UUID of this version superceded. May be empty only if this
+            is the  first version
+        datetime:
           type: string
           format: date
           example: '2019-09-28T18:34:23.45Z'
-          description: Date of creation or update
+          description: 'Date of creation or update of this record, date of creation
+            of this version. '
         checksum:
           type: string
           example: 90b4c251f8649a4f9c86d6d20ee6e9e9
-          description: MD5
+          description: MD5 checksum of the record
+        url:
+          type: string
+          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
+          description: URL which will retreive this version of the record
         kind:
           type: string
           enum:
-          - framework
-          - lot
-          - callof
-          - contract
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#framework
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#lot
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#callof
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json#contract
           example: :framework
           description: Kind of agreement, such as Framework, Lot,Contract. Lots are
             considered separateagreements, but link to their owning framework agreement.
@@ -459,10 +466,10 @@ components:
         id_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#lot_number
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#cf_contract_id
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#lot_number
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#cf_contract_id
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id
           description: who to identify the agreement
         keyword:
           type: array
@@ -489,15 +496,9 @@ components:
           - ended
           description: current status of agreementSee https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_status_codes
             for details.
-        pillar:
+        description:
           type: string
-          description: ''
-        duration:
-          type: integer
-          description: Months
-        category:
-          type: string
-          description: ''
+          description: Describe the agreement
         start_date:
           type: string
           format: date
@@ -506,13 +507,19 @@ components:
           type: string
           format: date
           description: ''
+        duration:
+          type: integer
+          description: Months
         original_end_date:
           type: string
           format: date
           description: ''
-        description:
+        pillar:
           type: string
-          description: Describe the agreement
+          description: ''
+        category:
+          type: string
+          description: ''
         restriction:
           "$ref": "#/components/schemas/Restriction"
         part_of_id:
@@ -552,57 +559,70 @@ components:
         supercedes_id:
           type: string
           example: e030f1b1-647d-4ed7-8d84-ac9790563362
-          description: UUID of this version superceded
-        date_added:
+          description: UUID of this version superceded. May be empty only if this
+            is the  first version
+        datetime:
           type: string
           format: date
           example: '2019-09-28T18:34:23.45Z'
-          description: Date of creation or update
+          description: 'Date of creation or update of this record, date of creation
+            of this version. '
         checksum:
           type: string
           example: 90b4c251f8649a4f9c86d6d20ee6e9e9
-          description: MD5
+          description: MD5 checksum of the record
+        url:
+          type: string
+          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
+          description: URL which will retreive this version of the record
         id:
           type: string
           example: CPV:37000000-8:CCS:2019-01:1
-          description: The composite code string, which must be unique across all
-            schemesThis should be prefixed tith ethe primary classification code
+          description: The composite code string which identifies this item, which
+            must be unique across all schemes. This should be prefixed with the primary
+            *classification_scheme* code
+        name:
+          type: string
+          description: a short name to help understand the item
         description:
           type: string
-          description: long description
+          description: long description of the item, which should match item descriptions
+            in it's specification.
         keyword:
           type: array
           items:
             type: string
-          description: alternate names for the item type
+          description: alternate names for the item type, which may help to find it.
         classification_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpvs
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#gsin
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#unspsc
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpc
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv
-          description: The classiciation scheme id, which links to an entry in item_classification_schemesthe
-            item's id must be prefixed correctly for the classification, and be unique
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#cpv
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#cpvs
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#gsin
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#unspsc
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#cpc
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#cpv
+          description: The classiciation scheme id, which links to an entry in https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.
+            The item's id must be prefixed correctly for the classification, and be
+            unique.
         classification:
           type: string
           example: CPV:37000000-8
-          description: Code within the primary scheme defining this type. Each code
-            should have a prefix identifying the scheme
-        additional_classification_schemes:
+          description: 'Code within the primary scheme defining this type. Each code
+            should have a prefix as defined in *classification_scheme*. '
+        supplementary_classification_schemes:
           type: array
           items:
             type: string
             enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpv
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpvs
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#gsin
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#unspsc
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme#cpc
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#cpv
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#cpvs
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#gsin
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#unspsc
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/item_scheme.json#cpc
           example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes
-          description: Additional ways to classify the item
+          description: 'Additional ways to classify the item, which may also provide
+            schemes for supplementary data in offerings. '
         additional_classifications:
           type: array
           items:
@@ -613,24 +633,24 @@ components:
         unit_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme#uncefact
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme#qudt
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme#qudt
-          description: " define the unit scheme, from the schemes in unit_classification_schemes "
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme.json#uncefact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme.json#qudt
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme.json#qudt
+          description: 'Define the unit scheme, from the schemes in https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_scheme '
         unit:
           type: string
           example: qudt:unit:SquareMeterPerKelvin
-          description: define the units, based on the unit scheme selected
+          description: 'Define the units used to quantify the item, based on the unit
+            scheme selected. '
         currency:
           type: string
           example: GBP
           description: define the currency of the per-unit-price, as ISO 4217 currency
             code. If absent, presume GDP,
-      description: Defines the items that can be offered in any selected agreementsAgreements
-        hava a number of items that can have values defining the agreement. The Items
-        shouldconstrain the key quantifiable elements of an agreement award. A supplier
-        may provide additionalvariable facts in their Offer to supplement the description
-        of how they support the agreement.
+      description: Defines the items that can be offered in certain agreements. *Agreement*s
+        can have a number of items that can have values detailing  the agreement.
+        The Items shouldconstrain the key quantifiable elements of an agreement award,
+        as defined by a supplier's offering against that agreement.
     Item:
       type: object
       required:
@@ -644,16 +664,22 @@ components:
         supercedes_id:
           type: string
           example: e030f1b1-647d-4ed7-8d84-ac9790563362
-          description: UUID of this version superceded
-        date_added:
+          description: UUID of this version superceded. May be empty only if this
+            is the  first version
+        datetime:
           type: string
           format: date
           example: '2019-09-28T18:34:23.45Z'
-          description: Date of creation or update
+          description: 'Date of creation or update of this record, date of creation
+            of this version. '
         checksum:
           type: string
           example: 90b4c251f8649a4f9c86d6d20ee6e9e9
-          description: MD5
+          description: MD5 checksum of the record
+        url:
+          type: string
+          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
+          description: URL which will retreive this version of the record
         id:
           type: string
           example: '07719842-a3a1-41c5-8320-6439295fb90e'
@@ -690,20 +716,20 @@ components:
         org_id_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe
           description: ''
         supplementary_org_id_schemens:
           type: array
           items:
             type: string
             enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe
           description: ''
         supplementary_org_id:
           type: array
@@ -722,31 +748,31 @@ components:
             type: string
             enum:
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme.json#other
           description: ''
         sector:
           type: array
           items:
             type: string
-          example: " ccs_sector : education_funded "
+          example: ccs_sector:education_funded
           description: ''
         trading_name:
           type: string
-          description: " Salesforce only stores for supplier "
+          description: " Salesforce only stores for supplier. "
         spend_this_year:
           type: number
           format: float
-          description: "\n Salesforce only stores for buyer "
+          description: " Salesforce only stores this for buyers. "
         documents_url:
           type: string
-          description: "\n Salesforce links to google drive for this supplier;\n we
-            will move to S3 in due course "
+          description: " Salesforce links to google drive folder for this supplier;
+            we will move to S3 in due course. "
         contact_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact
           description: ''
         account_manager_id:
           type: string
@@ -764,9 +790,9 @@ components:
         contact_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact
           description: ''
         id:
           type: string
@@ -776,8 +802,8 @@ components:
           items:
             type: string
             enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#sf_contact
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme#email
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#sf_contact
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_scheme.json#email
           description: ''
         supplementary_contact_id:
           type: array
@@ -852,16 +878,22 @@ components:
         supercedes_id:
           type: string
           example: e030f1b1-647d-4ed7-8d84-ac9790563362
-          description: UUID of this version superceded
-        date_added:
+          description: UUID of this version superceded. May be empty only if this
+            is the  first version
+        datetime:
           type: string
           format: date
           example: '2019-09-28T18:34:23.45Z'
-          description: Date of creation or update
+          description: 'Date of creation or update of this record, date of creation
+            of this version. '
         checksum:
           type: string
           example: 90b4c251f8649a4f9c86d6d20ee6e9e9
-          description: MD5
+          description: MD5 checksum of the record
+        url:
+          type: string
+          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
+          description: URL which will retreive this version of the record
         id:
           type: string
           example: db1fa9ac-1b83-4c27-8c80-ded2f0120c54
@@ -869,10 +901,10 @@ components:
         agreement_id_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#lot_number
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#cf_contract_id
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme#ccs_fw_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#lot_number
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#cf_contract_id
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_scheme.json#ccs_fw_id
           description: who to identify the agreement
         agreement_id:
           type: string
@@ -880,10 +912,10 @@ components:
         supplier_id_scheme:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#sf_org_id
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#companies_house
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dun
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme#dfe
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#sf_org_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#companies_house
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dun
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_scheme.json#dfe
           description: ''
         supplier_id:
           type: string
@@ -908,8 +940,8 @@ components:
           type: array
           items:
             type: string
-          description: where the offering can occur; contact should include address
-            details
+          description: Id of contact point where the offering can occur; contact should
+            include address details.
       description: " Supplier offering against an item or items of an agreement.This
         may be extended for different agreements. A supplier may provide additionalvariable
         facts in their Offer to supplement the description of how they support the
@@ -926,7 +958,7 @@ components:
             type: string
             enum:
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme#other
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_scheme.json#other
           example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes
           description: The sector scheme id
         sector_id:
@@ -941,9 +973,9 @@ components:
           items:
             type: string
             enum:
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016
-            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#postcode_raius
-          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme#nuts_2016]"
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#nuts_2016
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#postcode_raius
+          example: "[https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_scheme.json#nuts_2016]"
           description: The schemes for identifying locations
         location_id:
           type: array
@@ -963,15 +995,21 @@ components:
         id:
           type: string
           description: ''
-        type_scheme:
+        role_id:
+          type: string
+          example: course_related_codes:course_start_date
+          description: 'Scheme uri code that defines the role of the supplementary
+            field, which should be prefixed by a scheme id in the enclosing *Item
+            type*, '
+        type_id:
           type: string
           enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#string
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#date
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#int
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes#float
+          - string
+          - date
+          - int
+          - float
           example: string
-          description: type scheme should be appropriate for the filter scheme
+          description: 'Type of the field - which should be appropriate for the role. '
         value:
           oneOf:
           - type: string

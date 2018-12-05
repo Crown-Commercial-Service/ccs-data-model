@@ -1,7 +1,7 @@
 require_relative 'supplementary'
 
 ReferenceData.new :SupplementaryDataTypeCodes do
-  SUPPLEMENTARY_TYPE_CODES = Enum (codelist {
+  SUPPLEMENTARY_TYPE_CODES = Enum( codelist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "SupplementaryDataType"
     description "Identify the types in supplementary data of a filter"
@@ -28,5 +28,5 @@ ReferenceData.new :SupplementaryDataTypeCodes do
       macro &URI_FROM_DOC_AND_ID
       title "floating point numbner filter"
     }
-  })
+  }, code_type: :code, code_key: :id)
 end

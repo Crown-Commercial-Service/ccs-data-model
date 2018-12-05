@@ -14,14 +14,14 @@ module DataModel
 
     class << self
 
-      def init(name: , domain: , extends: , union: false, description: )
+      def init(name:, domain:, extends:, union: false, description:)
         @attributes = {}
         @typename = name
         @domain = domain
         @extends = extends
         @description = description
         @instances = []
-        @union= union
+        @union = union
 
         self.define_singleton_method(:attributes) do |inherited = true|
           if inherited && self.superclass.respond_to?(:attributes)
@@ -288,21 +288,27 @@ module DataModel
   end
 
   # create an enumeration class derived from Symbol
-  def Enum(doc, *codes, code_type: :code, code_key: :uri, name_key: :id, doc_id: :id)
-    if (!(doc.class <= DataType))
-      raise "scheme #{doc} for Enum needs to be a data type with many type values as an attribute 'codekey'"
+  #
+  def Enum(doc, *codes, code_type: :ref, code_key: :uri, name_key: :id, doc_id: :id)
+    begin
+      if (!(doc.class <= DataType))
+        raise "scheme #{doc} for Enum needs to be a data type with many type values as an attribute 'codekey'"
+      end
+      if (codes.length == 0)
+        codes = doc.attributes[code_type]
+      end
+      code_ids = codes.map {|code| code.attributes[code_key]}
+      name_ids = codes.map {|code| code.attributes[name_key]}
+
+      typename = "ENUM_#{name_ids.join '_'}".gsub(/[:-]/, '_')
+      selclass = Object.const_set typename, Class.new(Selection)
+      selclass.define_singleton_method(:ids) {code_ids}
+      selclass.define_singleton_method(:doc) {doc}
+      selclass.define_singleton_method(:to_s) {"#{self.doc.attributes[doc_id]}( #{self.ids.join(', ')})"}
+      return selclass
+    rescue StandardError => err
+      raise "can't get codes out of #{doc} \n#{code_type} #{code_key} #{name_key} #{doc_id}\n: #{err}"
     end
-    if (codes.length == 0)
-      codes = doc.attributes[code_type]
-    end
-    code_ids = codes.map {|code| code.attributes[code_key]}
-    name_ids = codes.map {|code| code.attributes[name_key]}
-    typename = "ENUM_#{name_ids.join '_'}".gsub(/[:-]/, '_')
-    selclass = Object.const_set typename, Class.new(Selection)
-    selclass.define_singleton_method(:ids) {code_ids}
-    selclass.define_singleton_method(:doc) {doc}
-    selclass.define_singleton_method(:to_s) {"#{self.doc.attributes[doc_id]}(#{self.ids.join(',')})"}
-    return selclass
   end
 
   #borrowed from rubocop
