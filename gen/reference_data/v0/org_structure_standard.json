@@ -1,0 +1,21 @@
+{
+  "standard": [
+    {
+      "id": "org_structure_standard",
+      "version": "0.1.4",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_structure_standard.json",
+      "title": "Org structure standards",
+      "description": "How to classify organisation units",
+      "ref": [
+        {
+          "id": "ccs_org",
+          "source": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json",
+          "prefix": "ccs_org",
+          "title": "CCS Org structure",
+          "description": "CCS Structure codes"
+        }
+      ]
+    }
+  ]
+}

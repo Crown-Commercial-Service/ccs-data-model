@@ -1,0 +1,27 @@
+{
+  "standard": [
+    {
+      "id": "unit_standard",
+      "version": "0.1.4",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_standard.json",
+      "title": "Unit Standards",
+      "description": "Standard of codes used to decide what standard to use to classify units",
+      "ref": [
+        {
+          "id": "uncefact",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_standard.json#uncefact",
+          "title": "UN/CEFACT Recommendation 20",
+          "description": "",
+          "source": "http://tfig.unece.org/contents/recommendation-20.htm"
+        },
+        {
+          "id": "qudt",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/unit_standard.json#qudt",
+          "title": "Quantities, Units, Dimensions and Data Types Ontologies",
+          "description": "Use the [QUDT Code](http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html) value.",
+          "source": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html"
+        }
+      ]
+    }
+  ]
+}

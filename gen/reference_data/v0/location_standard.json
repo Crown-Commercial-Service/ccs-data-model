@@ -1,0 +1,27 @@
+{
+  "standard": [
+    {
+      "id": "location_standard",
+      "version": "0.1.4",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json",
+      "title": "Standards codes to locate geographic areas",
+      "description": "Standard of codes used to decide what standard to use to classify an item",
+      "ref": [
+        {
+          "id": "nuts_2016",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json#nuts_2016",
+          "title": "NUTS coding",
+          "description": "NUTS geo coding",
+          "source": "https://en.wikipedia.org/wiki/NUTS_statistical_regions_of_the_United_Kingdom"
+        },
+        {
+          "id": "postcode_radius",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json#postcode_radius",
+          "title": "Postcode radius coding",
+          "description": "Take a radius in miles from the centre of a postcode.code should be of the form <POSTCODE>:<RADIUS IN MILES>",
+          "source": "https://cloud.google.com/maps-platform/"
+        }
+      ]
+    }
+  ]
+}

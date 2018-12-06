@@ -1,4 +1,4 @@
-require_relative 'reference_data'
+require_relative '../reference_data'
 
 
 

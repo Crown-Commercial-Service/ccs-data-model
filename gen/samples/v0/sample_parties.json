@@ -1,0 +1,37 @@
+{
+  "party": [
+    {
+      "id": "sf_org_id:455677",
+      "org_id_standard": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id",
+      "supplementary_org_id_standard": [
+        "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house"
+      ],
+      "supplementary_org_id": [
+        "companies_house:12345"
+      ],
+      "parent_org_id": "companies_house:78901",
+      "sector_standard": [
+        "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json"
+      ],
+      "sector": [
+        "ccs_sector_codes:education_funded"
+      ],
+      "spend_this_year": 1000.0,
+      "document_standard": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_standard_codes.json#gdoc",
+      "documents_url": "gdoc:https://drive.google.com/drive/u/012345",
+      "contact_standard": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact",
+      "account_manager_id": "sf_contact:45623456",
+      "questionnaire": [
+        {
+          "question_standards": [
+            "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sf_org_id:455677",
+      "org_name": "New Org Name"
+    }
+  ]
+}

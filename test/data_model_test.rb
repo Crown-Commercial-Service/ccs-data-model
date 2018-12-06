@@ -30,7 +30,7 @@ class DataModelTest < Test::Unit::TestCase
     assert_equal( [:one,:two], TestModel::Kindly.attributes[:kind][:type].ids, "has derived attribute")
     assert_equal( [:one,:two,:three], TestModel::Kindly.attributes[:allkinds][:type].ids, "has derived attribute")
 
-    assert_equal( "list_for_test_enum(one,two)", TestModel::Kindly.attributes[:kind][:type].to_s)
+    assert_equal( "list_for_test_enum( one, two)", TestModel::Kindly.attributes[:kind][:type].to_s)
   end
 
   def test_model

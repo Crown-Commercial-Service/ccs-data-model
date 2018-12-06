@@ -1,16 +1,17 @@
-require_relative 'reference_data'
+require_relative '../reference_data'
 
 ReferenceData.new :CCSSectorCodes do
-  CCSSECTORS= codelist {
+  CCSSECTORS = codelist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "CCS Sector Classification Standards"
     description "Standard of codes used to decide what standard to use to classify an item"
-    ED= code {
+    ED_SEC = code {
       id :education_funded
       macro &URI_FROM_DOC_AND_ID
       title "ccs eduction funded"
-      description "CCS sector coding for education appropriate for education frameworks."+
-          "value should be education_funded:true or education_funded:false"
+      description "CCS sector coding for education appropriate for education frameworks." +
+                      "value should be education_funded:true or education_funded:false"
+      example "#{container.id}:#{id}"
     }
   }
 end
@@ -20,7 +21,7 @@ ReferenceData.new :SectorStandard do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Sector Classification Standards"
     description "Standard of codes used to decide what standard to use to classify an item"
-    ref {
+     ref {
       link_standard_from_codelist(self, CCSSECTORS)
     }
     ref {
@@ -39,11 +40,11 @@ ReferenceData.new :CCSOrg do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "CCS Org structure"
     description "CCS Structure codes"
-    BUILDINGS= code {
+    BUILDINGS = code {
       id :pillar_buildings
       macro &URI_FROM_DOC_AND_ID
     }
-    EDUCATION= code {
+    EDUCATION = code {
       id :category_education
       macro &URI_FROM_DOC_AND_ID
     }
@@ -57,11 +58,10 @@ ReferenceData.new :OrgStructureStandard do
     description "How to classify organisation units"
     ref {
       id :ccs_org
-      link_standard_from_codelist( self, CCS_ORG_CODES.doc)
+      link_standard_from_codelist(self, CCS_ORG_CODES.doc)
     }
   })
 end
-
 
 
 ReferenceData.new :OrgIdStandard do
@@ -69,21 +69,23 @@ ReferenceData.new :OrgIdStandard do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Organisation id Classification Standards"
     description "Standard of codes used to decide what standard to use to classify an item"
-    ref {
+    SF_ORG = ref {
       id :sf_org_id
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
       description title
       source "CCS Salesforce"
       prefix id
+      example "#{prefix}:455677"
     }
-    ref {
+    CH_ORG = ref {
       id :companies_house
       macro &URI_FROM_DOC_AND_ID
       title "Companies House"
       description title
       source "Use CH register"
       prefix id
+      example "#{prefix}:12345"
     }
     ref {
       id :dun
@@ -109,25 +111,28 @@ ReferenceData.new :ContactIdStandard do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Contact id  Standards"
     description "How to identify a link to a contact"
-    SF_CONTACT= ref {
+    SF_CONTACT = ref {
       id :sf_contact
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
       description title
       source "CCS Salesforce"
+      example "#{id}:45623456"
     }
-    EMAIL= ref {
+    EMAIL = ref {
       id :email
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
       description title
       source "CCS Salesforce"
+      example "#{id}:someone@company.none"
+
     }
   })
 end
 
 ReferenceData.new :ContactRoles do
-  CONTACT_ROLES= Enum( codelist {
+  CONTACT_ROLES = Enum(codelist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Contact Roles"
     description " To be verified"

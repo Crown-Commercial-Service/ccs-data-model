@@ -1,4 +1,4 @@
-require_relative 'reference_data'
+require_relative '../reference_data'
 
 ReferenceData.new :ItemStandard do
   ITEM_STANDARDS = Enum (standard {

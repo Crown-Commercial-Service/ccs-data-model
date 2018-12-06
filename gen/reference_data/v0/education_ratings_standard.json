@@ -1,0 +1,22 @@
+{
+  "standard": [
+    {
+      "id": "education_ratings_standard",
+      "version": "0.1.4",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/education_ratings_standard.json",
+      "title": "Qualification Classification Standards",
+      "description": "Standard of codes used to decide what standard to use to classify an item",
+      "ref": [
+        {
+          "id": "offsted",
+          "prefix": "offsted_rating",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/education_ratings_standard.json#offsted",
+          "title": "Offsted Rating",
+          "description": "Using offsted standard for valid ratings codes",
+          "pattern": "(offsted:)(Outstanding|Good|Requires Improvement|Inadequate)",
+          "source": "https://www.gov.uk/government/organisations/ofsted"
+        }
+      ]
+    }
+  ]
+}

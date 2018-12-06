@@ -1,6 +1,6 @@
 require_relative 'reference_data'
-require_relative 'supplementary_reference_data'
-require_relative 'education_reference_data'
+require_relative 'reference_data/supplementary_reference_data'
+require_relative 'reference_data/education_reference_data'
 
 
 domain :Supplementary do

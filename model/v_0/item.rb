@@ -1,10 +1,10 @@
 require_relative 'register'
-require_relative 'unit_reference_data'
-require_relative 'item_reference_data'
+require_relative 'reference_data/unit_reference_data'
+require_relative 'reference_data/item_reference_data'
 require_relative 'supplementary'
-require_relative 'party_reference_data'
-require_relative 'geographic_reference_data'
-require_relative 'education_reference_data'
+require_relative 'reference_data/party_reference_data'
+require_relative 'reference_data/geographic_reference_data'
+require_relative 'reference_data/education_reference_data'
 
 domain :Items do
 
@@ -41,7 +41,7 @@ domain :Items do
               "define the currency of the per-unit-price, as ISO 4217 currency code. If absent, presume GDP,",
               example: "GBP"
     attribute :supplier_qualification_standard, String, ZERO_TO_MANY,
-              "standards describing qualification required by suppliers in order to offer solutions against this item. ",
+              "standards describing qualifications required by suppliers in order to offer solutions against this item. ",
               example: APPRENTICESHIP_QUALIFICATION.url
   }
 

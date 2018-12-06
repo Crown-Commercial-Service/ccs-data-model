@@ -54,7 +54,9 @@ domain :ReferenceData do
     attribute :title, String, ZERO_OR_ONE, "short name for the entry"
     attribute :description, String, ZERO_OR_ONE, "description on what the entry is for"
     attribute :uri, String, "resolved uri of the entry, used for selecting the entry in docs, and referring to it long form"
-    attribute :pattern, String, "optional regular expression to check entries against."
+    attribute :pattern, String, "optional regular expression to check ids against."
+    # attribute :expected_type, SUPPLEMENTARY_TYPE_CODES, "optional id of supplementary type, which should match the type of the item or other context."+
+    # "Many id objects don't have values and so shouldn't have a type."
     attribute :example, String, "example of the value"
   }
 
@@ -89,8 +91,6 @@ domain :ReferenceData do
            description: "A standard is a list of coded values where each value points to another code list") {
     attribute :code, :Code, ZERO_TO_MANY
   }
-
-
 
 end
 

@@ -1,4 +1,5 @@
-require_relative 'reference_data'
+require_relative '../reference_data'
+require_relative 'supplementary_reference_data'
 
 
 ReferenceData.new :CourseRelatedCodes do

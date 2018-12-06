@@ -1,0 +1,29 @@
+{
+  "standard": [
+    {
+      "id": "sector_standard",
+      "version": "0.1.4",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json",
+      "title": "Sector Classification Standards",
+      "description": "Standard of codes used to decide what standard to use to classify an item",
+      "ref": [
+        {
+          "source": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json",
+          "id": "ccs_sector_codes",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json",
+          "prefix": "ccs_sector_codes",
+          "title": "CCS Sector Classification Standards",
+          "description": "Standard of codes used to decide what standard to use to classify an item"
+        },
+        {
+          "id": "other",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other",
+          "prefix": "other",
+          "title": "Other sector coding",
+          "description": "Other / unknown sector coding standard",
+          "source": "none"
+        }
+      ]
+    }
+  ]
+}

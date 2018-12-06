@@ -1,0 +1,47 @@
+{
+  "standard": [
+    {
+      "id": "org_id_standard",
+      "version": "0.1.4",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json",
+      "title": "Organisation id Classification Standards",
+      "description": "Standard of codes used to decide what standard to use to classify an item",
+      "ref": [
+        {
+          "id": "sf_org_id",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id",
+          "title": "CCS Salesforce id",
+          "description": "CCS Salesforce id",
+          "source": "CCS Salesforce",
+          "prefix": "sf_org_id",
+          "example": "sf_org_id:455677"
+        },
+        {
+          "id": "companies_house",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house",
+          "title": "Companies House",
+          "description": "Companies House",
+          "source": "Use CH register",
+          "prefix": "companies_house",
+          "example": "companies_house:12345"
+        },
+        {
+          "id": "dun",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun",
+          "title": "Dun & Bradstreet",
+          "description": "Dun & Bradstreet",
+          "source": "Use D&B register",
+          "prefix": "dun"
+        },
+        {
+          "id": "dfe",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe",
+          "title": "DfE",
+          "description": "DfE",
+          "source": "Use DfE&B register",
+          "prefix": "dfe"
+        }
+      ]
+    }
+  ]
+}

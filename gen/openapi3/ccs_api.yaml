@@ -6,7 +6,7 @@ servers:
 info:
   title: API::Endpoint
   description: genearated endpoint for data API::Endpoint
-  version: 0.1.3
+  version: 0.1.4
   contact:
     email: admin@ccs.gov.uk
   license:
@@ -24,11 +24,13 @@ paths:
       - browser
       summary: search Agreement
       operationId: search-Agreement
-      description: searches Agreement by name, id or keyword
+      description: searches Agreement by name, version, id or keyword
       parameters:
       - "$ref": "#/components/parameters/q_name"
       - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_keyword"
+      - "$ref": "#/components/parameters/q_version_id"
+      - "$ref": "#/components/parameters/q_supercedes_id"
       - "$ref": "#/components/parameters/q_limit"
       - "$ref": "#/components/parameters/q_skip"
       responses:
@@ -41,7 +43,7 @@ paths:
       - recorder
       summary: post (create) a new Agreement
       operationId: create-Agreement
-      description: add a new Agreement and retreive copy of it
+      description: add a new Agreement and retrieve copy of it
       requestBody:
         content:
           application/json:
@@ -58,20 +60,22 @@ paths:
       tags:
       - recorder
       summary: get an existing Agreement
-      description: retrieve Agreement by id
+      description: retrieve Agreement by id or version id
       parameters:
       - "$ref": "#/components/parameters/id"
       responses:
         '200':
+          "$ref": "#/components/responses/Agreement"
+        '303':
           "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
     put:
       tags:
       - recorder
-      summary: put (revise) Agreement
+      summary: put (replace) Agreement
       operationId: revise-Agreement
-      description: update an existing Agreement given its id
+      description: replace an existing Agreement given its id, creating a new version
       parameters:
       - "$ref": "#/components/parameters/id"
       requestBody:
@@ -83,6 +87,30 @@ paths:
       responses:
         '200':
           "$ref": "#/components/responses/Agreement"
+        '303':
+          "$ref": "#/components/responses/Agreement"
+        4XX:
+          description: error TODO
+    patch:
+      tags:
+      - recorder
+      summary: patch (revise) Agreement
+      operationId: revise-Agreement
+      description: update an existing Agreement given its id, updating only the supplied
+        fields, creating a new version
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Agreement"
+        description: body should be the elements of  Agreement to be updated
+      responses:
+        '200':
+          "$ref": "#/components/responses/Agreement"
+        '303':
+          "$ref": "#/components/responses/Agreement"
         4XX:
           description: error TODO
   "/api/v0/ItemType":
@@ -91,11 +119,13 @@ paths:
       - browser
       summary: search ItemType
       operationId: search-ItemType
-      description: searches ItemType by name, id or keyword
+      description: searches ItemType by name, version, id or keyword
       parameters:
       - "$ref": "#/components/parameters/q_name"
       - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_keyword"
+      - "$ref": "#/components/parameters/q_version_id"
+      - "$ref": "#/components/parameters/q_supercedes_id"
       - "$ref": "#/components/parameters/q_limit"
       - "$ref": "#/components/parameters/q_skip"
       responses:
@@ -108,7 +138,7 @@ paths:
       - recorder
       summary: post (create) a new ItemType
       operationId: create-ItemType
-      description: add a new ItemType and retreive copy of it
+      description: add a new ItemType and retrieve copy of it
       requestBody:
         content:
           application/json:
@@ -125,20 +155,22 @@ paths:
       tags:
       - recorder
       summary: get an existing ItemType
-      description: retrieve ItemType by id
+      description: retrieve ItemType by id or version id
       parameters:
       - "$ref": "#/components/parameters/id"
       responses:
         '200':
+          "$ref": "#/components/responses/ItemType"
+        '303':
           "$ref": "#/components/responses/ItemType"
         4XX:
           description: error TODO
     put:
       tags:
       - recorder
-      summary: put (revise) ItemType
+      summary: put (replace) ItemType
       operationId: revise-ItemType
-      description: update an existing ItemType given its id
+      description: replace an existing ItemType given its id, creating a new version
       parameters:
       - "$ref": "#/components/parameters/id"
       requestBody:
@@ -150,71 +182,30 @@ paths:
       responses:
         '200':
           "$ref": "#/components/responses/ItemType"
+        '303':
+          "$ref": "#/components/responses/ItemType"
         4XX:
           description: error TODO
-  "/api/v0/Item":
-    get:
-      tags:
-      - browser
-      summary: search Item
-      operationId: search-Item
-      description: searches Item by name, id or keyword
-      parameters:
-      - "$ref": "#/components/parameters/q_id"
-      - "$ref": "#/components/parameters/q_limit"
-      - "$ref": "#/components/parameters/q_skip"
-      responses:
-        '200':
-          "$ref": "#/components/responses/Items"
-        4XX:
-          description: error TODO
-    post:
+    patch:
       tags:
       - recorder
-      summary: post (create) a new Item
-      operationId: create-Item
-      description: add a new Item and retreive copy of it
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/Item"
-        description: body should be the new Item
-      responses:
-        '200':
-          "$ref": "#/components/responses/Item"
-        4XX:
-          description: error TODO
-  "/api/v0/Item/{id}":
-    get:
-      tags:
-      - recorder
-      summary: get an existing Item
-      description: retrieve Item by id
-      parameters:
-      - "$ref": "#/components/parameters/id"
-      responses:
-        '200':
-          "$ref": "#/components/responses/Item"
-        4XX:
-          description: error TODO
-    put:
-      tags:
-      - recorder
-      summary: put (revise) Item
-      operationId: revise-Item
-      description: update an existing Item given its id
+      summary: patch (revise) ItemType
+      operationId: revise-ItemType
+      description: update an existing ItemType given its id, updating only the supplied
+        fields, creating a new version
       parameters:
       - "$ref": "#/components/parameters/id"
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/Item"
-        description: body should be the updated Item
+              "$ref": "#/components/schemas/ItemType"
+        description: body should be the elements of  ItemType to be updated
       responses:
         '200':
-          "$ref": "#/components/responses/Item"
+          "$ref": "#/components/responses/ItemType"
+        '303':
+          "$ref": "#/components/responses/ItemType"
         4XX:
           description: error TODO
   "/api/v0/Party":
@@ -223,7 +214,7 @@ paths:
       - browser
       summary: search Party
       operationId: search-Party
-      description: searches Party by name, id or keyword
+      description: searches Party by name, version, id or keyword
       parameters:
       - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_limit"
@@ -238,7 +229,7 @@ paths:
       - recorder
       summary: post (create) a new Party
       operationId: create-Party
-      description: add a new Party and retreive copy of it
+      description: add a new Party and retrieve copy of it
       requestBody:
         content:
           application/json:
@@ -255,20 +246,22 @@ paths:
       tags:
       - recorder
       summary: get an existing Party
-      description: retrieve Party by id
+      description: retrieve Party by id or version id
       parameters:
       - "$ref": "#/components/parameters/id"
       responses:
         '200':
+          "$ref": "#/components/responses/Party"
+        '303':
           "$ref": "#/components/responses/Party"
         4XX:
           description: error TODO
     put:
       tags:
       - recorder
-      summary: put (revise) Party
+      summary: put (replace) Party
       operationId: revise-Party
-      description: update an existing Party given its id
+      description: replace an existing Party given its id, creating a new version
       parameters:
       - "$ref": "#/components/parameters/id"
       requestBody:
@@ -280,6 +273,30 @@ paths:
       responses:
         '200':
           "$ref": "#/components/responses/Party"
+        '303':
+          "$ref": "#/components/responses/Party"
+        4XX:
+          description: error TODO
+    patch:
+      tags:
+      - recorder
+      summary: patch (revise) Party
+      operationId: revise-Party
+      description: update an existing Party given its id, updating only the supplied
+        fields, creating a new version
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Party"
+        description: body should be the elements of  Party to be updated
+      responses:
+        '200':
+          "$ref": "#/components/responses/Party"
+        '303':
+          "$ref": "#/components/responses/Party"
         4XX:
           description: error TODO
   "/api/v0/Contact":
@@ -288,7 +305,7 @@ paths:
       - browser
       summary: search Contact
       operationId: search-Contact
-      description: searches Contact by name, id or keyword
+      description: searches Contact by name, version, id or keyword
       parameters:
       - "$ref": "#/components/parameters/q_id"
       - "$ref": "#/components/parameters/q_title"
@@ -304,7 +321,7 @@ paths:
       - recorder
       summary: post (create) a new Contact
       operationId: create-Contact
-      description: add a new Contact and retreive copy of it
+      description: add a new Contact and retrieve copy of it
       requestBody:
         content:
           application/json:
@@ -321,20 +338,22 @@ paths:
       tags:
       - recorder
       summary: get an existing Contact
-      description: retrieve Contact by id
+      description: retrieve Contact by id or version id
       parameters:
       - "$ref": "#/components/parameters/id"
       responses:
         '200':
+          "$ref": "#/components/responses/Contact"
+        '303':
           "$ref": "#/components/responses/Contact"
         4XX:
           description: error TODO
     put:
       tags:
       - recorder
-      summary: put (revise) Contact
+      summary: put (replace) Contact
       operationId: revise-Contact
-      description: update an existing Contact given its id
+      description: replace an existing Contact given its id, creating a new version
       parameters:
       - "$ref": "#/components/parameters/id"
       requestBody:
@@ -346,6 +365,30 @@ paths:
       responses:
         '200':
           "$ref": "#/components/responses/Contact"
+        '303':
+          "$ref": "#/components/responses/Contact"
+        4XX:
+          description: error TODO
+    patch:
+      tags:
+      - recorder
+      summary: patch (revise) Contact
+      operationId: revise-Contact
+      description: update an existing Contact given its id, updating only the supplied
+        fields, creating a new version
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Contact"
+        description: body should be the elements of  Contact to be updated
+      responses:
+        '200':
+          "$ref": "#/components/responses/Contact"
+        '303':
+          "$ref": "#/components/responses/Contact"
         4XX:
           description: error TODO
   "/api/v0/Offering":
@@ -354,10 +397,12 @@ paths:
       - browser
       summary: search Offering
       operationId: search-Offering
-      description: searches Offering by name, id or keyword
+      description: searches Offering by name, version, id or keyword
       parameters:
       - "$ref": "#/components/parameters/q_name"
       - "$ref": "#/components/parameters/q_id"
+      - "$ref": "#/components/parameters/q_version_id"
+      - "$ref": "#/components/parameters/q_supercedes_id"
       - "$ref": "#/components/parameters/q_limit"
       - "$ref": "#/components/parameters/q_skip"
       responses:
@@ -370,7 +415,7 @@ paths:
       - recorder
       summary: post (create) a new Offering
       operationId: create-Offering
-      description: add a new Offering and retreive copy of it
+      description: add a new Offering and retrieve copy of it
       requestBody:
         content:
           application/json:
@@ -387,20 +432,22 @@ paths:
       tags:
       - recorder
       summary: get an existing Offering
-      description: retrieve Offering by id
+      description: retrieve Offering by id or version id
       parameters:
       - "$ref": "#/components/parameters/id"
       responses:
         '200':
+          "$ref": "#/components/responses/Offering"
+        '303':
           "$ref": "#/components/responses/Offering"
         4XX:
           description: error TODO
     put:
       tags:
       - recorder
-      summary: put (revise) Offering
+      summary: put (replace) Offering
       operationId: revise-Offering
-      description: update an existing Offering given its id
+      description: replace an existing Offering given its id, creating a new version
       parameters:
       - "$ref": "#/components/parameters/id"
       requestBody:
@@ -411,6 +458,30 @@ paths:
         description: body should be the updated Offering
       responses:
         '200':
+          "$ref": "#/components/responses/Offering"
+        '303':
+          "$ref": "#/components/responses/Offering"
+        4XX:
+          description: error TODO
+    patch:
+      tags:
+      - recorder
+      summary: patch (revise) Offering
+      operationId: revise-Offering
+      description: update an existing Offering given its id, updating only the supplied
+        fields, creating a new version
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Offering"
+        description: body should be the elements of  Offering to be updated
+      responses:
+        '200':
+          "$ref": "#/components/responses/Offering"
+        '303':
           "$ref": "#/components/responses/Offering"
         4XX:
           description: error TODO
@@ -527,13 +598,6 @@ components:
           example: ccs_org:pillar_buildings
           description: Commercial category org unit responsible for this agreement.
             Usually the CCS pillar name and a category name
-        contact_standard:
-          type: string
-          enum:
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact
-          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email
-          description: 'The standard used to link to contacts in this agreement record. '
         owner_id:
           type: array
           items:
@@ -666,65 +730,12 @@ components:
           items:
             type: string
           example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
-          description: 'standards describing qualification required by suppliers in
-            order to offer solutions against this item. '
+          description: 'standards describing qualifications required by suppliers
+            in order to offer solutions against this item. '
       description: Defines the items that can be offered in certain agreements. *Agreement*s
         can have a number of items that can have values detailing  the agreement.
         The Items shouldconstrain the key quantifiable elements of an agreement award,
         as defined by a supplier's offering against that agreement.
-    Item:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        version_id:
-          type: string
-          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
-          description: UUID of this version of the entry
-        supercedes_id:
-          type: string
-          example: e030f1b1-647d-4ed7-8d84-ac9790563362
-          description: UUID of this version superceded. May be empty only if this
-            is the  first version
-        datetime:
-          type: string
-          format: date
-          example: '2019-09-28T18:34:23.45Z'
-          description: 'Date of creation or update of this record, date of creation
-            of this version. '
-        checksum:
-          type: string
-          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
-          description: MD5 checksum of the record
-        url:
-          type: string
-          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
-          description: URL which will retreive this version of the record
-        id:
-          type: string
-          example: '07719842-a3a1-41c5-8320-6439295fb90e'
-          description: " a generated UUID minted for this item "
-        item_type_id:
-          type: string
-          example: CPV:37000000-8:CCS:2019-01:1
-          description: " type of the item "
-        unit_quantity:
-          type: string
-          example: '100'
-          description: " define the units, which should match one of the allowed unit
-            code valuesin the standard defind in the type"
-        unit_price:
-          type: number
-          format: float
-          example: 110
-          description: an number giving the price per unit as dictated by item_type->unit
-        supplementary:
-          type: array
-          items:
-            "$ref": "#/components/schemas/Field"
-      description: Specifies the value of an item that is being offered for an agreement.
-        All the data should be constrained according to the Item type in question
     Party:
       type: object
       required:
@@ -733,6 +744,7 @@ components:
       properties:
         id:
           type: string
+          example: sf_org_id:455677
           description: " URN, should match salesforce ID; master key "
         org_id_standard:
           type: string
@@ -741,6 +753,7 @@ components:
           - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house
           - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun
           - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id
           description: ''
         supplementary_org_id_standard:
           type: array
@@ -751,18 +764,21 @@ components:
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house
           description: ''
         supplementary_org_id:
           type: array
           items:
             type: string
+          example: companies_house:12345
           description: ''
         parent_org_id:
           type: string
+          example: companies_house:78901
           description: " URN, should match one of the standards listed "
         org_name:
           type: string
-          description: ''
+          description: interesting organisation
         sector_standard:
           type: array
           items:
@@ -770,12 +786,13 @@ components:
             enum:
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json
             - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json
           description: ''
         sector:
           type: array
           items:
             type: string
-          example: ccs_sector:education_funded
+          example: ccs_sector_codes:education_funded
           description: ''
         trading_name:
           type: string
@@ -783,9 +800,22 @@ components:
         spend_this_year:
           type: number
           format: float
+          example: 1000.0
           description: " Salesforce only stores this for buyers. "
+        questionnaire:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Questionnaire"
+        document_standard:
+          type: string
+          enum:
+          - s3
+          - gdoc
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_standard_codes.json#gdoc
+          description: ''
         documents_url:
           type: string
+          example: gdoc:https://drive.google.com/drive/u/012345
           description: " Salesforce links to google drive folder for this supplier;
             we will move to S3 in due course. "
         contact_standard:
@@ -797,6 +827,7 @@ components:
           description: ''
         account_manager_id:
           type: string
+          example: sf_contact:45623456
           description: " Who manages the account for CCS "
       description: The party is used to identify buyers and suppliers. Since some
         organisations act asboth buyers and suppliers we use the same record for both,
@@ -1020,6 +1051,122 @@ components:
             be offered.
       description: a type with a number of classification attributes, such as sector,
         location
+    Questionnaire:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: UUID for the questionnaire entry
+        completed:
+          type: string
+          format: date
+          description: ''
+        expires:
+          type: string
+          format: date
+          description: ''
+        question_standards:
+          type: array
+          items:
+            type: string
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
+          description: The coding standards for the questions and answers
+        question:
+          "$ref": "#/components/schemas/Question"
+      description: A managed set of qualification questions andwered at a point in
+        time for a period of time
+    Address:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        street:
+          type: string
+          example: 1 fogg street
+          description: ''
+        address_2:
+          type: string
+          example: ''
+          description: ''
+        town:
+          type: string
+          example: London
+          description: ''
+        county:
+          type: string
+          description: ''
+        country:
+          type: string
+          description: ''
+        postcode:
+          type: string
+          example: SW1 1HQ
+          description: ''
+        latitutde:
+          type: string
+          description: " Location from the address for geo search "
+        longtitude:
+          type: string
+          description: " Location from the address for geo search "
+      description: "\n Address should include at least address line 1 and ideally
+        post code.\n will contain lat / long if we have derived it.\n "
+    Item:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        version_id:
+          type: string
+          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+          description: UUID of this version of the entry
+        supercedes_id:
+          type: string
+          example: e030f1b1-647d-4ed7-8d84-ac9790563362
+          description: UUID of this version superceded. May be empty only if this
+            is the  first version
+        datetime:
+          type: string
+          format: date
+          example: '2019-09-28T18:34:23.45Z'
+          description: 'Date of creation or update of this record, date of creation
+            of this version. '
+        checksum:
+          type: string
+          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+          description: MD5 checksum of the record
+        url:
+          type: string
+          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
+          description: URL which will retreive this version of the record
+        id:
+          type: string
+          example: '07719842-a3a1-41c5-8320-6439295fb90e'
+          description: " a generated UUID minted for this item "
+        item_type_id:
+          type: string
+          example: CPV:37000000-8:CCS:2019-01:1
+          description: " type of the item "
+        unit_quantity:
+          type: string
+          example: '100'
+          description: " define the units, which should match one of the allowed unit
+            code valuesin the standard defind in the type"
+        unit_price:
+          type: number
+          format: float
+          example: 110
+          description: an number giving the price per unit as dictated by item_type->unit
+        supplementary:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Field"
+      description: Specifies the value of an item that is being offered for an agreement.
+        All the data should be constrained according to the Item type in question
     Field:
       type: object
       required:
@@ -1054,38 +1201,58 @@ components:
           - type: integer
           example: A descriptive string
       description: an additional field that helps qualify the object
-    Address:
+    Question:
       type: object
       required:
       - id
       - name
       properties:
-        street:
+        version_id:
           type: string
-          description: ''
-        address_2:
+          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+          description: UUID of this version of the entry
+        supercedes_id:
           type: string
-          description: ''
-        town:
+          example: e030f1b1-647d-4ed7-8d84-ac9790563362
+          description: UUID of this version superceded. May be empty only if this
+            is the  first version
+        datetime:
           type: string
-          description: ''
-        county:
+          format: date
+          example: '2019-09-28T18:34:23.45Z'
+          description: 'Date of creation or update of this record, date of creation
+            of this version. '
+        checksum:
           type: string
-          description: ''
-        country:
+          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+          description: MD5 checksum of the record
+        url:
           type: string
-          description: ''
-        postcode:
+          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
+          description: URL which will retreive this version of the record
+        id:
           type: string
-          description: ''
-        latitutde:
+          description: UUID for the questionnaire entry
+        classification:
           type: string
-          description: " Location from the address for geo search "
-        longtitude:
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
+          description: coded answers to questions matching the standards
+        answer_code:
           type: string
-          description: " Location from the address for geo search "
-      description: "\n Address should include at least address line 1 and ideally
-        post code.\n will contain lat / long if we have derived it.\n "
+          example: offsted:Requires_Improvement
+          description: coded answers to questions matching the standards
+        supplementary_classification:
+          type: array
+          items:
+            type: string
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
+          description: coded answers to questions matching the standards
+        supplementary_fields:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Field"
+      description: A managed set of qualification questions andwered at a point in
+        time for a period of time
     Value:
       type: object
       required:
@@ -1133,6 +1300,18 @@ components:
         type: string
     q_title:
       name: q_title
+      in: query
+      description: optional search parameter
+      schema:
+        type: string
+    q_version_id:
+      name: q_version_id
+      in: query
+      description: optional search parameter
+      schema:
+        type: string
+    q_supercedes_id:
+      name: q_supercedes_id
       in: query
       description: optional search parameter
       schema:
@@ -1190,20 +1369,6 @@ components:
             type: array
             items:
               "$ref": "#/components/schemas/ItemType"
-    Item:
-      description: Item matching id
-      content:
-        application/json:
-          schema:
-            "$ref": "#/components/schemas/Item"
-    Items:
-      description: array of Items matching id
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/Item"
     Party:
       description: Party matching id
       content:

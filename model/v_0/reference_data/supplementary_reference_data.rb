@@ -1,4 +1,4 @@
-require_relative 'supplementary'
+require_relative '../supplementary'
 
 ReferenceData.new :SupplementaryDataTypeCodes do
   SUPPLEMENTARY_TYPE_CODES = Enum( codelist {

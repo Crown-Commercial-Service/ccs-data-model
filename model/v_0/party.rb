@@ -1,6 +1,7 @@
 require_relative '../../src/data_model'
-require_relative 'party_reference_data'
-require_relative 'supplementary_reference_data'
+require_relative 'reference_data/party_reference_data'
+require_relative 'reference_data/supplementary_reference_data'
+require_relative 'reference_data/documents_reference_data'
 include DataModel
 
 domain(:Parties) {
@@ -35,31 +36,37 @@ domain(:Parties) {
           "both buyers and suppliers we use the same record for both, but most organisations will" +
           "be one or the other. The onvolvement of the party with an agreement determine the role in" +
           "that contenxt.") {
-    attribute :id, String, " URN, should match salesforce ID; master key "
-    attribute :org_id_standard, ORG_ID_STANDARDS
-    attribute :supplementary_org_id_standard, ORG_ID_STANDARDS, ZERO_TO_MANY
-    attribute :supplementary_org_id, String, ZERO_TO_MANY
-    attribute :parent_org_id, String, " URN, should match one of the standards listed ", links: :Party
-    attribute :org_name, String
-    attribute :sector_standard, SECTOR_STANDARDS, ZERO_TO_MANY
-    attribute :sector, String, ZERO_TO_MANY, example: "ccs_sector:education_funded"
+    attribute :id, String, " URN, should match salesforce ID; master key ", example: SF_ORG.example
+    attribute :org_id_standard, ORG_ID_STANDARDS, example: SF_ORG.uri
+    attribute :supplementary_org_id_standard, ORG_ID_STANDARDS, ZERO_TO_MANY, example: CH_ORG.uri
+    attribute :supplementary_org_id, String, ZERO_TO_MANY, example: CH_ORG.example
+    attribute :parent_org_id, String, ZERO_OR_ONE, " URN, should match one of the standards listed ", links: :Party,
+              example: "#{CH_ORG.prefix}:78901"
+    attribute :org_name, String, "interesting organisation"
+    attribute :sector_standard, SECTOR_STANDARDS, ZERO_TO_MANY, example: CCSSECTORS.url
+    attribute :sector, String, ZERO_TO_MANY, example: ED_SEC.example
     attribute :trading_name, String, ZERO_OR_ONE, " Salesforce only stores for supplier. "
-    attribute :spend_this_year, Float, ZERO_OR_ONE, " Salesforce only stores this for buyers. "
-    attribute :documents_url, String, ZERO_OR_ONE, " Salesforce links to google drive folder for this supplier; we will move to S3 in due course. "
+    attribute :spend_this_year, Float, ZERO_OR_ONE, " Salesforce only stores this for buyers. ", example: 1000.00
+
+    attribute :questionnaire, :Questionnaire, ZERO_TO_MANY, "Supplier questionnaires"
+    attribute :document_standard, DOC_STANDARDS, ZERO_OR_ONE, example: GDOC.uri
+    attribute :documents_url, String, ZERO_OR_ONE, " Salesforce links to google drive folder for this supplier; we will move to S3 in due course. ",
+              example: "gdoc:https://drive.google.com/drive/u/012345"
+
     attribute :contact_standard, CONTACT_ID_STANDARDS, ZERO_OR_ONE, example: SF_CONTACT.uri
-    attribute :account_manager_id, String, ZERO_OR_ONE, " Who manages the account for CCS "
+    attribute :account_manager_id, String, ZERO_OR_ONE, " Who manages the account for CCS ", example: SF_CONTACT.example
   }
 
   datatype(:Address, description: "
  Address should include at least address line 1 and ideally post code.
  will contain lat / long if we have derived it.
  ") {
-    attribute :street, String, ZERO_OR_ONE
-    attribute :address_2, String, ZERO_OR_ONE
-    attribute :town, String, ZERO_OR_ONE
+    attribute :street, String, ZERO_OR_ONE, example: "1 fogg street"
+    attribute :address_2, String, ZERO_OR_ONE, example: ""
+    attribute :town, String, ZERO_OR_ONE, example: "London"
     attribute :county, String, ZERO_OR_ONE
     attribute :country, String, ZERO_OR_ONE
-    attribute :postcode, String, ZERO_OR_ONE
+    attribute :postcode, String, ZERO_OR_ONE, example: "SW1 1HQ"
     attribute :latitutde, String, ZERO_OR_ONE, " Location from the address for geo search "
     attribute :longtitude, String, ZERO_OR_ONE, " Location from the address for geo search "
   }

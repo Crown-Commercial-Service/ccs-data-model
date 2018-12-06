@@ -1,7 +1,7 @@
 require_relative 'register'
 require_relative 'item'
-require_relative 'agreement_reference_data'
-require_relative 'education_reference_data'
+require_relative 'reference_data/agreement_reference_data'
+require_relative 'reference_data/education_reference_data'
 
 include DataModel
 
@@ -11,7 +11,7 @@ domain :Agreements do
     attribute :sector_standard, SECTOR_STANDARDS, ZERO_TO_MANY, "The sector standard id", example: CCSSECTORS.url
     attribute :sector_id, String, ZERO_TO_MANY,
               "The sector standard ids that define to whom the item may be sold. Prefix must match one of the standards.",
-              example: "#{ED.container.id}:#{ED.id}"
+              example: "#{ED_SEC.container.id}:#{ED_SEC.id}"
     attribute :location_standard, LOCATION_STANDARDS, ZERO_TO_MANY, "The standards for identifying locations",
               example: "[#{NUTS.uri}]"
     attribute :location_id, String, ZERO_TO_MANY,

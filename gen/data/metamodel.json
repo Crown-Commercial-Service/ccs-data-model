@@ -154,13 +154,6 @@
         "type": "String",
         "example": "ccs_org:pillar_buildings"
       },
-      "contact_standard": {
-        "multiplicity": "1",
-        "description": "The standard used to link to contacts in this agreement record. ",
-        "name": "contact_standard",
-        "type": "contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email)",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email"
-      },
       "owner_id": {
         "multiplicity": "1..*",
         "description": "Individual accountable for the agreement",
@@ -317,36 +310,41 @@
         "multiplicity": "1",
         "description": " URN, should match salesforce ID; master key ",
         "name": "id",
-        "type": "String"
+        "type": "String",
+        "example": "sf_org_id:455677"
       },
       "org_id_standard": {
         "multiplicity": "1",
         "description": "",
         "name": "org_id_standard",
-        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)"
+        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id"
       },
       "supplementary_org_id_standard": {
         "multiplicity": "*",
         "description": "",
         "name": "supplementary_org_id_standard",
-        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)"
+        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house"
       },
       "supplementary_org_id": {
         "multiplicity": "*",
         "description": "",
         "name": "supplementary_org_id",
-        "type": "String"
+        "type": "String",
+        "example": "companies_house:12345"
       },
       "parent_org_id": {
-        "multiplicity": "1",
+        "multiplicity": "0..1",
         "description": " URN, should match one of the standards listed ",
         "name": "parent_org_id",
         "type": "String",
+        "example": "companies_house:78901",
         "links": "Parties::Party"
       },
       "org_name": {
         "multiplicity": "1",
-        "description": "",
+        "description": "interesting organisation",
         "name": "org_name",
         "type": "String"
       },
@@ -354,14 +352,15 @@
         "multiplicity": "*",
         "description": "",
         "name": "sector_standard",
-        "type": "sector_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other)"
+        "type": "sector_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json"
       },
       "sector": {
         "multiplicity": "*",
         "description": "",
         "name": "sector",
         "type": "String",
-        "example": "ccs_sector:education_funded"
+        "example": "ccs_sector_codes:education_funded"
       },
       "trading_name": {
         "multiplicity": "0..1",
@@ -373,13 +372,28 @@
         "multiplicity": "0..1",
         "description": " Salesforce only stores this for buyers. ",
         "name": "spend_this_year",
-        "type": "Float"
+        "type": "Float",
+        "example": 1000.0
+      },
+      "questionnaire": {
+        "multiplicity": "*",
+        "description": "Supplier questionnaires",
+        "name": "questionnaire",
+        "type": "Parties::Questionnaire"
+      },
+      "document_standard": {
+        "multiplicity": "0..1",
+        "description": "",
+        "name": "document_standard",
+        "type": "doc_standard_codes( s3, gdoc)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_standard_codes.json#gdoc"
       },
       "documents_url": {
         "multiplicity": "0..1",
         "description": " Salesforce links to google drive folder for this supplier; we will move to S3 in due course. ",
         "name": "documents_url",
-        "type": "String"
+        "type": "String",
+        "example": "gdoc:https://drive.google.com/drive/u/012345"
       },
       "contact_standard": {
         "multiplicity": "0..1",
@@ -392,7 +406,8 @@
         "multiplicity": "0..1",
         "description": " Who manages the account for CCS ",
         "name": "account_manager_id",
-        "type": "String"
+        "type": "String",
+        "example": "sf_contact:45623456"
       }
     },
     "Address": {
@@ -400,19 +415,22 @@
         "multiplicity": "0..1",
         "description": "",
         "name": "street",
-        "type": "String"
+        "type": "String",
+        "example": "1 fogg street"
       },
       "address_2": {
         "multiplicity": "0..1",
         "description": "",
         "name": "address_2",
-        "type": "String"
+        "type": "String",
+        "example": ""
       },
       "town": {
         "multiplicity": "0..1",
         "description": "",
         "name": "town",
-        "type": "String"
+        "type": "String",
+        "example": "London"
       },
       "county": {
         "multiplicity": "0..1",
@@ -430,7 +448,8 @@
         "multiplicity": "0..1",
         "description": "",
         "name": "postcode",
-        "type": "String"
+        "type": "String",
+        "example": "SW1 1HQ"
       },
       "latitutde": {
         "multiplicity": "0..1",

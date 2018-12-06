@@ -24,7 +24,7 @@ class OpenApi3 < Output
     super File.join(dir, "openapi3"),
           name, fmt.to_s
     self.fmt = fmt
-    self.std_qry_params = [:name, :id, :keyword, :title]
+    self.std_qry_params = [:name, :id, :keyword, :title, :version_id,  :supercedes_id]
     self.std_path_params = [:id]
   end
 
@@ -39,8 +39,10 @@ class OpenApi3 < Output
   PARAMETERS = "parameters"
   REF = "$ref"
   R200 = "200"
+  R303 = "303"
   R4XX = "4XX"
   GET = "get"
+  PATCH = "patch"
   POST = "post"
   PUT = "put"
   PATHS = "paths"
@@ -91,7 +93,7 @@ class OpenApi3 < Output
               TAGS => [BROWSERS],
               SUMMARY => "search #{resource_name}",
               OPERATION_ID => "search-#{resource_name}",
-              DESCRIPTION => "searches #{resource_name} by name, id or keyword",
+              DESCRIPTION => "searches #{resource_name} by name, version, id or keyword",
               PARAMETERS => std_qry_params
                                 .select {|k| resource.type.attributes.has_key? k}
                                 .map {|k| {REF => ref_component(:query, k)}}
@@ -109,7 +111,7 @@ class OpenApi3 < Output
               TAGS => [RECORDERS],
               SUMMARY => "post (create) a new #{resource_name}",
               OPERATION_ID => "create-#{resource_name}",
-              DESCRIPTION => "add a new #{resource_name} and retreive copy of it",
+              DESCRIPTION => "add a new #{resource_name} and retrieve copy of it",
               REQUEST_BODY => {
                   CONTENT => {
                       APPLICATION_JSON => {
@@ -134,10 +136,13 @@ class OpenApi3 < Output
           GET => {
               TAGS => [RECORDERS],
               SUMMARY => "get an existing #{resource_name}",
-              DESCRIPTION => "retrieve #{resource_name} by id",
+              DESCRIPTION => "retrieve #{resource_name} by id or version id",
               PARAMETERS => [{REF => ref_component(:path, "id")}],
               RESPONSES => {
                   R200 => {
+                      REF => ref_component(:response, resource_name)
+                  },
+                  R303 => {
                       REF => ref_component(:response, resource_name)
                   },
                   R4XX => {
@@ -147,9 +152,9 @@ class OpenApi3 < Output
           },
           PUT => {
               TAGS => [RECORDERS],
-              SUMMARY => "put (revise) #{resource_name}",
+              SUMMARY => "put (replace) #{resource_name}",
               OPERATION_ID => "revise-#{resource_name}",
-              DESCRIPTION => "update an existing #{resource_name} given its id",
+              DESCRIPTION => "replace an existing #{resource_name} given its id, creating a new version",
               PARAMETERS => [{REF => ref_component(:path, "id")}],
               REQUEST_BODY => {
                   CONTENT => {
@@ -163,6 +168,37 @@ class OpenApi3 < Output
               },
               RESPONSES => {
                   R200 => {
+                      REF => ref_component(:response, resource_name)
+                  },
+                  R303 => {
+                      REF => ref_component(:response, resource_name)
+                  },
+                  R4XX => {
+                      DESCRIPTION => "error TODO"
+                  }
+              }
+          },
+          PATCH => {
+              TAGS => [RECORDERS],
+              SUMMARY => "patch (revise) #{resource_name}",
+              OPERATION_ID => "revise-#{resource_name}",
+              DESCRIPTION => "update an existing #{resource_name} given its id, updating only the supplied fields, creating a new version",
+              PARAMETERS => [{REF => ref_component(:path, "id")}],
+              REQUEST_BODY => {
+                  CONTENT => {
+                      APPLICATION_JSON => {
+                          SCHEMA => {
+                              REF => ref_component(:schema, resource_name)
+                          }
+                      }
+                  },
+                  DESCRIPTION => "body should be the elements of  #{resource_name} to be updated"
+              },
+              RESPONSES => {
+                  R200 => {
+                      REF => ref_component(:response, resource_name)
+                  },
+                  R303 => {
                       REF => ref_component(:response, resource_name)
                   },
                   R4XX => {

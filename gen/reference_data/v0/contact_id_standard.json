@@ -1,0 +1,29 @@
+{
+  "standard": [
+    {
+      "id": "contact_id_standard",
+      "version": "0.1.4",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json",
+      "title": "Contact id  Standards",
+      "description": "How to identify a link to a contact",
+      "ref": [
+        {
+          "id": "sf_contact",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact",
+          "title": "CCS Salesforce id",
+          "description": "CCS Salesforce id",
+          "source": "CCS Salesforce",
+          "example": "sf_contact:45623456"
+        },
+        {
+          "id": "email",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email",
+          "title": "CCS Salesforce id",
+          "description": "CCS Salesforce id",
+          "source": "CCS Salesforce",
+          "example": "email:someone@company.none"
+        }
+      ]
+    }
+  ]
+}

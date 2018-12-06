@@ -1,7 +1,7 @@
 require_relative '../../src/data_model'
 require_relative 'agreement'
-require_relative 'offering_reference_data'
-require_relative 'education_reference_data'
+require_relative 'reference_data/offering_reference_data'
+require_relative 'reference_data/education_reference_data'
 require_relative 'party'
 include DataModel
 

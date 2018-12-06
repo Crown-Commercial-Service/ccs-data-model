@@ -23,7 +23,6 @@ API.new :API_V0_1 do
     version VERSION
     resource {type Agreements::Agreement}
     resource {type Items::ItemType}
-    resource {type Items::Item}
     resource {type Parties::Party}
     resource {type Parties::Contact}
     resource {type Offerings::Offering}

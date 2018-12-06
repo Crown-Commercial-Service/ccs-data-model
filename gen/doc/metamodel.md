@@ -31,7 +31,6 @@
 |duration |Months |5 |Integer |1 |
 |org_structure_standard |Standard identifying prefixes for organisation responbsible for this agreement.  |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json |org_structure_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json) |1 |
 |owning_org_unit_name |Commercial category org unit responsible for this agreement. Usually the CCS pillar name and a category name |ccs_org:pillar_buildings |String |1..* |
-|contact_standard |The standard used to link to contacts in this agreement record.  |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email |contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email) |1 |
 |owner_id |Individual accountable for the agreement |emailexample_owner@crowncommercial.gov.uk |String |1..* |
 |restriction |Restrictions that may apply, such as government sectors and locations.  | |Agreements::Restriction |0..1 |
 |part_of_id |Agreement this is part of; typically applicable only to *Lots*.  | |String -> Agreements::Agreement |1 |
@@ -70,19 +69,21 @@
 
 |attribute|description|example|type|multiplicity|
 |---------|-----------|-------|----|------------|
-|id | URN, should match salesforce ID; master key  | |String |1 |
-|org_id_standard | | |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |1 |
-|supplementary_org_id_standard | | |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |* |
-|supplementary_org_id | | |String |* |
-|parent_org_id | URN, should match one of the standards listed  | |String -> Parties::Party |1 |
-|org_name | | |String |1 |
-|sector_standard | | |sector_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other) |* |
-|sector | |ccs_sector:education_funded |String |* |
+|id | URN, should match salesforce ID; master key  |sf_org_id:455677 |String |1 |
+|org_id_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |1 |
+|supplementary_org_id_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |* |
+|supplementary_org_id | |companies_house:12345 |String |* |
+|parent_org_id | URN, should match one of the standards listed  |companies_house:78901 |String -> Parties::Party |0..1 |
+|org_name |interesting organisation | |String |1 |
+|sector_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json |sector_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_sector_codes.json, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/sector_standard.json#other) |* |
+|sector | |ccs_sector_codes:education_funded |String |* |
 |trading_name | Salesforce only stores for supplier.  | |String |0..1 |
-|spend_this_year | Salesforce only stores this for buyers.  | |Float |0..1 |
-|documents_url | Salesforce links to google drive folder for this supplier; we will move to S3 in due course.  | |String |0..1 |
+|spend_this_year | Salesforce only stores this for buyers.  |1000.0 |Float |0..1 |
+|questionnaire |Supplier questionnaires | |Parties::Questionnaire |* |
+|document_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_standard_codes.json#gdoc |doc_standard_codes( s3, gdoc) |0..1 |
+|documents_url | Salesforce links to google drive folder for this supplier; we will move to S3 in due course.  |gdoc:https://drive.google.com/drive/u/012345 |String |0..1 |
 |contact_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact |contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email) |0..1 |
-|account_manager_id | Who manages the account for CCS  | |String |0..1 |
+|account_manager_id | Who manages the account for CCS  |sf_contact:45623456 |String |0..1 |
 ## Address
   
  Address should include at least address line 1 and ideally post code.
@@ -91,12 +92,12 @@
 
 |attribute|description|example|type|multiplicity|
 |---------|-----------|-------|----|------------|
-|street | | |String |0..1 |
+|street | |1 fogg street |String |0..1 |
 |address_2 | | |String |0..1 |
-|town | | |String |0..1 |
+|town | |London |String |0..1 |
 |county | | |String |0..1 |
 |country | | |String |0..1 |
-|postcode | | |String |0..1 |
+|postcode | |SW1 1HQ |String |0..1 |
 |latitutde | Location from the address for geo search  | |String |0..1 |
 |longtitude | Location from the address for geo search  | |String |0..1 |
 ## Contact
