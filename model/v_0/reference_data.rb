@@ -12,6 +12,7 @@ end
 
 ID_AND_URL_FROM_DOMAIN_AND_VERSION = lambda do
   id snake_case(domain.name)
+  title snake_case(domain.name)
   version VERSION
   url ref_url(id, version)
 end
@@ -60,15 +61,12 @@ domain :ReferenceData do
     attribute :example, String, "example of the value"
   }
 
-  datatype(:DataDocRef, extends: :Code, description: "A code which refers to a definition document, that describes another CodeList") {
+  datatype(:Standard, extends: :Code, description: "A code which refers to a definition document, that describes another CodeList") {
     attribute :source, String, "a description or url for how to build codes against this standard"
     attribute :prefix, String, "A prefix code for building codes from this source. " +
         " If the referred standard has a good unique prefix that should be used, where as if it is unclear " +
         " a prefix should be defined so that coded IDs are not ambiguous in terms of format or origin." +
         "if there is one", example: "companies-house"
-    attribute :supplementals, :DataDocRef,
-              " standards supporting the code supplementary codes that can be used with this standard" +
-                  "which should also specify the field type to be used in each case"
   }
 
   datatype(:DataDocument,
@@ -82,9 +80,9 @@ domain :ReferenceData do
     attribute :description, String, ZERO_OR_ONE
   }
 
-  datatype(:Standard, extends: :DataDocument,
+  datatype(:StandardList, extends: :DataDocument,
            description: "A standard is a list of coded values where each value points to another code list") {
-    attribute :ref, :DataDocRef, ZERO_TO_MANY
+    attribute :standard, :Standard, ZERO_TO_MANY
   }
 
   datatype(:CodeList, extends: :DataDocument,

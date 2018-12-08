@@ -2,16 +2,17 @@
   "codelist": [
     {
       "id": "contact_roles",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json",
       "title": "Contact Roles",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json",
       "description": " To be verified",
       "code": [
         {
           "id": "org_administrator",
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#org_administrator",
           "title": "org_administrator",
-          "description": "org_administrator"
+          "description": "org_administrator",
+          "example": "contact_roles:org_administrator"
         },
         {
           "id": "ccs_admin",

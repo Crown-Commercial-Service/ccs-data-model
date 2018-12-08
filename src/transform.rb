@@ -114,7 +114,7 @@ module Transform
               n = Hash.new
               stack.push(n) # add a new container to the stack to use next
               if last.class <= Hash
-                last[type.id] = n
+                last[type.name] = n
               elsif last.class <= Array
                 last.push(n)
               end

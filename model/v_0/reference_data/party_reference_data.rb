@@ -17,14 +17,14 @@ ReferenceData.new :CCSSectorCodes do
 end
 
 ReferenceData.new :SectorStandard do
-  SECTOR_STANDARDS = Enum (standard {
+  SECTOR_STANDARDS = Enum (standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Sector Classification Standards"
     description "Standard of codes used to decide what standard to use to classify an item"
-     ref {
+     standard {
       link_standard_from_codelist(self, CCSSECTORS)
     }
-    ref {
+    standard {
       id :other
       macro &URI_FROM_DOC_AND_ID
       prefix :other
@@ -52,11 +52,11 @@ ReferenceData.new :CCSOrg do
 end
 
 ReferenceData.new :OrgStructureStandard do
-  ORG_STRUCT_STANDARDS = Enum(standard {
+  ORG_STRUCT_STANDARDS = Enum(standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Org structure standards"
     description "How to classify organisation units"
-    ref {
+    standard {
       id :ccs_org
       link_standard_from_codelist(self, CCS_ORG_CODES.doc)
     }
@@ -65,11 +65,11 @@ end
 
 
 ReferenceData.new :OrgIdStandard do
-  ORG_ID_STANDARDS = Enum (standard {
+  ORG_ID_STANDARDS = Enum (standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Organisation id Classification Standards"
     description "Standard of codes used to decide what standard to use to classify an item"
-    SF_ORG = ref {
+    SF_ORG = standard {
       id :sf_org_id
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
@@ -78,16 +78,16 @@ ReferenceData.new :OrgIdStandard do
       prefix id
       example "#{prefix}:455677"
     }
-    CH_ORG = ref {
+    CH_ORG = standard {
       id :companies_house
       macro &URI_FROM_DOC_AND_ID
       title "Companies House"
       description title
-      source "Use CH register"
+      source "Use Companies House register"
       prefix id
       example "#{prefix}:12345"
     }
-    ref {
+    standard {
       id :dun
       macro &URI_FROM_DOC_AND_ID
       title "Dun & Bradstreet"
@@ -95,23 +95,23 @@ ReferenceData.new :OrgIdStandard do
       source "Use D&B register"
       prefix id
     }
-    ref {
+    standard {
       id :dfe
       macro &URI_FROM_DOC_AND_ID
       title "DfE"
       description title
-      source "Use DfE&B register"
+      source "Use DfE register"
       prefix id
     }
   })
 end
 
 ReferenceData.new :ContactIdStandard do
-  CONTACT_ID_STANDARDS = Enum (standard {
+  CONTACT_ID_STANDARDS = Enum (standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Contact id  Standards"
     description "How to identify a link to a contact"
-    SF_CONTACT = ref {
+    SF_CONTACT = standard {
       id :sf_contact
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
@@ -119,7 +119,7 @@ ReferenceData.new :ContactIdStandard do
       source "CCS Salesforce"
       example "#{id}:45623456"
     }
-    EMAIL = ref {
+    EMAIL = standard {
       id :email
       macro &URI_FROM_DOC_AND_ID
       title "CCS Salesforce id"
@@ -136,11 +136,12 @@ ReferenceData.new :ContactRoles do
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Contact Roles"
     description " To be verified"
-    code {
+    ADMIN= code {
       id :org_administrator
       macro &URI_FROM_DOC_AND_ID
       title id
       description id
+      example "#{container.id}:#{id}"
     }
     code {
       id :ccs_admin

@@ -42,7 +42,7 @@ domain :Items do
               example: "GBP"
     attribute :supplier_qualification_standard, String, ZERO_TO_MANY,
               "standards describing qualifications required by suppliers in order to offer solutions against this item. ",
-              example: APPRENTICESHIP_QUALIFICATION.url
+              example: APPRENTICESHIP_QUALIFICATION_QUESTIONS.url
   }
 
   datatype(:Item, extends: Register::Record,

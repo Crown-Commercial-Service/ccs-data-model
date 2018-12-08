@@ -25,6 +25,7 @@ API.new :API_V0_1 do
     resource {type Items::ItemType}
     resource {type Parties::Party}
     resource {type Parties::Contact}
+    resource {type Parties::Questionnaire}
     resource {type Offerings::Offering}
   }
 end

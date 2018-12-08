@@ -1,12 +1,12 @@
 {
-  "standard": [
+  "standardlist": [
     {
       "id": "org_id_standard",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json",
       "title": "Organisation id Classification Standards",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json",
       "description": "Standard of codes used to decide what standard to use to classify an item",
-      "ref": [
+      "standard": [
         {
           "id": "sf_org_id",
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id",
@@ -21,7 +21,7 @@
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house",
           "title": "Companies House",
           "description": "Companies House",
-          "source": "Use CH register",
+          "source": "Use Companies House register",
           "prefix": "companies_house",
           "example": "companies_house:12345"
         },
@@ -38,7 +38,7 @@
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe",
           "title": "DfE",
           "description": "DfE",
-          "source": "Use DfE&B register",
+          "source": "Use DfE register",
           "prefix": "dfe"
         }
       ]

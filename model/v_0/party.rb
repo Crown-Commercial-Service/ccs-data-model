@@ -1,34 +1,39 @@
 require_relative '../../src/data_model'
+require_relative 'supplementary'
+require_relative 'register'
+require_relative 'documents'
+
 require_relative 'reference_data/party_reference_data'
 require_relative 'reference_data/supplementary_reference_data'
-require_relative 'reference_data/documents_reference_data'
 include DataModel
 
 domain(:Parties) {
 
-  datatype(:Question, extends: Register::Record,
+  datatype(:Question,
            description: "A managed set of qualification questions andwered at a point in time for a period of time") {
 
-    attribute :id, String, "UUID for the questionnaire entry"
     attribute :classification, String, SINGLE, "coded answers to questions matching the standards",
-              example: "#{APPRENTICESHIP_QUALIFICATION.url}"
+              example: "#{APPRENTICESHIP_QUALIFICATION_QUESTIONS.url}"
     attribute :answer_code, String, ZERO_OR_ONE, "coded answers to questions matching the standards",
-              example: "#{OFFSTED_RATING.id}:Requires_Improvement"
+              example: "#{OFFSTED_RATING.example}"
     attribute :supplementary_classification, String, ZERO_TO_MANY, "coded answers to questions matching the standards",
-    example: "#{APPRENTICESHIP_QUALIFICATION.url}"
-    attribute :supplementary_fields, Supplementary::Field, ZERO_TO_MANY,
+              example: "#{APPRENTICESHIP_QUALIFICATION_QUESTIONS.url}"
+    attribute :supplementary_field, Supplementary::Field, ZERO_TO_MANY,
               "additional filters used to qulify the item. Filter standards should obviously be relevant to the item"
+    attribute :document, Documents::Document
   }
 
-  datatype(:Questionnaire,
+  datatype(:Questionnaire, extends: Register::Record,
            description: "A managed set of qualification questions andwered at a point in time for a period of time") {
 
-    attribute :id, String, "UUID for the questionnaire entry"
-    attribute :completed, Date
-    attribute :expires, Date
+    attribute :id, String, "UUID for the questionnaire entry", example: "uuid"
+    attribute :org_id, String, " such as URN; could match salesforce ID; master key ", example: SF_ORG.example
+    attribute :org_id_standard, ORG_ID_STANDARDS, example: SF_ORG.uri
+    attribute :completed, Date, example: "2018-7-7"
+    attribute :expires, Date, example: "2020-7-6"
     attribute :question_standards, String, ZERO_TO_MANY, "The coding standards for the questions and answers",
-              example: APPRENTICESHIP_QUALIFICATION.url
-    attribute :question, :Question, ZERO_OR_ONE, "coded answers to questions matching the standards"
+              example: APPRENTICESHIP_QUALIFICATION_QUESTIONS.url
+    attribute :question, :Question, ZERO_TO_MANY, "coded answers to questions matching the standards"
   }
 
   datatype(:Party, description:
@@ -36,7 +41,7 @@ domain(:Parties) {
           "both buyers and suppliers we use the same record for both, but most organisations will" +
           "be one or the other. The onvolvement of the party with an agreement determine the role in" +
           "that contenxt.") {
-    attribute :id, String, " URN, should match salesforce ID; master key ", example: SF_ORG.example
+    attribute :id, String, " such as URN; could match salesforce ID; master key ", example: SF_ORG.example
     attribute :org_id_standard, ORG_ID_STANDARDS, example: SF_ORG.uri
     attribute :supplementary_org_id_standard, ORG_ID_STANDARDS, ZERO_TO_MANY, example: CH_ORG.uri
     attribute :supplementary_org_id, String, ZERO_TO_MANY, example: CH_ORG.example
@@ -47,11 +52,6 @@ domain(:Parties) {
     attribute :sector, String, ZERO_TO_MANY, example: ED_SEC.example
     attribute :trading_name, String, ZERO_OR_ONE, " Salesforce only stores for supplier. "
     attribute :spend_this_year, Float, ZERO_OR_ONE, " Salesforce only stores this for buyers. ", example: 1000.00
-
-    attribute :questionnaire, :Questionnaire, ZERO_TO_MANY, "Supplier questionnaires"
-    attribute :document_standard, DOC_STANDARDS, ZERO_OR_ONE, example: GDOC.uri
-    attribute :documents_url, String, ZERO_OR_ONE, " Salesforce links to google drive folder for this supplier; we will move to S3 in due course. ",
-              example: "gdoc:https://drive.google.com/drive/u/012345"
 
     attribute :contact_standard, CONTACT_ID_STANDARDS, ZERO_OR_ONE, example: SF_CONTACT.uri
     attribute :account_manager_id, String, ZERO_OR_ONE, " Who manages the account for CCS ", example: SF_CONTACT.example
@@ -77,9 +77,11 @@ domain(:Parties) {
     attribute :id, String, " a newly minted UUID for CMp "
     attribute :supplementary_contact_standard, CONTACT_ID_STANDARDS, ZERO_TO_MANY
     attribute :supplementary_contact_id, String, ZERO_TO_MANY
-    attribute :party_id, String, " contact is a link for this party ", links: :Party
-    #TODO ID Standard
-    attribute :role, String, ZERO_TO_MANY, " role for CMp "
+
+    attribute :org_id_standard, ORG_ID_STANDARDS, example: SF_ORG.uri
+    attribute :party_id, String, " contact is a link for this party ", links: :Party, example: SF_ORG.example
+
+    attribute :role, CONTACT_ROLES, ZERO_TO_MANY, " role for CMp ", example: ADMIN.example
     attribute :first_name, String
     attribute :last_name, String
     attribute :title, String, ZERO_OR_ONE, " Salesforce; not sure what the constrainst are "

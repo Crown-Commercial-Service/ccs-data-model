@@ -203,6 +203,41 @@
   },
   "Parties": {
     "Question": {
+      "classification": {
+        "multiplicity": "1",
+        "description": "coded answers to questions matching the standards",
+        "name": "classification",
+        "type": "String",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
+      },
+      "answer_code": {
+        "multiplicity": "0..1",
+        "description": "coded answers to questions matching the standards",
+        "name": "answer_code",
+        "type": "String",
+        "example": "offsted_rating:Requires Improvement"
+      },
+      "supplementary_classification": {
+        "multiplicity": "*",
+        "description": "coded answers to questions matching the standards",
+        "name": "supplementary_classification",
+        "type": "String",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
+      },
+      "supplementary_field": {
+        "multiplicity": "*",
+        "description": "additional filters used to qulify the item. Filter standards should obviously be relevant to the item",
+        "name": "supplementary_field",
+        "type": "Supplementary::Field"
+      },
+      "document": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "document",
+        "type": "Documents::Document"
+      }
+    },
+    "Questionnaire": {
       "version_id": {
         "multiplicity": "1",
         "description": "UUID of this version of the entry",
@@ -242,54 +277,36 @@
         "multiplicity": "1",
         "description": "UUID for the questionnaire entry",
         "name": "id",
-        "type": "String"
+        "type": "String",
+        "example": "uuid"
       },
-      "classification": {
+      "org_id": {
         "multiplicity": "1",
-        "description": "coded answers to questions matching the standards",
-        "name": "classification",
+        "description": " such as URN; could match salesforce ID; master key ",
+        "name": "org_id",
         "type": "String",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
+        "example": "sf_org_id:455677"
       },
-      "answer_code": {
-        "multiplicity": "0..1",
-        "description": "coded answers to questions matching the standards",
-        "name": "answer_code",
-        "type": "String",
-        "example": "offsted:Requires_Improvement"
-      },
-      "supplementary_classification": {
-        "multiplicity": "*",
-        "description": "coded answers to questions matching the standards",
-        "name": "supplementary_classification",
-        "type": "String",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
-      },
-      "supplementary_fields": {
-        "multiplicity": "*",
-        "description": "additional filters used to qulify the item. Filter standards should obviously be relevant to the item",
-        "name": "supplementary_fields",
-        "type": "Supplementary::Field"
-      }
-    },
-    "Questionnaire": {
-      "id": {
+      "org_id_standard": {
         "multiplicity": "1",
-        "description": "UUID for the questionnaire entry",
-        "name": "id",
-        "type": "String"
+        "description": "",
+        "name": "org_id_standard",
+        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id"
       },
       "completed": {
         "multiplicity": "1",
         "description": "",
         "name": "completed",
-        "type": "Date"
+        "type": "Date",
+        "example": "2018-7-7"
       },
       "expires": {
         "multiplicity": "1",
         "description": "",
         "name": "expires",
-        "type": "Date"
+        "type": "Date",
+        "example": "2020-7-6"
       },
       "question_standards": {
         "multiplicity": "*",
@@ -299,7 +316,7 @@
         "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json"
       },
       "question": {
-        "multiplicity": "0..1",
+        "multiplicity": "*",
         "description": "coded answers to questions matching the standards",
         "name": "question",
         "type": "Parties::Question"
@@ -308,7 +325,7 @@
     "Party": {
       "id": {
         "multiplicity": "1",
-        "description": " URN, should match salesforce ID; master key ",
+        "description": " such as URN; could match salesforce ID; master key ",
         "name": "id",
         "type": "String",
         "example": "sf_org_id:455677"
@@ -374,26 +391,6 @@
         "name": "spend_this_year",
         "type": "Float",
         "example": 1000.0
-      },
-      "questionnaire": {
-        "multiplicity": "*",
-        "description": "Supplier questionnaires",
-        "name": "questionnaire",
-        "type": "Parties::Questionnaire"
-      },
-      "document_standard": {
-        "multiplicity": "0..1",
-        "description": "",
-        "name": "document_standard",
-        "type": "doc_standard_codes( s3, gdoc)",
-        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_standard_codes.json#gdoc"
-      },
-      "documents_url": {
-        "multiplicity": "0..1",
-        "description": " Salesforce links to google drive folder for this supplier; we will move to S3 in due course. ",
-        "name": "documents_url",
-        "type": "String",
-        "example": "gdoc:https://drive.google.com/drive/u/012345"
       },
       "contact_standard": {
         "multiplicity": "0..1",
@@ -490,18 +487,27 @@
         "name": "supplementary_contact_id",
         "type": "String"
       },
+      "org_id_standard": {
+        "multiplicity": "1",
+        "description": "",
+        "name": "org_id_standard",
+        "type": "org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe)",
+        "example": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id"
+      },
       "party_id": {
         "multiplicity": "1",
         "description": " contact is a link for this party ",
         "name": "party_id",
         "type": "String",
+        "example": "sf_org_id:455677",
         "links": "Parties::Party"
       },
       "role": {
         "multiplicity": "*",
         "description": " role for CMp ",
         "name": "role",
-        "type": "String"
+        "type": "contact_roles( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#org_administrator, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#ccs_admin, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#commercial_contact)",
+        "example": "contact_roles:org_administrator"
       },
       "first_name": {
         "multiplicity": "1",

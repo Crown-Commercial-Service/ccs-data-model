@@ -1,12 +1,12 @@
 {
-  "standard": [
+  "standardlist": [
     {
       "id": "apprenticeship_offer_standard",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_offer_standard.json",
       "title": "Apprenticeships qualifications questions for suppliers",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_offer_standard.json",
       "description": "Standard of codes used to decide what standard to use to classify an item.This is a mix of custom codes and course codes.",
-      "ref": [
+      "standard": [
         {
           "source": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json",
           "id": "course_start_date",

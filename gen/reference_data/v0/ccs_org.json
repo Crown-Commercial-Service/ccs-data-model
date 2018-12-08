@@ -2,9 +2,9 @@
   "codelist": [
     {
       "id": "ccs_org",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json",
       "title": "CCS Org structure",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json",
       "description": "CCS Structure codes",
       "code": [
         {

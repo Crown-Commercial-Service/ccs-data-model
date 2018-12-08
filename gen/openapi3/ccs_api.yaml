@@ -6,7 +6,7 @@ servers:
 info:
   title: API::Endpoint
   description: genearated endpoint for data API::Endpoint
-  version: 0.1.4
+  version: 0.1.5
   contact:
     email: admin@ccs.gov.uk
   license:
@@ -391,6 +391,100 @@ paths:
           "$ref": "#/components/responses/Contact"
         4XX:
           description: error TODO
+  "/api/v0/Questionnaire":
+    get:
+      tags:
+      - browser
+      summary: search Questionnaire
+      operationId: search-Questionnaire
+      description: searches Questionnaire by name, version, id or keyword
+      parameters:
+      - "$ref": "#/components/parameters/q_id"
+      - "$ref": "#/components/parameters/q_version_id"
+      - "$ref": "#/components/parameters/q_supercedes_id"
+      - "$ref": "#/components/parameters/q_limit"
+      - "$ref": "#/components/parameters/q_skip"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Questionnaires"
+        4XX:
+          description: error TODO
+    post:
+      tags:
+      - recorder
+      summary: post (create) a new Questionnaire
+      operationId: create-Questionnaire
+      description: add a new Questionnaire and retrieve copy of it
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Questionnaire"
+        description: body should be the new Questionnaire
+      responses:
+        '200':
+          "$ref": "#/components/responses/Questionnaire"
+        4XX:
+          description: error TODO
+  "/api/v0/Questionnaire/{id}":
+    get:
+      tags:
+      - recorder
+      summary: get an existing Questionnaire
+      description: retrieve Questionnaire by id or version id
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      responses:
+        '200':
+          "$ref": "#/components/responses/Questionnaire"
+        '303':
+          "$ref": "#/components/responses/Questionnaire"
+        4XX:
+          description: error TODO
+    put:
+      tags:
+      - recorder
+      summary: put (replace) Questionnaire
+      operationId: revise-Questionnaire
+      description: replace an existing Questionnaire given its id, creating a new
+        version
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Questionnaire"
+        description: body should be the updated Questionnaire
+      responses:
+        '200':
+          "$ref": "#/components/responses/Questionnaire"
+        '303':
+          "$ref": "#/components/responses/Questionnaire"
+        4XX:
+          description: error TODO
+    patch:
+      tags:
+      - recorder
+      summary: patch (revise) Questionnaire
+      operationId: revise-Questionnaire
+      description: update an existing Questionnaire given its id, updating only the
+        supplied fields, creating a new version
+      parameters:
+      - "$ref": "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Questionnaire"
+        description: body should be the elements of  Questionnaire to be updated
+      responses:
+        '200':
+          "$ref": "#/components/responses/Questionnaire"
+        '303':
+          "$ref": "#/components/responses/Questionnaire"
+        4XX:
+          description: error TODO
   "/api/v0/Offering":
     get:
       tags:
@@ -745,7 +839,7 @@ components:
         id:
           type: string
           example: sf_org_id:455677
-          description: " URN, should match salesforce ID; master key "
+          description: " such as URN; could match salesforce ID; master key "
         org_id_standard:
           type: string
           enum:
@@ -802,22 +896,6 @@ components:
           format: float
           example: 1000.0
           description: " Salesforce only stores this for buyers. "
-        questionnaire:
-          type: array
-          items:
-            "$ref": "#/components/schemas/Questionnaire"
-        document_standard:
-          type: string
-          enum:
-          - s3
-          - gdoc
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_standard_codes.json#gdoc
-          description: ''
-        documents_url:
-          type: string
-          example: gdoc:https://drive.google.com/drive/u/012345
-          description: " Salesforce links to google drive folder for this supplier;
-            we will move to S3 in due course. "
         contact_standard:
           type: string
           enum:
@@ -862,13 +940,28 @@ components:
           items:
             type: string
           description: ''
+        org_id_standard:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id
+          description: ''
         party_id:
           type: string
+          example: sf_org_id:455677
           description: " contact is a link for this party "
         role:
           type: array
           items:
             type: string
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#org_administrator
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#ccs_admin
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#commercial_contact
+          example: contact_roles:org_administrator
           description: " role for CMp "
         first_name:
           type: string
@@ -930,6 +1023,74 @@ components:
           description: 'Category org unit responsible for this agreement. '
       description: 'A way of contacting a party. Store contacts in a safe identity
         store. Do not store personal details elsewhere. '
+    Questionnaire:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        version_id:
+          type: string
+          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
+          description: UUID of this version of the entry
+        supercedes_id:
+          type: string
+          example: e030f1b1-647d-4ed7-8d84-ac9790563362
+          description: UUID of this version superceded. May be empty only if this
+            is the  first version
+        datetime:
+          type: string
+          format: date
+          example: '2019-09-28T18:34:23.45Z'
+          description: 'Date of creation or update of this record, date of creation
+            of this version. '
+        checksum:
+          type: string
+          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
+          description: MD5 checksum of the record
+        url:
+          type: string
+          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
+          description: URL which will retreive this version of the record
+        id:
+          type: string
+          example: uuid
+          description: UUID for the questionnaire entry
+        org_id:
+          type: string
+          example: sf_org_id:455677
+          description: " such as URN; could match salesforce ID; master key "
+        org_id_standard:
+          type: string
+          enum:
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun
+          - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id
+          description: ''
+        completed:
+          type: string
+          format: date
+          example: '2018-7-7'
+          description: ''
+        expires:
+          type: string
+          format: date
+          example: '2020-7-6'
+          description: ''
+        question_standards:
+          type: array
+          items:
+            type: string
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
+          description: The coding standards for the questions and answers
+        question:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Question"
+      description: A managed set of qualification questions andwered at a point in
+        time for a period of time
     Offering:
       type: object
       required:
@@ -1051,33 +1212,6 @@ components:
             be offered.
       description: a type with a number of classification attributes, such as sector,
         location
-    Questionnaire:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          type: string
-          description: UUID for the questionnaire entry
-        completed:
-          type: string
-          format: date
-          description: ''
-        expires:
-          type: string
-          format: date
-          description: ''
-        question_standards:
-          type: array
-          items:
-            type: string
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
-          description: The coding standards for the questions and answers
-        question:
-          "$ref": "#/components/schemas/Question"
-      description: A managed set of qualification questions andwered at a point in
-        time for a period of time
     Address:
       type: object
       required:
@@ -1114,6 +1248,34 @@ components:
           description: " Location from the address for geo search "
       description: "\n Address should include at least address line 1 and ideally
         post code.\n will contain lat / long if we have derived it.\n "
+    Question:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        classification:
+          type: string
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
+          description: coded answers to questions matching the standards
+        answer_code:
+          type: string
+          example: offsted_rating:Requires Improvement
+          description: coded answers to questions matching the standards
+        supplementary_classification:
+          type: array
+          items:
+            type: string
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
+          description: coded answers to questions matching the standards
+        supplementary_field:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Field"
+        document:
+          "$ref": "#/components/schemas/Document"
+      description: A managed set of qualification questions andwered at a point in
+        time for a period of time
     Item:
       type: object
       required:
@@ -1173,12 +1335,8 @@ components:
       - id
       - name
       properties:
-        id:
-          type: string
-          description: ''
         role_id:
           type: string
-          example: course_related_codes:course_start_date
           description: 'Standard uri code that defines the role of the supplementary
             field, which should be prefixed by a standard id in the enclosing *Item
             type*, '
@@ -1201,58 +1359,40 @@ components:
           - type: integer
           example: A descriptive string
       description: an additional field that helps qualify the object
-    Question:
+    Document:
       type: object
       required:
       - id
       - name
       properties:
-        version_id:
+        storage:
           type: string
-          example: 90ccab31-84fb-486c-84ba-77a66ff686ea
-          description: UUID of this version of the entry
-        supercedes_id:
-          type: string
-          example: e030f1b1-647d-4ed7-8d84-ac9790563362
-          description: UUID of this version superceded. May be empty only if this
-            is the  first version
-        datetime:
-          type: string
-          format: date
-          example: '2019-09-28T18:34:23.45Z'
-          description: 'Date of creation or update of this record, date of creation
-            of this version. '
-        checksum:
-          type: string
-          example: 90b4c251f8649a4f9c86d6d20ee6e9e9
-          description: MD5 checksum of the record
-        url:
-          type: string
-          example: api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234
-          description: URL which will retreive this version of the record
-        id:
-          type: string
-          description: UUID for the questionnaire entry
-        classification:
-          type: string
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
-          description: coded answers to questions matching the standards
-        answer_code:
-          type: string
-          example: offsted:Requires_Improvement
-          description: coded answers to questions matching the standards
-        supplementary_classification:
+          enum:
+          - s3
+          - gdoc
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#gdoc
+          description: ''
+        role_standard:
           type: array
           items:
             type: string
-          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json
-          description: coded answers to questions matching the standards
-        supplementary_fields:
+            enum:
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#ed_doc
+            - https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#contract_doc
+          example: https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#contract_doc
+          description: ''
+        role:
           type: array
           items:
-            "$ref": "#/components/schemas/Field"
-      description: A managed set of qualification questions andwered at a point in
-        time for a period of time
+            type: string
+          example: ":signed_calloff"
+          description: ''
+        url:
+          type: string
+          example: gdoc:https://drive.google.com/drive/u/012345
+          description: " Salesforce links to google drive folder for this supplier;
+            we will move to S3 in due course. "
+      description: ''
     Value:
       type: object
       required:
@@ -1397,6 +1537,20 @@ components:
             type: array
             items:
               "$ref": "#/components/schemas/Contact"
+    Questionnaire:
+      description: Questionnaire matching id
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Questionnaire"
+    Questionnaires:
+      description: array of Questionnaires matching id
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Questionnaire"
     Offering:
       description: Offering matching id
       content:

@@ -272,7 +272,7 @@ module DataModel
 
   module_function
 
-  def date(day, month, year)
+  def _date(day, month, year)
     Date.new(day, month, year)
   end
 
@@ -289,7 +289,7 @@ module DataModel
 
   # create an enumeration class derived from Symbol
   #
-  def Enum(doc, *codes, code_type: :ref, code_key: :uri, name_key: :id, doc_id: :id)
+  def Enum(doc, *codes, code_type: :standard, code_key: :uri, name_key: :id, doc_id: :id)
     begin
       if (!(doc.class <= DataType))
         raise "standard #{doc} for Enum needs to be a data type with many type values as an attribute 'codekey'"

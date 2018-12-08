@@ -1,12 +1,12 @@
 {
-  "standard": [
+  "standardlist": [
     {
       "id": "contact_id_standard",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json",
       "title": "Contact id  Standards",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json",
       "description": "How to identify a link to a contact",
-      "ref": [
+      "standard": [
         {
           "id": "sf_contact",
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact",

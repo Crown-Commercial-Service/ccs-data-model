@@ -1,12 +1,12 @@
 {
-  "standard": [
+  "standardlist": [
     {
-      "version": "0.1.4",
+      "version": "0.1.5",
       "id": "agreement_id_standard",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_standard.json",
       "title": "Agreement id standards",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_id_standard.json",
       "description": "Standard for how to identify an agreement",
-      "ref": [
+      "standard": [
         {
           "id": "ccs_fw_id",
           "prefix": "rm",

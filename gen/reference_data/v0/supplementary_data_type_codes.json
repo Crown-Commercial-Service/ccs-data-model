@@ -2,9 +2,9 @@
   "codelist": [
     {
       "id": "supplementary_data_type_codes",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes.json",
       "title": "SupplementaryDataType",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes.json",
       "description": "Identify the types in supplementary data of a filter",
       "code": [
         {

@@ -1,12 +1,12 @@
 {
-  "standard": [
+  "standardlist": [
     {
       "id": "location_standard",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json",
       "title": "Standards codes to locate geographic areas",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json",
       "description": "Standard of codes used to decide what standard to use to classify an item",
-      "ref": [
+      "standard": [
         {
           "id": "nuts_2016",
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/location_standard.json#nuts_2016",

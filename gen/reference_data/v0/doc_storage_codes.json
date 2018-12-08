@@ -1,0 +1,51 @@
+{
+  "codelist": [
+    {
+      "id": "doc_storage_codes",
+      "title": "doc_storage_codes",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json",
+      "description": "Where do we store the document",
+      "code": [
+        {
+          "id": "s3",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#s3",
+          "title": "AWS S3 doc URI",
+          "description": "AWS S3 doc URI"
+        },
+        {
+          "id": "gdoc",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#gdoc",
+          "title": "Google drive link",
+          "description": "Google drive link"
+        }
+      ]
+    }
+  ],
+  "standardlist": [
+    {
+      "id": "doc_storage_codes",
+      "title": "doc_storage_codes",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json",
+      "description": "What is the purpose of the document. There will be many schemes based on questionnaires.",
+      "standard": [
+        {
+          "id": "ed_doc",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#ed_doc",
+          "title": "Education certificates and supporting documents",
+          "description": "Education certificates and supporting documents",
+          "prefix": "ed_doc",
+          "example": "ed_doc:Certificate of Rating"
+        },
+        {
+          "id": "contract_doc",
+          "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#contract_doc",
+          "title": "Contracts",
+          "description": "Contracts",
+          "example": ":signed_calloff"
+        }
+      ]
+    }
+  ]
+}

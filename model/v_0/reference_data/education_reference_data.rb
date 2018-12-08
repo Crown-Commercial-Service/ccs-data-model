@@ -54,31 +54,32 @@ ReferenceData.new :ApprenticeSpecificOfferingCodes do
   end
 
 ReferenceData.new :EducationRatingsStandard do
-  EDU_RATINGS = standard {
+  EDU_RATINGS = standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Qualification Classification Standards"
     description "Standard of codes used to decide what standard to use to classify an item"
-    OFFSTED_RATING = ref {
-      id :offsted
+    OFFSTED_RATING = standard {
+      id :offsted_rating
       prefix :offsted_rating
       macro &URI_FROM_DOC_AND_ID
+      example "#{prefix}:Requires Improvement"
       title "Offsted Rating"
       description "Using offsted standard for valid ratings codes"
-      pattern "(offsted:)(Outstanding|Good|Requires Improvement|Inadequate)"
+      pattern "(#{prefix}:)(Outstanding|Good|Requires Improvement|Inadequate)"
       source "https://www.gov.uk/government/organisations/ofsted"
     }
   }
 end
 
 ReferenceData.new :ApprenticeshipQualificationQuestionnaireStandard do
-  APPRENTICESHIP_QUALIFICATION = standard {
+  APPRENTICESHIP_QUALIFICATION_QUESTIONS = standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Apprenticeships qualifications questions for suppliers"
     description "Standard of codes used to decide what standard to use to classify an item"
-    PROVIDER_OFFSTED = ref {
+    PROVIDER_OFFSTED = standard {
       link_standard_from_code(self, OFFSTED_RATING)
     }
-    ref {
+    standard {
       id :supplier_has_experience
       prefix container.id
       macro &URI_FROM_DOC_AND_ID
@@ -90,22 +91,22 @@ ReferenceData.new :ApprenticeshipQualificationQuestionnaireStandard do
 end
 
 ReferenceData.new :ApprenticeshipOfferStandard do
-  APPRENTICESHIP_OFFER = standard {
+  APPRENTICESHIP_OFFER = standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Apprenticeships qualifications questions for suppliers"
     description "Standard of codes used to decide what standard to use to classify an item." +
                     "This is a mix of custom codes and course codes."
 
-    OFFER_COURSE_START_DATE = ref {
+    OFFER_COURSE_START_DATE = standard {
       link_standard_from_code(self, START_DATE)
     }
-    ref {
+    standard {
       link_standard_from_code(self, COURSE_LOC)
     }
-    ref {
+    standard {
       link_standard_from_code(self, SHARED)
     }
-    ref {
+    standard {
       link_standard_from_code( self, IN_ESFA_FUNDING)
     }
   }

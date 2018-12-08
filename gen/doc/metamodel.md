@@ -39,7 +39,17 @@
 |min_value |Minimum value of award, in pounds sterling | |Integer |0..1 |
 |max_value |Maximum value of award, in pounds sterling | |Integer |0..1 |
 # Data model: Parties
-## Question extends Register::Record
+## Question
+  A managed set of qualification questions andwered at a point in time for a period of time
+
+|attribute|description|example|type|multiplicity|
+|---------|-----------|-------|----|------------|
+|classification |coded answers to questions matching the standards |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json |String |1 |
+|answer_code |coded answers to questions matching the standards |offsted_rating:Requires Improvement |String |0..1 |
+|supplementary_classification |coded answers to questions matching the standards |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json |String |* |
+|supplementary_field |additional filters used to qulify the item. Filter standards should obviously be relevant to the item | |Supplementary::Field |* |
+|document | | |Documents::Document |1 |
+## Questionnaire extends Register::Record
   A managed set of qualification questions andwered at a point in time for a period of time
 
 |attribute|description|example|type|multiplicity|
@@ -49,27 +59,19 @@
 |datetime |Date of creation or update of this record, date of creation of this version.  |2019-09-28T18:34:23.45Z |DateTime |1 |
 |checksum |MD5 checksum of the record |90b4c251f8649a4f9c86d6d20ee6e9e9 |String |1 |
 |url |URL which will retreive this version of the record |api.services.crowncommercial.gov.uk/api/Agreement/rm-RM1234 |String |1 |
-|id |UUID for the questionnaire entry | |String |1 |
-|classification |coded answers to questions matching the standards |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json |String |1 |
-|answer_code |coded answers to questions matching the standards |offsted:Requires_Improvement |String |0..1 |
-|supplementary_classification |coded answers to questions matching the standards |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json |String |* |
-|supplementary_fields |additional filters used to qulify the item. Filter standards should obviously be relevant to the item | |Supplementary::Field |* |
-## Questionnaire
-  A managed set of qualification questions andwered at a point in time for a period of time
-
-|attribute|description|example|type|multiplicity|
-|---------|-----------|-------|----|------------|
-|id |UUID for the questionnaire entry | |String |1 |
-|completed | | |Date |1 |
-|expires | | |Date |1 |
+|id |UUID for the questionnaire entry |uuid |String |1 |
+|org_id | such as URN; could match salesforce ID; master key  |sf_org_id:455677 |String |1 |
+|org_id_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |1 |
+|completed | |2018-7-7 |Date |1 |
+|expires | |2020-7-6 |Date |1 |
 |question_standards |The coding standards for the questions and answers |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprenticeship_qualification_questionnaire_standard.json |String |* |
-|question |coded answers to questions matching the standards | |Parties::Question |0..1 |
+|question |coded answers to questions matching the standards | |Parties::Question |* |
 ## Party
   The party is used to identify buyers and suppliers. Since some organisations act asboth buyers and suppliers we use the same record for both, but most organisations willbe one or the other. The onvolvement of the party with an agreement determine the role inthat contenxt.
 
 |attribute|description|example|type|multiplicity|
 |---------|-----------|-------|----|------------|
-|id | URN, should match salesforce ID; master key  |sf_org_id:455677 |String |1 |
+|id | such as URN; could match salesforce ID; master key  |sf_org_id:455677 |String |1 |
 |org_id_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |1 |
 |supplementary_org_id_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |* |
 |supplementary_org_id | |companies_house:12345 |String |* |
@@ -79,9 +81,6 @@
 |sector | |ccs_sector_codes:education_funded |String |* |
 |trading_name | Salesforce only stores for supplier.  | |String |0..1 |
 |spend_this_year | Salesforce only stores this for buyers.  |1000.0 |Float |0..1 |
-|questionnaire |Supplier questionnaires | |Parties::Questionnaire |* |
-|document_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_standard_codes.json#gdoc |doc_standard_codes( s3, gdoc) |0..1 |
-|documents_url | Salesforce links to google drive folder for this supplier; we will move to S3 in due course.  |gdoc:https://drive.google.com/drive/u/012345 |String |0..1 |
 |contact_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact |contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email) |0..1 |
 |account_manager_id | Who manages the account for CCS  |sf_contact:45623456 |String |0..1 |
 ## Address
@@ -109,8 +108,9 @@
 |id | a newly minted UUID for CMp  | |String |1 |
 |supplementary_contact_standard | | |contact_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#email) |* |
 |supplementary_contact_id | | |String |* |
-|party_id | contact is a link for this party  | |String -> Parties::Party |1 |
-|role | role for CMp  | |String |* |
+|org_id_standard | |https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id |org_id_standard( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#companies_house, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dun, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#dfe) |1 |
+|party_id | contact is a link for this party  |sf_org_id:455677 |String -> Parties::Party |1 |
+|role | role for CMp  |contact_roles:org_administrator |contact_roles( https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#org_administrator, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#ccs_admin, https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_roles.json#commercial_contact) |* |
 |first_name | | |String |1 |
 |last_name | | |String |1 |
 |title | Salesforce; not sure what the constrainst are  | |String |0..1 |

@@ -1,2 +1,16 @@
 {
+  "contact": [
+    {
+      "contact_standard": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/contact_id_standard.json#sf_contact",
+      "org_id_standard": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/org_id_standard.json#sf_org_id",
+      "party_id": "sf_org_id:455677",
+      "role": [
+        "contact_roles:org_administrator"
+      ],
+      "org_structure_standard": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/ccs_org.json",
+      "org_unit": [
+        "ccs_orgpillar_buildings"
+      ]
+    }
+  ]
 }

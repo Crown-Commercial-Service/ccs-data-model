@@ -2,9 +2,9 @@
   "codelist": [
     {
       "id": "course_related_codes",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json",
       "title": "Filter Classification Codes specific to Apprenticeships questions",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json",
       "description": "Codes of codes used to filter offerings and other catalogue entries",
       "code": [
         {

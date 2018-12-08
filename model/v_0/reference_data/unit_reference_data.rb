@@ -3,11 +3,11 @@ require_relative '../reference_data'
 
 
 ReferenceData.new :UnitStandard do
-  UNITS_STANDARDS = Enum(standard {
+  UNITS_STANDARDS = Enum(standardlist {
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Unit Standards"
     description "Standard of codes used to decide what standard to use to classify units"
-    ref {
+    standard {
       id :uncefact
       macro &URI_FROM_DOC_AND_ID
       title "UN/CEFACT Recommendation 20"
@@ -15,7 +15,7 @@ ReferenceData.new :UnitStandard do
       source "http://tfig.unece.org/contents/recommendation-20.htm"
       macro &URI_FROM_DOC_AND_ID
     }
-    QUDT= ref {
+    QUDT= standard {
       id :qudt
       macro &URI_FROM_DOC_AND_ID
       title "Quantities, Units, Dimensions and Data Types Ontologies"

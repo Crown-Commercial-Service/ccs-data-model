@@ -1,10 +1,10 @@
 {
   "codelist": [
     {
-      "version": "0.1.4",
+      "version": "0.1.5",
       "id": "agreement_type_codes",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json",
       "title": "Agreement types",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/agreement_type_codes.json",
       "description": "Standard of codes used to decide what standard to use to classify an agreement",
       "code": [
         {

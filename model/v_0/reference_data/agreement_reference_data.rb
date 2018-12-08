@@ -30,12 +30,12 @@ ReferenceData.new :AgreementTypeCodes do
 end
 
 ReferenceData.new :AgreementIDStandard do
-  AGREEMENT_ID_STANDARDS = Enum(standard {
+  AGREEMENT_ID_STANDARDS = Enum(standardlist {
     version "0.1.0"
     macro &ID_AND_URL_FROM_DOMAIN_AND_VERSION
     title "Agreement id standards"
     description "Standard for how to identify an agreement"
-    CCS_FW_CODE = ref {
+    CCS_FW_CODE = standard {
       id :ccs_fw_id
       prefix :rm
       macro &URI_FROM_DOC_AND_ID
@@ -43,7 +43,7 @@ ReferenceData.new :AgreementIDStandard do
       example "#{prefix}:RM1234"
       source "Salesforce or Contracts Finder"
     }
-    ref {
+    standard {
       id :lot_number
       prefix :lot
       macro &URI_FROM_DOC_AND_ID
@@ -52,7 +52,7 @@ ReferenceData.new :AgreementIDStandard do
       example "#{prefix}:RM1234#3"
       source "Salesforce or Contracts Finder"
     }
-    ref {
+    standard {
       id :cf_contract_id
       prefix :cf
       macro &URI_FROM_DOC_AND_ID

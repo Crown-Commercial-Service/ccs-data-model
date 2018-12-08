@@ -2,9 +2,9 @@
   "codelist": [
     {
       "id": "apprentice_specific_offering_codes",
-      "version": "0.1.4",
-      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprentice_specific_offering_codes.json",
       "title": "Filter Classification Codes specific to Apprenticeships offering filters",
+      "version": "0.1.5",
+      "url": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/apprentice_specific_offering_codes.json",
       "description": "",
       "code": [
         {
