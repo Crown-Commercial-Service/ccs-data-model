@@ -100,6 +100,7 @@ module DataModel
           if args.length == 0 && !block
             unless @attributes[k]
               puts ("Warning - reading unset attribute '#{k}' on #{self.class}")
+              puts caller(1,1)
             end
             return @attributes[k]
           end

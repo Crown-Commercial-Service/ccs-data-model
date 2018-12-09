@@ -60,6 +60,13 @@ SAMPLE_PARTIES =
             type_id "date"
             # value { date _date(2021, 03, 01)}
           }
+          document {
+            storage S3.uri
+            role_standard SIGNED_CONTRACTS.uri
+            role SIGNED_CONTRACTS.example
+            url "s3://some-bucket/some-doc.pdf"
+
+          }
         }
       }
 

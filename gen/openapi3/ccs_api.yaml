@@ -1337,6 +1337,7 @@ components:
       properties:
         role_id:
           type: string
+          example: course_related_codes:course_start_date:2019-03-01
           description: 'Standard uri code that defines the role of the supplementary
             field, which should be prefixed by a standard id in the enclosing *Item
             type*, '
@@ -1385,7 +1386,7 @@ components:
           type: array
           items:
             type: string
-          example: ":signed_calloff"
+          example: contract_doc:signed_calloff
           description: ''
         url:
           type: string

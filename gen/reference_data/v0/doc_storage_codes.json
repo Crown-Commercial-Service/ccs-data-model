@@ -40,10 +40,11 @@
         },
         {
           "id": "contract_doc",
+          "prefix": "contract_doc",
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/doc_storage_codes.json#contract_doc",
           "title": "Contracts",
           "description": "Contracts",
-          "example": ":signed_calloff"
+          "example": "contract_doc:signed_calloff"
         }
       ]
     }

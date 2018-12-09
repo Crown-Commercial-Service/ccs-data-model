@@ -12,7 +12,8 @@
           "uri": "https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/course_related_codes.json#course_start_date",
           "title": "When does a course start - provide a Date in line with https://github.com/Crown-Commercial-Service/ccs-data-model/tree/master/gen/reference_data/v0/supplementary_data_type_codes.json#date",
           "description": "When describing course offerings, this can describe the start date of the course",
-          "pattern": "course_related_codes:course_start_date:(DATE)"
+          "pattern": "course_related_codes:course_start_date:(DATE)",
+          "example": "course_related_codes:course_start_date:2019-03-01"
         },
         {
           "id": "course_location",

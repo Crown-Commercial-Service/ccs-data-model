@@ -58,7 +58,7 @@ domain :ReferenceData do
     attribute :pattern, String, "optional regular expression to check ids against."
     # attribute :expected_type, SUPPLEMENTARY_TYPE_CODES, "optional id of supplementary type, which should match the type of the item or other context."+
     # "Many id objects don't have values and so shouldn't have a type."
-    attribute :example, String, "example of the value"
+    attribute :example, String
   }
 
   datatype(:Standard, extends: :Code, description: "A code which refers to a definition document, that describes another CodeList") {

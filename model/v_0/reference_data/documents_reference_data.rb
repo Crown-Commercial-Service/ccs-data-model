@@ -32,6 +32,7 @@ ReferenceData.new :DocStorageCodes do
     }
     SIGNED_CONTRACTS= standard {
       id :contract_doc
+      prefix id
       macro &URI_FROM_DOC_AND_ID
       title "Contracts"
       description title

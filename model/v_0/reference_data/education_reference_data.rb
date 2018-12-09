@@ -13,6 +13,7 @@ ReferenceData.new :CourseRelatedCodes do
       title "When does a course start - provide a Date in line with #{DATE.uri}"
       description "When describing course offerings, this can describe the start date of the course"
       pattern "#{container.id}:#{id}:(DATE)"
+      example "#{container.id}:#{id}:2019-03-01"
     }
     COURSE_LOC = code {
       id :course_location
