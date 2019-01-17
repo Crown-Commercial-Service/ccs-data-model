@@ -45,8 +45,8 @@ the build script generates [outputs](gen) including
     - remove agreement specific elements and move to canonical model
     - build as a defined extention of [OCDS entitites](http://standard.open-contracting.org/latest/en/schema/)
     
-- [ ] generate API definition
-    - generate OpenAPI2 definition (since that is the version supported by [AWS gateway](https://aws.amazon.com/api-gateway/) )
+- [X] generate API definition
+    - generate OpenAPI2 definition: https://app.swaggerhub.com/apis/Kevin.Humphries.CCS/test-ccs (since that is the version supported by [AWS gateway](https://aws.amazon.com/api-gateway/) )
     
 - [ ] move agreement specific definitions to data files in separate project
     - move agreements to data definitions of catalogy and questionnaire format
